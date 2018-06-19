@@ -1,4 +1,4 @@
-package ormsamples; /**
+package database.ormsamples; /**
  * Licensee: tr3s(Universidade do Minho)
  * License Type: Academic
  */
