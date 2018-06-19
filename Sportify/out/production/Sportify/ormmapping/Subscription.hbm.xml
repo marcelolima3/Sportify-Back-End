@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: tr3s(Universidade do Minho)
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="sportify.models.user.Subscription" table="Subscription" lazy="false">
+		<id name="ID" column="ID" type="integer" unsaved-value="0">
+			<generator class="native">
+			</generator>
+		</id>
+		<property name="date" column="`Date`" type="date" not-null="false" lazy="false"/>
+		<property name="paid" column="Paid" type="boolean" not-null="false" lazy="false"/>
+		<set name="ORM_SubscribedEvents" lazy="true" cascade="save-update,lock" inverse="false">
+			<key column="SubscriptionID" not-null="true"/>
+			<one-to-many class="sportify.models.event.EventCategory"/>
+		</set>
+	</class>
+</hibernate-mapping>

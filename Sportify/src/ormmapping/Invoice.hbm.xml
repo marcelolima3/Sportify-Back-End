@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: tr3s(Universidade do Minho)
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="sportify.models.user.Invoice" table="Invoice" lazy="false">
+		<id name="attribute2" column="Attribute2" type="integer" unsaved-value="0">
+			<generator class="native">
+			</generator>
+		</id>
+		<property name="attribute" column="Attribute" type="integer" length="10" not-null="true" lazy="false"/>
+		<property name="ID" column="ID" type="integer" length="10" not-null="true" lazy="false"/>
+		<property name="date" column="`Date`" type="date" not-null="false" lazy="false"/>
+		<property name="amount" column="Amount" type="big_decimal" precision="19" scale="0" not-null="false" lazy="false"/>
+		<set name="ORM_Subscriptions" lazy="true" cascade="save-update,lock" inverse="false">
+			<key column="InvoiceAttribute2" not-null="true"/>
+			<one-to-many class="sportify.models.user.Subscription"/>
+		</set>
+	</class>
+</hibernate-mapping>
