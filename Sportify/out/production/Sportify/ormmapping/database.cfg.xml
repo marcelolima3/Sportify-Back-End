@@ -21,11 +21,11 @@
     <DriverFiles>&lt;&lt;MySQL Connector/J 5.1.33&gt;&gt;</DriverFiles>
     <Dialect>org.hibernate.dialect.MySQLDialect</Dialect>
     <DriverClass>com.mysql.jdbc.Driver</DriverClass>
-    <URL>jdbc:mysql://localhost/sportify</URL>
+    <URL>jdbc:mysql://localhost:3306/sportify</URL>
     <UserName>root</UserName>
     <EncryptedPassword>A762D72606F50F433EB4CBAB8AD11BA7</EncryptedPassword>
     <HostName>localhost</HostName>
-    <PortNO></PortNO>
+    <PortNO>3306</PortNO>
     <DBName>sportify</DBName>
     <ServiceName></ServiceName>
     <ServerName></ServerName>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Ricardo(Universidade do Minho)
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="user.PaymentMethod" table="PaymentMethod" lazy="false" discriminator-value="PaymentMethod">
+		<id name="ID" column="ID" type="integer" unsaved-value="0">
+			<generator class="native">
+			</generator>
+		</id>
+		<discriminator column="Discriminator" type="string"/>
+		<subclass name="user.PrepaidCard" discriminator-value="PrepaidCard" lazy="false">
+			<property name="cardNumber" column="CardNumber" type="long" length="19" not-null="false" lazy="false"/>
+			<property name="securityCode" column="SecurityCode" type="string" length="255" not-null="false" lazy="false"/>
+			<property name="expirationDate" column="ExpirationDate" type="date" not-null="false" lazy="false"/>
+			<property name="cardType" column="CardType" type="string" length="255" not-null="false" lazy="false"/>
+			<property name="balance" column="Balance" type="big_decimal" precision="19" scale="0" not-null="false" lazy="false"/>
+			<property name="numRecharges" column="NumRecharges" type="integer" length="10" not-null="false" lazy="false"/>
+		</subclass>
+		<subclass name="user.InvoicePayment" discriminator-value="InvoicePayment" lazy="false">
+			<property name="currentAmount" column="CurrentAmount" type="big_decimal" precision="19" scale="0" not-null="false" lazy="false"/>
+			<set name="ORM_Payments" lazy="true" cascade="save-update,lock" inverse="false">
+				<key column="PaymentMethodID" not-null="true"/>
+				<one-to-many class="user.Invoice"/>
+			</set>
+		</subclass>
+		<subclass name="user.MonthlyBill" discriminator-value="MonthlyBill" lazy="false">
+			<property name="limitAmount" column="LimitAmount" type="big_decimal" precision="19" scale="0" not-null="false" lazy="false"/>
+			<property name="currentAmount" column="`Column`" type="big_decimal" precision="19" scale="0" not-null="false" lazy="false"/>
+			<set name="ORM_Payments" lazy="true" cascade="save-update,lock" inverse="false">
+				<key column="PaymentMethodID2" not-null="true"/>
+				<one-to-many class="user.Invoice"/>
+			</set>
+		</subclass>
+	</class>
+</hibernate-mapping>

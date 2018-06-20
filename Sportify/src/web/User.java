@@ -27,7 +27,7 @@ public class User extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/user.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/sportify.sportify.user.jsp").forward(request, response);
     }
 
 }

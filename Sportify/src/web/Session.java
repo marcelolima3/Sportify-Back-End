@@ -2,7 +2,7 @@ package web;
 
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
-import sportify.models.EAClassDiagramPersistentManager;
+import sportify.competition.EAClassDiagramPersistentManager;
 
 public class Session {
     private static Session instance = null;

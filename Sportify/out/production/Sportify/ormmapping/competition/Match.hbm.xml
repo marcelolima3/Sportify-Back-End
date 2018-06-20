@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Ricardo(Universidade do Minho)
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="competition.Match" table="Match" lazy="false">
+		<id name="ID" column="ID" type="integer" unsaved-value="0">
+			<generator class="native">
+			</generator>
+		</id>
+		<property name="description" column="Description" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="startTime" column="StartTime" type="date" not-null="false" lazy="false"/>
+		<property name="endTime" column="EndTime" type="date" not-null="false" lazy="false"/>
+		<property name="location" column="Location" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="active" column="Active" type="boolean" not-null="false" lazy="false"/>
+		<set name="ORM_Events" lazy="true" cascade="save-update,lock" inverse="false">
+			<key column="MatchID" not-null="true"/>
+			<one-to-many class="sportify.event.Event"/>
+		</set>
+		<set name="ORM_Athletes" table="Match_Athlete" lazy="true" cascade="save-update,lock">
+			<key column="MatchID" not-null="true"/>
+			<many-to-many column="AthleteID" class="sportify.subentities.Athlete">
+			</many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>
