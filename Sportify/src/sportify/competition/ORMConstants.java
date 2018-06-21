@@ -14,11 +14,11 @@
 package sportify.competition;
 
 public interface ORMConstants extends org.orm.util.ORMBaseConstants {
-	final int KEY_ATHLETE_MATCHES = -91127149;
+	final int KEY_ATHLETE_MATCH_EVENTS = 2051886963;
 	
 	final int KEY_ATHLETE_TEAM = -597375747;
 	
-	final int KEY_COMPETITION_MATCHES = -1526375789;
+	final int KEY_COMPETITION_MATCH_EVENTS = -159352973;
 	
 	final int KEY_EVENT_CATEGORY = -1909025501;
 	
@@ -26,9 +26,9 @@ public interface ORMConstants extends org.orm.util.ORMBaseConstants {
 	
 	final int KEY_INVOICE_SUBSCRIPTIONS = 861576516;
 	
-	final int KEY_MATCH_ATHLETES = -1346060306;
+	final int KEY_MATCH_EVENT_ATHLETES = -1411260301;
 	
-	final int KEY_MATCH_EVENTS = 1254539507;
+	final int KEY_MATCH_EVENT_EVENTS = 306986680;
 	
 	final int KEY_MODALITY_COMPETITIONS = -1419980014;
 	

@@ -14,7 +14,7 @@ import java.io.IOException;
 public class Index extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession s = request.getSession();
-        s.removeAttribute("sportify/sportify.user");
+        s.removeAttribute("sportify/sportify.sportify.sportify.user");
         s.removeAttribute("pass");
 
         response.sendRedirect("/JavaWeb");
@@ -29,7 +29,7 @@ public class Index extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Object obj = JavaWeb.listGames();
 
-        request.setAttribute("sportify.sportify.user-agent", request.getHeader("User-Agent"));
+        request.setAttribute("sportify.sportify.sportify.sportify.user-agent", request.getHeader("User-Agent"));
 
         request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
     }

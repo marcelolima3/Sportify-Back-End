@@ -25,7 +25,7 @@ public class AthleteCriteria extends AbstractORMCriteria {
 	public final StringExpression name;
 	public final StringExpression nationality;
 	public final StringExpression genre;
-	public final CollectionExpression matches;
+	public final CollectionExpression match_events;
 	
 	public AthleteCriteria(Criteria criteria) {
 		super(criteria);
@@ -35,7 +35,7 @@ public class AthleteCriteria extends AbstractORMCriteria {
 		name = new StringExpression("name", this);
 		nationality = new StringExpression("nationality", this);
 		genre = new StringExpression("genre", this);
-		matches = new CollectionExpression("ORM_Matches", this);
+		match_events = new CollectionExpression("ORM_Match_events", this);
 	}
 	
 	public AthleteCriteria(PersistentSession session) {
@@ -50,8 +50,8 @@ public class AthleteCriteria extends AbstractORMCriteria {
 		return new TeamCriteria(createCriteria("team"));
 	}
 	
-	public sportify.competition.MatchCriteria createMatchesCriteria() {
-		return new sportify.competition.MatchCriteria(createCriteria("ORM_Matches"));
+	public sportify.competition.Match_eventCriteria createMatch_eventsCriteria() {
+		return new sportify.competition.Match_eventCriteria(createCriteria("ORM_Match_events"));
 	}
 	
 	public Athlete uniqueAthlete() {

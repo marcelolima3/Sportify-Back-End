@@ -15,9 +15,9 @@ License Type: Academic
 		<property name="name" column="Name" type="string" length="255" not-null="false" lazy="false"/>
 		<property name="nationality" column="Nationality" type="string" length="255" not-null="false" lazy="false"/>
 		<property name="genre" column="Genre" type="string" length="255" not-null="false" lazy="false"/>
-		<set name="ORM_Matches" table="Match_Athlete" lazy="true" cascade="save-update,lock" inverse="true">
+		<set name="ORM_Match_events" table="Match_event_Athlete" lazy="true" cascade="save-update,lock" inverse="true">
 			<key column="AthleteID" not-null="true"/>
-			<many-to-many column="MatchID" class="competition.Match">
+			<many-to-many column="Match_eventID" class="sportify.competition.Match_event">
 			</many-to-many>
 		</set>
 	</class>

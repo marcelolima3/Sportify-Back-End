@@ -18,8 +18,8 @@ public class Athlete implements sportify.subentities.SubscriptionEntity {
 	}
 	
 	private java.util.Set this_getSet (int key) {
-		if (key == sportify.competition.ORMConstants.KEY_ATHLETE_MATCHES) {
-			return ORM_matches;
+		if (key == sportify.competition.ORMConstants.KEY_ATHLETE_MATCH_EVENTS) {
+			return ORM_match_events;
 		}
 		
 		return null;
@@ -52,7 +52,7 @@ public class Athlete implements sportify.subentities.SubscriptionEntity {
 	
 	private String genre;
 	
-	private java.util.Set ORM_matches = new java.util.HashSet();
+	private java.util.Set ORM_match_events = new java.util.HashSet();
 	
 	private void setID(int value) {
 		this.ID = value;
@@ -114,15 +114,15 @@ public class Athlete implements sportify.subentities.SubscriptionEntity {
 		return team;
 	}
 	
-	private void setORM_Matches(java.util.Set value) {
-		this.ORM_matches = value;
+	private void setORM_Match_events(java.util.Set value) {
+		this.ORM_match_events = value;
 	}
 	
-	private java.util.Set getORM_Matches() {
-		return ORM_matches;
+	private java.util.Set getORM_Match_events() {
+		return ORM_match_events;
 	}
 	
-	public final sportify.competition.MatchSetCollection matches = new sportify.competition.MatchSetCollection(this, _ormAdapter, sportify.competition.ORMConstants.KEY_ATHLETE_MATCHES, sportify.competition.ORMConstants.KEY_MATCH_ATHLETES, sportify.competition.ORMConstants.KEY_MUL_MANY_TO_MANY);
+	public final sportify.competition.Match_eventSetCollection match_events = new sportify.competition.Match_eventSetCollection(this, _ormAdapter, sportify.competition.ORMConstants.KEY_ATHLETE_MATCH_EVENTS, sportify.competition.ORMConstants.KEY_MATCH_EVENT_ATHLETES, sportify.competition.ORMConstants.KEY_MUL_MANY_TO_MANY);
 	
 	public String toString() {
 		return String.valueOf(getID());

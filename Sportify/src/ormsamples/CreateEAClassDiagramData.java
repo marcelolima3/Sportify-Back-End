@@ -25,14 +25,14 @@ public class CreateEAClassDiagramData {
 			// Initialize the properties of the persistent object here
 			sportify.user.PrepaidCardDAO.save(luserPrepaidCard);
 			sportify.competition.Competition lcompetitionCompetition = sportify.competition.CompetitionDAO.createCompetition();
-			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : matches
+			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : match_events
 			sportify.competition.CompetitionDAO.save(lcompetitionCompetition);
 			sportify.user.Subscription luserSubscription = sportify.user.SubscriptionDAO.createSubscription();
 			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : subscribedEvents
 			sportify.user.SubscriptionDAO.save(luserSubscription);
-			sportify.competition.Match lcompetitionMatch = sportify.competition.MatchDAO.createMatch();
+			sportify.competition.Match_event lcompetitionMatch_event = sportify.competition.Match_eventDAO.createMatch_event();
 			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : athletes, events
-			sportify.competition.MatchDAO.save(lcompetitionMatch);
+			sportify.competition.Match_eventDAO.save(lcompetitionMatch_event);
 			sportify.event.Event leventEvent = sportify.event.EventDAO.createEvent();
 			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : category
 			sportify.event.EventDAO.save(leventEvent);
@@ -46,7 +46,7 @@ public class CreateEAClassDiagramData {
 			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : subscriptions
 			sportify.user.InvoiceDAO.save(luserInvoice);
 			sportify.subentities.Athlete subEntitiesAthlete = sportify.subentities.AthleteDAO.createAthlete();
-			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : matches, team
+			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : match_events, team
 			sportify.subentities.AthleteDAO.save(subEntitiesAthlete);
 			sportify.competition.Sport lcompetitionSport = sportify.competition.SportDAO.createSport();
 			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : modalities, competitions

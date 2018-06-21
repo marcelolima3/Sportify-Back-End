@@ -20,8 +20,8 @@ public class Competition {
 	}
 	
 	private java.util.Set this_getSet (int key) {
-		if (key == ORMConstants.KEY_COMPETITION_MATCHES) {
-			return ORM_matches;
+		if (key == ORMConstants.KEY_COMPETITION_MATCH_EVENTS) {
+			return ORM_match_events;
 		}
 		
 		return null;
@@ -48,7 +48,7 @@ public class Competition {
 	
 	private Boolean active;
 	
-	private java.util.Set ORM_matches = new java.util.HashSet();
+	private java.util.Set ORM_match_events = new java.util.HashSet();
 	
 	private void setID(int value) {
 		this.ID = value;
@@ -114,15 +114,15 @@ public class Competition {
 		return active;
 	}
 	
-	private void setORM_Matches(java.util.Set value) {
-		this.ORM_matches = value;
+	private void setORM_Match_events(java.util.Set value) {
+		this.ORM_match_events = value;
 	}
 	
-	private java.util.Set getORM_Matches() {
-		return ORM_matches;
+	private java.util.Set getORM_Match_events() {
+		return ORM_match_events;
 	}
 	
-	public final sportify.competition.MatchSetCollection matches = new sportify.competition.MatchSetCollection(this, _ormAdapter, ORMConstants.KEY_COMPETITION_MATCHES, ORMConstants.KEY_MUL_ONE_TO_MANY);
+	public final sportify.competition.Match_eventSetCollection match_events = new sportify.competition.Match_eventSetCollection(this, _ormAdapter, ORMConstants.KEY_COMPETITION_MATCH_EVENTS, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
 	public Date getStartTime() {
 		//TODO: Implement Method

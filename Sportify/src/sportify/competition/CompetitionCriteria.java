@@ -26,7 +26,7 @@ public class CompetitionCriteria extends AbstractORMCriteria {
 	public final DateExpression endDate;
 	public final StringExpression description;
 	public final BooleanExpression active;
-	public final CollectionExpression matches;
+	public final CollectionExpression match_events;
 	
 	public CompetitionCriteria(Criteria criteria) {
 		super(criteria);
@@ -37,7 +37,7 @@ public class CompetitionCriteria extends AbstractORMCriteria {
 		endDate = new DateExpression("endDate", this);
 		description = new StringExpression("description", this);
 		active = new BooleanExpression("active", this);
-		matches = new CollectionExpression("ORM_Matches", this);
+		match_events = new CollectionExpression("ORM_Match_events", this);
 	}
 	
 	public CompetitionCriteria(PersistentSession session) {
@@ -48,8 +48,8 @@ public class CompetitionCriteria extends AbstractORMCriteria {
 		this(EAClassDiagramPersistentManager.instance().getSession());
 	}
 	
-	public MatchCriteria createMatchesCriteria() {
-		return new MatchCriteria(createCriteria("ORM_Matches"));
+	public Match_eventCriteria createMatch_eventsCriteria() {
+		return new Match_eventCriteria(createCriteria("ORM_Match_events"));
 	}
 	
 	public Competition uniqueCompetition() {

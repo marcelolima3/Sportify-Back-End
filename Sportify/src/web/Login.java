@@ -24,7 +24,7 @@ public class Login extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession s = request.getSession();
 
-        String name = (String) s.getAttribute("sportify/sportify.user");
+        String name = (String) s.getAttribute("sportify/sportify.sportify.sportify.user");
         String password = (String) s.getAttribute("pass");
 
         if (name == null)

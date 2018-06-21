@@ -18,7 +18,7 @@ License Type: Academic
 		<property name="query.substitutions">true 1, false 0, yes 'Y', no 'N'</property>
 		<!-- mapping files -->
 		<mapping resource="ormmapping/competition/Competition.hbm.xml" />
-		<mapping resource="ormmapping/competition/Match.hbm.xml" />
+		<mapping resource="ormmapping/competition/Match_event.hbm.xml" />
 		<mapping resource="ormmapping/competition/Modality.hbm.xml" />
 		<mapping resource="ormmapping/competition/Sport.hbm.xml" />
 		<mapping resource="ormmapping/event/Event.hbm.xml" />

@@ -25,7 +25,7 @@ public class AthleteDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final StringExpression name;
 	public final StringExpression nationality;
 	public final StringExpression genre;
-	public final CollectionExpression matches;
+	public final CollectionExpression match_events;
 	
 	public AthleteDetachedCriteria() {
 		super(sportify.subentities.Athlete.class, sportify.subentities.AthleteCriteria.class);
@@ -35,7 +35,7 @@ public class AthleteDetachedCriteria extends AbstractORMDetachedCriteria {
 		name = new StringExpression("name", this.getDetachedCriteria());
 		nationality = new StringExpression("nationality", this.getDetachedCriteria());
 		genre = new StringExpression("genre", this.getDetachedCriteria());
-		matches = new CollectionExpression("ORM_Matches", this.getDetachedCriteria());
+		match_events = new CollectionExpression("ORM_Match_events", this.getDetachedCriteria());
 	}
 	
 	public AthleteDetachedCriteria(DetachedCriteria aDetachedCriteria) {
@@ -46,15 +46,15 @@ public class AthleteDetachedCriteria extends AbstractORMDetachedCriteria {
 		name = new StringExpression("name", this.getDetachedCriteria());
 		nationality = new StringExpression("nationality", this.getDetachedCriteria());
 		genre = new StringExpression("genre", this.getDetachedCriteria());
-		matches = new CollectionExpression("ORM_Matches", this.getDetachedCriteria());
+		match_events = new CollectionExpression("ORM_Match_events", this.getDetachedCriteria());
 	}
 	
 	public TeamDetachedCriteria createTeamCriteria() {
 		return new TeamDetachedCriteria(createCriteria("team"));
 	}
 	
-	public sportify.competition.MatchDetachedCriteria createMatchesCriteria() {
-		return new sportify.competition.MatchDetachedCriteria(createCriteria("ORM_Matches"));
+	public sportify.competition.Match_eventDetachedCriteria createMatch_eventsCriteria() {
+		return new sportify.competition.Match_eventDetachedCriteria(createCriteria("ORM_Match_events"));
 	}
 	
 	public Athlete uniqueAthlete(PersistentSession session) {

@@ -327,9 +327,9 @@ public class AthleteDAO {
 				athlete.getTeam().athletes.remove(athlete);
 			}
 			
-			sportify.competition.Match[] lMatchess = athlete.matches.toArray();
-			for(int i = 0; i < lMatchess.length; i++) {
-				lMatchess[i].athletes.remove(athlete);
+			sportify.competition.Match_event[] lMatch_eventss = athlete.match_events.toArray();
+			for(int i = 0; i < lMatch_eventss.length; i++) {
+				lMatch_eventss[i].athletes.remove(athlete);
 			}
 			return delete(athlete);
 		}
@@ -345,9 +345,9 @@ public class AthleteDAO {
 				athlete.getTeam().athletes.remove(athlete);
 			}
 			
-			sportify.competition.Match[] lMatchess = athlete.matches.toArray();
-			for(int i = 0; i < lMatchess.length; i++) {
-				lMatchess[i].athletes.remove(athlete);
+			sportify.competition.Match_event[] lMatch_eventss = athlete.match_events.toArray();
+			for(int i = 0; i < lMatch_eventss.length; i++) {
+				lMatch_eventss[i].athletes.remove(athlete);
 			}
 			try {
 				session.delete(athlete);

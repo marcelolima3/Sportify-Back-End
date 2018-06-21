@@ -30,9 +30,9 @@ public class DeleteEAClassDiagramData {
 			sportify.user.Subscription luserSubscription = sportify.user.SubscriptionDAO.loadSubscriptionByQuery(null, null);
 			// Delete the persistent object
 			sportify.user.SubscriptionDAO.delete(luserSubscription);
-			sportify.competition.Match lcompetitionMatch = sportify.competition.MatchDAO.loadMatchByQuery(null, null);
+			sportify.competition.Match_event lcompetitionMatch_event = sportify.competition.Match_eventDAO.loadMatch_eventByQuery(null, null);
 			// Delete the persistent object
-			sportify.competition.MatchDAO.delete(lcompetitionMatch);
+			sportify.competition.Match_eventDAO.delete(lcompetitionMatch_event);
 			sportify.event.Event leventEvent = sportify.event.EventDAO.loadEventByQuery(null, null);
 			// Delete the persistent object
 			sportify.event.EventDAO.delete(leventEvent);

@@ -30,9 +30,9 @@ public class RetrieveAndUpdateEAClassDiagramData {
 			sportify.user.Subscription luserSubscription = sportify.user.SubscriptionDAO.loadSubscriptionByQuery(null, null);
 			// Update the properties of the persistent object
 			sportify.user.SubscriptionDAO.save(luserSubscription);
-			sportify.competition.Match lcompetitionMatch = sportify.competition.MatchDAO.loadMatchByQuery(null, null);
+			sportify.competition.Match_event lcompetitionMatch_event = sportify.competition.Match_eventDAO.loadMatch_eventByQuery(null, null);
 			// Update the properties of the persistent object
-			sportify.competition.MatchDAO.save(lcompetitionMatch);
+			sportify.competition.Match_eventDAO.save(lcompetitionMatch_event);
 			sportify.event.Event leventEvent = sportify.event.EventDAO.loadEventByQuery(null, null);
 			// Update the properties of the persistent object
 			sportify.event.EventDAO.save(leventEvent);
@@ -105,11 +105,11 @@ public class RetrieveAndUpdateEAClassDiagramData {
 		//luserSubscriptionCriteria.ID.eq();
 		System.out.println(luserSubscriptionCriteria.uniqueSubscription());
 		
-		System.out.println("Retrieving Match by MatchCriteria");
-		sportify.competition.MatchCriteria lcompetitionMatchCriteria = new sportify.competition.MatchCriteria();
+		System.out.println("Retrieving Match_event by Match_eventCriteria");
+		sportify.competition.Match_eventCriteria lcompetitionMatch_eventCriteria = new sportify.competition.Match_eventCriteria();
 		// Please uncomment the follow line and fill in parameter(s)
-		//lcompetitionMatchCriteria.ID.eq();
-		System.out.println(lcompetitionMatchCriteria.uniqueMatch());
+		//lcompetitionMatch_eventCriteria.ID.eq();
+		System.out.println(lcompetitionMatch_eventCriteria.uniqueMatch_event());
 		
 		System.out.println("Retrieving Event by EventCriteria");
 		sportify.event.EventCriteria leventEventCriteria = new sportify.event.EventCriteria();

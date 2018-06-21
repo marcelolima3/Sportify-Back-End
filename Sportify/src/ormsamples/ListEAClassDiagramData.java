@@ -65,11 +65,11 @@ public class ListEAClassDiagramData {
 		}
 		System.out.println(length + " record(s) retrieved.");
 		
-		System.out.println("Listing Match...");
-		sportify.competition.Match[] competitionMatchs = sportify.competition.MatchDAO.listMatchByQuery(null, null);
-		length = Math.min(competitionMatchs.length, ROW_COUNT);
+		System.out.println("Listing Match_event...");
+		sportify.competition.Match_event[] competitionMatch_events = sportify.competition.Match_eventDAO.listMatch_eventByQuery(null, null);
+		length = Math.min(competitionMatch_events.length, ROW_COUNT);
 		for (int i = 0; i < length; i++) {
-			System.out.println(competitionMatchs[i]);
+			System.out.println(competitionMatch_events[i]);
 		}
 		System.out.println(length + " record(s) retrieved.");
 		
@@ -216,17 +216,17 @@ public class ListEAClassDiagramData {
 		}
 		System.out.println(length + " Subscription record(s) retrieved."); 
 		
-		System.out.println("Listing Match by Criteria...");
-		sportify.competition.MatchCriteria lcompetitionMatchCriteria = new sportify.competition.MatchCriteria();
+		System.out.println("Listing Match_event by Criteria...");
+		sportify.competition.Match_eventCriteria lcompetitionMatch_eventCriteria = new sportify.competition.Match_eventCriteria();
 		// Please uncomment the follow line and fill in parameter(s) 
-		//lcompetitionMatchCriteria.ID.eq();
-		lcompetitionMatchCriteria.setMaxResults(ROW_COUNT);
-		sportify.competition.Match[] competitionMatchs = lcompetitionMatchCriteria.listMatch();
-		length =competitionMatchs== null ? 0 : Math.min(competitionMatchs.length, ROW_COUNT); 
+		//lcompetitionMatch_eventCriteria.ID.eq();
+		lcompetitionMatch_eventCriteria.setMaxResults(ROW_COUNT);
+		sportify.competition.Match_event[] competitionMatch_events = lcompetitionMatch_eventCriteria.listMatch_event();
+		length =competitionMatch_events== null ? 0 : Math.min(competitionMatch_events.length, ROW_COUNT); 
 		for (int i = 0; i < length; i++) {
-			 System.out.println(competitionMatchs[i]);
+			 System.out.println(competitionMatch_events[i]);
 		}
-		System.out.println(length + " Match record(s) retrieved."); 
+		System.out.println(length + " Match_event record(s) retrieved."); 
 		
 		System.out.println("Listing Event by Criteria...");
 		sportify.event.EventCriteria leventEventCriteria = new sportify.event.EventCriteria();

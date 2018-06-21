@@ -26,7 +26,7 @@ public class CompetitionDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final DateExpression endDate;
 	public final StringExpression description;
 	public final BooleanExpression active;
-	public final CollectionExpression matches;
+	public final CollectionExpression match_events;
 	
 	public CompetitionDetachedCriteria() {
 		super(sportify.competition.Competition.class, sportify.competition.CompetitionCriteria.class);
@@ -37,7 +37,7 @@ public class CompetitionDetachedCriteria extends AbstractORMDetachedCriteria {
 		endDate = new DateExpression("endDate", this.getDetachedCriteria());
 		description = new StringExpression("description", this.getDetachedCriteria());
 		active = new BooleanExpression("active", this.getDetachedCriteria());
-		matches = new CollectionExpression("ORM_Matches", this.getDetachedCriteria());
+		match_events = new CollectionExpression("ORM_Match_events", this.getDetachedCriteria());
 	}
 	
 	public CompetitionDetachedCriteria(DetachedCriteria aDetachedCriteria) {
@@ -49,11 +49,11 @@ public class CompetitionDetachedCriteria extends AbstractORMDetachedCriteria {
 		endDate = new DateExpression("endDate", this.getDetachedCriteria());
 		description = new StringExpression("description", this.getDetachedCriteria());
 		active = new BooleanExpression("active", this.getDetachedCriteria());
-		matches = new CollectionExpression("ORM_Matches", this.getDetachedCriteria());
+		match_events = new CollectionExpression("ORM_Match_events", this.getDetachedCriteria());
 	}
 	
-	public MatchDetachedCriteria createMatchesCriteria() {
-		return new MatchDetachedCriteria(createCriteria("ORM_Matches"));
+	public Match_eventDetachedCriteria createMatch_eventsCriteria() {
+		return new Match_eventDetachedCriteria(createCriteria("ORM_Match_events"));
 	}
 	
 	public Competition uniqueCompetition(PersistentSession session) {
