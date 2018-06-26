@@ -1,10 +1,29 @@
 version: "3"
 services:
+  ws:
+    image: web
+    networks:
+      - frontend
+    ports:
+      - "80:80"
+
   as:
     image: app
+    networks:
+      - frontend
+      - backend
     ports:
       - "8080:8080"
+
   db:
     image: mysql-app
+    networks:
+      - backend
     ports:
       - "3306:3306"
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
