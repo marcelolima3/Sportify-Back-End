@@ -20,23 +20,23 @@ import org.orm.criteria.*;
 
 public class MonthlyBillDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression ID;
-	public final BigDecimalExpression limitAmount;
-	public final BigDecimalExpression currentAmount;
+	public final DoubleExpression limitAmount;
+	public final DoubleExpression currentAmount;
 	public final CollectionExpression payments;
 	
 	public MonthlyBillDetachedCriteria() {
 		super(com.Sportify.Entities.payment.MonthlyBill.class, com.Sportify.Entities.payment.MonthlyBillCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
-		limitAmount = new BigDecimalExpression("limitAmount", this.getDetachedCriteria());
-		currentAmount = new BigDecimalExpression("currentAmount", this.getDetachedCriteria());
+		limitAmount = new DoubleExpression("limitAmount", this.getDetachedCriteria());
+		currentAmount = new DoubleExpression("currentAmount", this.getDetachedCriteria());
 		payments = new CollectionExpression("ORM_payments", this.getDetachedCriteria());
 	}
 	
 	public MonthlyBillDetachedCriteria(DetachedCriteria aDetachedCriteria) {
 		super(aDetachedCriteria, com.Sportify.Entities.payment.MonthlyBillCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
-		limitAmount = new BigDecimalExpression("limitAmount", this.getDetachedCriteria());
-		currentAmount = new BigDecimalExpression("currentAmount", this.getDetachedCriteria());
+		limitAmount = new DoubleExpression("limitAmount", this.getDetachedCriteria());
+		currentAmount = new DoubleExpression("currentAmount", this.getDetachedCriteria());
 		payments = new CollectionExpression("ORM_payments", this.getDetachedCriteria());
 	}
 	

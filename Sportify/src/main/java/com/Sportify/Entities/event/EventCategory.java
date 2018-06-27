@@ -31,8 +31,8 @@ public class EventCategory implements Serializable {
 	@Column(name="Name", nullable=true, length=255)	
 	private String name;
 	
-	@Column(name="Price", nullable=true, precision=19, scale=0)	
-	private java.math.BigDecimal price;
+	@Column(name="Price", nullable=true)	
+	private double price;
 	
 	private void setID(int value) {
 		this.ID = value;
@@ -54,15 +54,15 @@ public class EventCategory implements Serializable {
 		return name;
 	}
 	
-	public void setPrice(java.math.BigDecimal value) {
+	public void setPrice(double value) {
 		this.price = value;
 	}
 	
-	public java.math.BigDecimal getPrice() {
+	public double getPrice() {
 		return price;
 	}
 	
-	public EventCategory(String name, java.math.BigDecimal price) {
+	public EventCategory(String name, double price) {
 		//TODO: Implement Method
 		throw new UnsupportedOperationException();
 	}

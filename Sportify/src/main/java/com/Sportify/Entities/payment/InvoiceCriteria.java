@@ -22,14 +22,14 @@ import org.orm.criteria.*;
 public class InvoiceCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
 	public final DateExpression date;
-	public final BigDecimalExpression amount;
+	public final DoubleExpression amount;
 	public final CollectionExpression subscriptions;
 	
 	public InvoiceCriteria(Criteria criteria) {
 		super(criteria);
 		ID = new IntegerExpression("ID", this);
 		date = new DateExpression("date", this);
-		amount = new BigDecimalExpression("amount", this);
+		amount = new DoubleExpression("amount", this);
 		subscriptions = new CollectionExpression("ORM_subscriptions", this);
 	}
 	

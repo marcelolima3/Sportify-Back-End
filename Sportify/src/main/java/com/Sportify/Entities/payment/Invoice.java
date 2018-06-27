@@ -50,8 +50,8 @@ public class Invoice implements Serializable {
 	@Temporal(TemporalType.DATE)	
 	private java.util.Date date;
 	
-	@Column(name="Amount", nullable=true, precision=19, scale=0)	
-	private java.math.BigDecimal amount;
+	@Column(name="Amount", nullable=true)	
+	private double amount;
 	
 	@OneToMany(targetEntity= com.Sportify.Entities.user.Subscription.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
@@ -79,11 +79,11 @@ public class Invoice implements Serializable {
 		return date;
 	}
 	
-	public void setAmount(java.math.BigDecimal value) {
+	public void setAmount(double value) {
 		this.amount = value;
 	}
 	
-	public java.math.BigDecimal getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 	
@@ -97,11 +97,6 @@ public class Invoice implements Serializable {
 	
 	@Transient	
 	public final com.Sportify.Entities.user.SubscriptionSetCollection subscriptions = new com.Sportify.Entities.user.SubscriptionSetCollection(this, _ormAdapter, ORMConstants.KEY_INVOICE_SUBSCRIPTIONS, ORMConstants.KEY_MUL_ONE_TO_MANY);
-	
-	public Invoice(java.util.Date date) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
 	
 	public String toString() {
 		return String.valueOf(getID());

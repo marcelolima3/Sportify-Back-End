@@ -17,7 +17,6 @@ import com.Sportify.DAO.ORMConstants;
 import com.Sportify.Entities.payment.PaymentMethod;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -25,7 +24,10 @@ import javax.persistence.*;
 public class User implements Serializable {
 	public User() {
 	}
-	
+
+	public User(PaymentMethod paymentMethod, String dinis, String s, String root) {
+	}
+
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_USER_SUBSCRIPTIONS) {
 			return ORM_subscriptions;
@@ -65,6 +67,9 @@ public class User implements Serializable {
 	@Column(name="RegistrationDate", nullable=true)	
 	@Temporal(TemporalType.DATE)	
 	private java.util.Date registrationDate;
+	
+	@Column(name="DefaultNotificationType", nullable=true, length=255)	
+	private String defaultNotificationType;
 	
 	@OneToMany(targetEntity= com.Sportify.Entities.user.Subscription.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
@@ -116,6 +121,14 @@ public class User implements Serializable {
 		return registrationDate;
 	}
 	
+	public void setDefaultNotificationType(String value) {
+		this.defaultNotificationType = value;
+	}
+	
+	public String getDefaultNotificationType() {
+		return defaultNotificationType;
+	}
+	
 	public void setPaymentManager(com.Sportify.Entities.payment.PaymentMethod value) {
 		this.paymentManager = value;
 	}
@@ -135,7 +148,7 @@ public class User implements Serializable {
 	@Transient	
 	public final com.Sportify.Entities.user.SubscriptionSetCollection subscriptions = new com.Sportify.Entities.user.SubscriptionSetCollection(this, _ormAdapter, ORMConstants.KEY_USER_SUBSCRIPTIONS, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
-	public User(PaymentMethod pd, String name, String email, String password) {
+	public User(String name, String email, String password) {
 		//TODO: Implement Method
 		throw new UnsupportedOperationException();
 	}

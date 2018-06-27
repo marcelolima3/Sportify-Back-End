@@ -43,20 +43,20 @@ public class InvoicePayment extends com.Sportify.Entities.payment.PaymentMethod 
 		
 	};
 	
-	@Column(name="CurrentAmount", nullable=true, precision=19, scale=0)	
-	private java.math.BigDecimal currentAmount;
+	@Column(name="CurrentAmount", nullable=true)	
+	private double currentAmount;
 	
 	@OneToMany(targetEntity= com.Sportify.Entities.payment.Invoice.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="InvoicePaymentPaymentMethodID", nullable=false) })	
+	@JoinColumns({ @JoinColumn(name="InvoicePaymentPaymentMethodID", nullable=true) })	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set ORM_payments = new java.util.HashSet();
 	
-	public void setCurrentAmount(java.math.BigDecimal value) {
+	public void setCurrentAmount(double value) {
 		this.currentAmount = value;
 	}
 	
-	public java.math.BigDecimal getCurrentAmount() {
+	public double getCurrentAmount() {
 		return currentAmount;
 	}
 	
@@ -71,7 +71,7 @@ public class InvoicePayment extends com.Sportify.Entities.payment.PaymentMethod 
 	@Transient	
 	public final com.Sportify.Entities.payment.InvoiceSetCollection payments = new com.Sportify.Entities.payment.InvoiceSetCollection(this, _ormAdapter, ORMConstants.KEY_INVOICEPAYMENT_PAYMENTS, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
-	public InvoicePayment(java.math.BigDecimal currentAmount) {
+	public InvoicePayment(double currentAmount) {
 		//TODO: Implement Method
 		throw new UnsupportedOperationException();
 	}

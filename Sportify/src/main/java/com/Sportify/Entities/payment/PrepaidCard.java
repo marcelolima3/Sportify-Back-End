@@ -38,8 +38,8 @@ public class PrepaidCard extends com.Sportify.Entities.payment.PaymentMethod imp
 	@Column(name="CardType", nullable=true, length=255)	
 	private String cardType;
 	
-	@Column(name="Balance", nullable=true, precision=19, scale=0)	
-	private java.math.BigDecimal balance;
+	@Column(name="Balance", nullable=true)	
+	private double balance;
 	
 	@Column(name="NumRecharges", nullable=false, length=10)	
 	private int numRecharges;
@@ -76,11 +76,11 @@ public class PrepaidCard extends com.Sportify.Entities.payment.PaymentMethod imp
 		return cardType;
 	}
 	
-	public void setBalance(java.math.BigDecimal value) {
+	public void setBalance(double value) {
 		this.balance = value;
 	}
 	
-	public java.math.BigDecimal getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 	
@@ -92,7 +92,7 @@ public class PrepaidCard extends com.Sportify.Entities.payment.PaymentMethod imp
 		return numRecharges;
 	}
 	
-	public PrepaidCard(long cardNumber, String securityCode, java.util.Date expriationDate, String cardType, java.math.BigDecimal balance, int numRecharges) {
+	public PrepaidCard(long cardNumber, String securityCode, java.util.Date expriationDate, String cardType, double balance, int numRecharges) {
 		//TODO: Implement Method
 		throw new UnsupportedOperationException();
 	}

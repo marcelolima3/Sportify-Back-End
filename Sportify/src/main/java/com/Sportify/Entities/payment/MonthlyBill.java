@@ -43,31 +43,31 @@ public class MonthlyBill extends com.Sportify.Entities.payment.PaymentMethod imp
 		
 	};
 	
-	@Column(name="LimitAmount", nullable=true, precision=19, scale=0)	
-	private java.math.BigDecimal limitAmount;
+	@Column(name="LimitAmount", nullable=true)	
+	private double limitAmount;
 	
-	@Column(name="CurrentAmount", nullable=true, precision=19, scale=0)	
-	private java.math.BigDecimal currentAmount;
+	@Column(name="CurrentAmount", nullable=true)	
+	private double currentAmount;
 	
 	@OneToMany(targetEntity= com.Sportify.Entities.payment.Invoice.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="MonthlyBillPaymentMethodID", nullable=false) })	
+	@JoinColumns({ @JoinColumn(name="MonthlyBillPaymentMethodID", nullable=true) })	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set ORM_payments = new java.util.HashSet();
 	
-	public void setLimitAmount(java.math.BigDecimal value) {
+	public void setLimitAmount(double value) {
 		this.limitAmount = value;
 	}
 	
-	public java.math.BigDecimal getLimitAmount() {
+	public double getLimitAmount() {
 		return limitAmount;
 	}
 	
-	public void setCurrentAmount(java.math.BigDecimal value) {
+	public void setCurrentAmount(double value) {
 		this.currentAmount = value;
 	}
 	
-	public java.math.BigDecimal getCurrentAmount() {
+	public double getCurrentAmount() {
 		return currentAmount;
 	}
 	
@@ -82,7 +82,7 @@ public class MonthlyBill extends com.Sportify.Entities.payment.PaymentMethod imp
 	@Transient	
 	public final com.Sportify.Entities.payment.InvoiceSetCollection payments = new com.Sportify.Entities.payment.InvoiceSetCollection(this, _ormAdapter, ORMConstants.KEY_MONTHLYBILL_PAYMENTS, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
-	public MonthlyBill(java.math.BigDecimal limitAmount, java.math.BigDecimal currentAmount) {
+	public MonthlyBill(double limitAmount, double currentAmount) {
 		//TODO: Implement Method
 		throw new UnsupportedOperationException();
 	}
