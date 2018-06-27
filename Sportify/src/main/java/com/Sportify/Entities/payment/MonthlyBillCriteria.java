@@ -21,15 +21,15 @@ import org.orm.criteria.*;
 
 public class MonthlyBillCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
-	public final BigDecimalExpression limitAmount;
-	public final BigDecimalExpression currentAmount;
+	public final DoubleExpression limitAmount;
+	public final DoubleExpression currentAmount;
 	public final CollectionExpression payments;
 	
 	public MonthlyBillCriteria(Criteria criteria) {
 		super(criteria);
 		ID = new IntegerExpression("ID", this);
-		limitAmount = new BigDecimalExpression("limitAmount", this);
-		currentAmount = new BigDecimalExpression("currentAmount", this);
+		limitAmount = new DoubleExpression("limitAmount", this);
+		currentAmount = new DoubleExpression("currentAmount", this);
 		payments = new CollectionExpression("ORM_payments", this);
 	}
 	

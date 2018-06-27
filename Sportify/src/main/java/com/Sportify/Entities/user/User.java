@@ -18,11 +18,11 @@ import com.Sportify.Entities.payment.PaymentMethod;
 import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
+
+
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="`User`")
@@ -79,6 +79,9 @@ public class User implements Serializable {
 	@Temporal(TemporalType.DATE)	
 	private java.util.Date registrationDate;
 	
+	@Column(name="DefaultNotificationType", nullable=true, length=255)	
+	private String defaultNotificationType;
+	
 	@OneToMany(targetEntity= com.Sportify.Entities.user.Subscription.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="UserID", nullable=false) })	
@@ -129,6 +132,14 @@ public class User implements Serializable {
 		return registrationDate;
 	}
 	
+	public void setDefaultNotificationType(String value) {
+		this.defaultNotificationType = value;
+	}
+	
+	public String getDefaultNotificationType() {
+		return defaultNotificationType;
+	}
+	
 	public void setPaymentManager(com.Sportify.Entities.payment.PaymentMethod value) {
 		this.paymentManager = value;
 	}
@@ -147,7 +158,7 @@ public class User implements Serializable {
 	
 	@Transient	
 	public final com.Sportify.Entities.user.SubscriptionSetCollection subscriptions = new com.Sportify.Entities.user.SubscriptionSetCollection(this, _ormAdapter, ORMConstants.KEY_USER_SUBSCRIPTIONS, ORMConstants.KEY_MUL_ONE_TO_MANY);
-	
+
 	public String toString() {
 		return String.valueOf(getID());
 	}

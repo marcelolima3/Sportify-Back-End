@@ -21,13 +21,13 @@ import org.orm.criteria.*;
 
 public class InvoicePaymentCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
-	public final BigDecimalExpression currentAmount;
+	public final DoubleExpression currentAmount;
 	public final CollectionExpression payments;
 	
 	public InvoicePaymentCriteria(Criteria criteria) {
 		super(criteria);
 		ID = new IntegerExpression("ID", this);
-		currentAmount = new BigDecimalExpression("currentAmount", this);
+		currentAmount = new DoubleExpression("currentAmount", this);
 		payments = new CollectionExpression("ORM_payments", this);
 	}
 	

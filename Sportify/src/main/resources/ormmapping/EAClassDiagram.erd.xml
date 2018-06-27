@@ -149,9 +149,8 @@
     <Column name="Price">
       <PrimaryKey>false</PrimaryKey>
       <ForeignKey>false</ForeignKey>
-      <Type>11</Type>
-      <Length>19</Length>
-      <Scale>0</Scale>
+      <Type>6</Type>
+      <Length>0</Length>
       <Nullable>true</Nullable>
       <IDGenerator>native</IDGenerator>
       <Unique>false</Unique>
@@ -207,9 +206,8 @@
     <Column name="Balance">
       <PrimaryKey>false</PrimaryKey>
       <ForeignKey>false</ForeignKey>
-      <Type>11</Type>
-      <Length>19</Length>
-      <Scale>0</Scale>
+      <Type>6</Type>
+      <Length>0</Length>
       <Nullable>true</Nullable>
       <IDGenerator>native</IDGenerator>
       <Unique>false</Unique>
@@ -355,6 +353,18 @@
       <Index>false</Index>
       <UserTypes/>
     </Column>
+    <Column name="UserID">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>true</ForeignKey>
+      <ReferencedColumn>com.Sportify.Entities.user.User.ID</ReferencedColumn>
+      <Type>9</Type>
+      <Length>10</Length>
+      <Nullable>false</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
     <Column name="NotificationTrackerID">
       <PrimaryKey>false</PrimaryKey>
       <ForeignKey>true</ForeignKey>
@@ -371,18 +381,6 @@
       <PrimaryKey>false</PrimaryKey>
       <ForeignKey>true</ForeignKey>
       <ReferencedColumn>subEntities.SubscriptionEntity.ID</ReferencedColumn>
-      <Type>9</Type>
-      <Length>10</Length>
-      <Nullable>false</Nullable>
-      <IDGenerator>native</IDGenerator>
-      <Unique>false</Unique>
-      <Index>false</Index>
-      <UserTypes/>
-    </Column>
-    <Column name="UserID">
-      <PrimaryKey>false</PrimaryKey>
-      <ForeignKey>true</ForeignKey>
-      <ReferencedColumn>com.Sportify.Entities.user.User.ID</ReferencedColumn>
       <Type>9</Type>
       <Length>10</Length>
       <Nullable>false</Nullable>
@@ -646,14 +644,24 @@
       <Index>false</Index>
       <UserTypes/>
     </Column>
+    <Column name="DefaultNotificationType">
+      <PrimaryKey>false</PrimaryKey>
+      <ForeignKey>false</ForeignKey>
+      <Type>27</Type>
+      <Length>255</Length>
+      <Nullable>true</Nullable>
+      <IDGenerator>native</IDGenerator>
+      <Unique>false</Unique>
+      <Index>false</Index>
+      <UserTypes/>
+    </Column>
   </Entity>
   <Entity name="InvoicePayment" Unlogged="false" PKClustered="0">
     <Column name="CurrentAmount">
       <PrimaryKey>false</PrimaryKey>
       <ForeignKey>false</ForeignKey>
-      <Type>11</Type>
-      <Length>19</Length>
-      <Scale>0</Scale>
+      <Type>6</Type>
+      <Length>0</Length>
       <Nullable>true</Nullable>
       <IDGenerator>native</IDGenerator>
       <Unique>false</Unique>
@@ -691,7 +699,7 @@
       <ReferencedColumn>com.Sportify.Entities.payment.MonthlyBill.PaymentMethodID</ReferencedColumn>
       <Type>9</Type>
       <Length>10</Length>
-      <Nullable>false</Nullable>
+      <Nullable>true</Nullable>
       <IDGenerator>native</IDGenerator>
       <Unique>false</Unique>
       <Index>false</Index>
@@ -703,7 +711,7 @@
       <ReferencedColumn>com.Sportify.Entities.payment.InvoicePayment.PaymentMethodID</ReferencedColumn>
       <Type>9</Type>
       <Length>10</Length>
-      <Nullable>false</Nullable>
+      <Nullable>true</Nullable>
       <IDGenerator>native</IDGenerator>
       <Unique>false</Unique>
       <Index>false</Index>
@@ -723,9 +731,8 @@
     <Column name="Amount">
       <PrimaryKey>false</PrimaryKey>
       <ForeignKey>false</ForeignKey>
-      <Type>11</Type>
-      <Length>19</Length>
-      <Scale>0</Scale>
+      <Type>6</Type>
+      <Length>0</Length>
       <Nullable>true</Nullable>
       <IDGenerator>native</IDGenerator>
       <Unique>false</Unique>
@@ -820,9 +827,8 @@
     <Column name="LimitAmount">
       <PrimaryKey>false</PrimaryKey>
       <ForeignKey>false</ForeignKey>
-      <Type>11</Type>
-      <Length>19</Length>
-      <Scale>0</Scale>
+      <Type>6</Type>
+      <Length>0</Length>
       <Nullable>true</Nullable>
       <IDGenerator>native</IDGenerator>
       <Unique>false</Unique>
@@ -832,9 +838,8 @@
     <Column name="CurrentAmount">
       <PrimaryKey>false</PrimaryKey>
       <ForeignKey>false</ForeignKey>
-      <Type>11</Type>
-      <Length>19</Length>
-      <Scale>0</Scale>
+      <Type>6</Type>
+      <Length>0</Length>
       <Nullable>true</Nullable>
       <IDGenerator>native</IDGenerator>
       <Unique>false</Unique>
@@ -992,16 +997,6 @@
       <Column>ID</Column>
     </RefColumns>
   </ForeignKey>
-  <ForeignKey name="FKSubscripti993170">
-    <ReferenceTable>Subscription</ReferenceTable>
-    <ReferencedTable>User</ReferencedTable>
-    <Columns>
-      <Column>UserID</Column>
-    </Columns>
-    <RefColumns>
-      <Column>ID</Column>
-    </RefColumns>
-  </ForeignKey>
   <ForeignKey name="FKSubscripti470890">
     <ReferenceTable>Subscription</ReferenceTable>
     <ReferencedTable>SubscriptionEntity</ReferencedTable>
@@ -1147,6 +1142,16 @@
     <ReferencedTable>Competition</ReferencedTable>
     <Columns>
       <Column>CompetitionID</Column>
+    </Columns>
+    <RefColumns>
+      <Column>ID</Column>
+    </RefColumns>
+  </ForeignKey>
+  <ForeignKey name="FKSubscripti993170">
+    <ReferenceTable>Subscription</ReferenceTable>
+    <ReferencedTable>User</ReferencedTable>
+    <Columns>
+      <Column>UserID</Column>
     </Columns>
     <RefColumns>
       <Column>ID</Column>

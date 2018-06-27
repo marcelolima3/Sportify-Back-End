@@ -25,7 +25,7 @@ public class PrepaidCardCriteria extends AbstractORMCriteria {
 	public final StringExpression securityCode;
 	public final DateExpression expirationDate;
 	public final StringExpression cardType;
-	public final BigDecimalExpression balance;
+	public final DoubleExpression balance;
 	public final IntegerExpression numRecharges;
 	
 	public PrepaidCardCriteria(Criteria criteria) {
@@ -35,7 +35,7 @@ public class PrepaidCardCriteria extends AbstractORMCriteria {
 		securityCode = new StringExpression("securityCode", this);
 		expirationDate = new DateExpression("expirationDate", this);
 		cardType = new StringExpression("cardType", this);
-		balance = new BigDecimalExpression("balance", this);
+		balance = new DoubleExpression("balance", this);
 		numRecharges = new IntegerExpression("numRecharges", this);
 	}
 	

@@ -20,20 +20,20 @@ import org.orm.criteria.*;
 
 public class InvoicePaymentDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression ID;
-	public final BigDecimalExpression currentAmount;
+	public final DoubleExpression currentAmount;
 	public final CollectionExpression payments;
 	
 	public InvoicePaymentDetachedCriteria() {
 		super(com.Sportify.Entities.payment.InvoicePayment.class, com.Sportify.Entities.payment.InvoicePaymentCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
-		currentAmount = new BigDecimalExpression("currentAmount", this.getDetachedCriteria());
+		currentAmount = new DoubleExpression("currentAmount", this.getDetachedCriteria());
 		payments = new CollectionExpression("ORM_payments", this.getDetachedCriteria());
 	}
 	
 	public InvoicePaymentDetachedCriteria(DetachedCriteria aDetachedCriteria) {
 		super(aDetachedCriteria, com.Sportify.Entities.payment.InvoicePaymentCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
-		currentAmount = new BigDecimalExpression("currentAmount", this.getDetachedCriteria());
+		currentAmount = new DoubleExpression("currentAmount", this.getDetachedCriteria());
 		payments = new CollectionExpression("ORM_payments", this.getDetachedCriteria());
 	}
 	

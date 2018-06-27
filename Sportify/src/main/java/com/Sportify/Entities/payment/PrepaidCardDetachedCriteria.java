@@ -24,7 +24,7 @@ public class PrepaidCardDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final StringExpression securityCode;
 	public final DateExpression expirationDate;
 	public final StringExpression cardType;
-	public final BigDecimalExpression balance;
+	public final DoubleExpression balance;
 	public final IntegerExpression numRecharges;
 	
 	public PrepaidCardDetachedCriteria() {
@@ -34,7 +34,7 @@ public class PrepaidCardDetachedCriteria extends AbstractORMDetachedCriteria {
 		securityCode = new StringExpression("securityCode", this.getDetachedCriteria());
 		expirationDate = new DateExpression("expirationDate", this.getDetachedCriteria());
 		cardType = new StringExpression("cardType", this.getDetachedCriteria());
-		balance = new BigDecimalExpression("balance", this.getDetachedCriteria());
+		balance = new DoubleExpression("balance", this.getDetachedCriteria());
 		numRecharges = new IntegerExpression("numRecharges", this.getDetachedCriteria());
 	}
 	
@@ -45,7 +45,7 @@ public class PrepaidCardDetachedCriteria extends AbstractORMDetachedCriteria {
 		securityCode = new StringExpression("securityCode", this.getDetachedCriteria());
 		expirationDate = new DateExpression("expirationDate", this.getDetachedCriteria());
 		cardType = new StringExpression("cardType", this.getDetachedCriteria());
-		balance = new BigDecimalExpression("balance", this.getDetachedCriteria());
+		balance = new DoubleExpression("balance", this.getDetachedCriteria());
 		numRecharges = new IntegerExpression("numRecharges", this.getDetachedCriteria());
 	}
 	

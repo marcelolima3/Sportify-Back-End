@@ -98,7 +98,7 @@ public class UsersManagement {
                     }
                 }
                 i.setAmount(((MonthlyBill) paymentMethod).getCurrentAmount());
-                ((MonthlyBill) paymentMethod).setCurrentAmount(new BigDecimal(0));
+                ((MonthlyBill) paymentMethod).setCurrentAmount(0);
                 ((MonthlyBill) paymentMethod).payments.add(i);
             } else if (paymentMethod instanceof InvoicePayment) {
                 Invoice i = new Invoice();
@@ -110,11 +110,11 @@ public class UsersManagement {
                     }
                 }
                 i.setAmount(((InvoicePayment) paymentMethod).getCurrentAmount());
-                ((InvoicePayment) paymentMethod).setCurrentAmount(new BigDecimal(0));
+                ((InvoicePayment) paymentMethod).setCurrentAmount(0);
                 ((InvoicePayment) paymentMethod).payments.add(i);
             } else {
                 ((PrepaidCard) paymentMethod).setNumRecharges(((PrepaidCard) paymentMethod).getNumRecharges() + 1);
-                ((PrepaidCard) paymentMethod).setBalance(new BigDecimal(10));
+                ((PrepaidCard) paymentMethod).setBalance(10);
             }
         } catch (PersistentException e) {
             e.printStackTrace();

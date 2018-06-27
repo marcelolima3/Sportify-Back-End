@@ -27,6 +27,7 @@ public class UserCriteria extends AbstractORMCriteria {
 	public final StringExpression email;
 	public final StringExpression password;
 	public final DateExpression registrationDate;
+	public final StringExpression defaultNotificationType;
 	public final CollectionExpression subscriptions;
 	
 	public UserCriteria(Criteria criteria) {
@@ -38,6 +39,7 @@ public class UserCriteria extends AbstractORMCriteria {
 		email = new StringExpression("email", this);
 		password = new StringExpression("password", this);
 		registrationDate = new DateExpression("registrationDate", this);
+		defaultNotificationType = new StringExpression("defaultNotificationType", this);
 		subscriptions = new CollectionExpression("ORM_subscriptions", this);
 	}
 	

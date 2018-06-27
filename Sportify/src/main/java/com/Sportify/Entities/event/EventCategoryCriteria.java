@@ -22,13 +22,13 @@ import org.orm.criteria.*;
 public class EventCategoryCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression name;
-	public final BigDecimalExpression price;
+	public final DoubleExpression price;
 	
 	public EventCategoryCriteria(Criteria criteria) {
 		super(criteria);
 		ID = new IntegerExpression("ID", this);
 		name = new StringExpression("name", this);
-		price = new BigDecimalExpression("price", this);
+		price = new DoubleExpression("price", this);
 	}
 	
 	public EventCategoryCriteria(PersistentSession session) {

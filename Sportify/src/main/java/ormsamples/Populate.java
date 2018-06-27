@@ -28,16 +28,15 @@ import com.Sportify.Managers.CompetitionsManagement;
 import com.Sportify.Managers.UsersManagement;
 import org.orm.*;
 
-import java.math.BigDecimal;
-import java.time.temporal.Temporal;
 import java.util.*;
+
 
 public class Populate {
 
     public void createTestData() throws PersistentException {
         PersistentTransaction t = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
-            PaymentMethod paymentMethod = new InvoicePayment(new BigDecimal(10));
+            PaymentMethod paymentMethod = new InvoicePayment(10);
             User user = new User(paymentMethod, "Dinis", "mail@mail.com", "root");
             UserDAO.save(user);
             t.commit();
@@ -50,7 +49,7 @@ public class Populate {
         PersistentTransaction t = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             UsersManagement usersManagement = new UsersManagement();
-            int id = usersManagement.registerUser("Dinis", "mail3@gmail.com", "root", new InvoicePayment(new BigDecimal(10)));
+            int id = usersManagement.registerUser("Dinis", "mail3@gmail.com", "root", new InvoicePayment(10));
             System.out.println("ID: " + id);
             t.commit();
         }

@@ -21,14 +21,14 @@ import org.orm.criteria.*;
 public class InvoiceDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression ID;
 	public final DateExpression date;
-	public final BigDecimalExpression amount;
+	public final DoubleExpression amount;
 	public final CollectionExpression subscriptions;
 	
 	public InvoiceDetachedCriteria() {
 		super(com.Sportify.Entities.payment.Invoice.class, com.Sportify.Entities.payment.InvoiceCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		date = new DateExpression("date", this.getDetachedCriteria());
-		amount = new BigDecimalExpression("amount", this.getDetachedCriteria());
+		amount = new DoubleExpression("amount", this.getDetachedCriteria());
 		subscriptions = new CollectionExpression("ORM_subscriptions", this.getDetachedCriteria());
 	}
 	
@@ -36,7 +36,7 @@ public class InvoiceDetachedCriteria extends AbstractORMDetachedCriteria {
 		super(aDetachedCriteria, com.Sportify.Entities.payment.InvoiceCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		date = new DateExpression("date", this.getDetachedCriteria());
-		amount = new BigDecimalExpression("amount", this.getDetachedCriteria());
+		amount = new DoubleExpression("amount", this.getDetachedCriteria());
 		subscriptions = new CollectionExpression("ORM_subscriptions", this.getDetachedCriteria());
 	}
 	
