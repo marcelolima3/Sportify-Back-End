@@ -18,9 +18,11 @@ import com.Sportify.Entities.competition.Competition;
 import com.Sportify.Entities.competition.CompetitionCriteria;
 import org.orm.*;
 import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class CompetitionDAO {
 	public static Competition loadCompetitionByORMID(int ID) throws PersistentException {
 		try {

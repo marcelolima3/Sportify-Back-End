@@ -18,9 +18,11 @@ import com.Sportify.Entities.competition.MatchEvent;
 import com.Sportify.Entities.competition.MatchEventCriteria;
 import org.orm.*;
 import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class MatchEventDAO {
 	public static MatchEvent loadMatchEventByORMID(int ID) throws PersistentException {
 		try {

@@ -14,6 +14,7 @@
 package com.Sportify.Entities.subentities;
 
 import com.Sportify.DAO.ORMConstants;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
@@ -71,7 +72,8 @@ public class Athlete extends com.Sportify.Entities.subentities.SubscriptionEntit
 	
 	@Column(name="Genre", nullable=true, length=255)	
 	private String genre;
-	
+
+	@JsonIgnore
 	@ManyToOne(targetEntity= com.Sportify.Entities.subentities.Team.class, fetch=FetchType.LAZY)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="TeamSubscriptionEntityID", referencedColumnName="SubscriptionEntityID", nullable=false) })	
@@ -127,15 +129,15 @@ public class Athlete extends com.Sportify.Entities.subentities.SubscriptionEntit
 		this.team = value;
 	}
 	
-	private com.Sportify.Entities.subentities.Team getORM_Team() {
+	public com.Sportify.Entities.subentities.Team getORM_Team() {
 		return team;
 	}
 	
-	private void setORM_MatchEvents(java.util.Set value) {
+	public void setORM_MatchEvents(java.util.Set value) {
 		this.ORM_matchEvents = value;
 	}
 	
-	private java.util.Set getORM_MatchEvents() {
+	public java.util.Set getORM_MatchEvents() {
 		return ORM_matchEvents;
 	}
 	

@@ -18,9 +18,11 @@ import com.Sportify.Entities.competition.Modality;
 import com.Sportify.Entities.competition.ModalityCriteria;
 import org.orm.*;
 import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class ModalityDAO {
 	public static Modality loadModalityByORMID(int ID) throws PersistentException {
 		try {

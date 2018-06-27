@@ -18,9 +18,11 @@ import com.Sportify.Entities.competition.Sport;
 import com.Sportify.Entities.competition.SportCriteria;
 import org.orm.*;
 import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class SportDAO {
 	public static Sport loadSportByORMID(int ID) throws PersistentException {
 		try {
