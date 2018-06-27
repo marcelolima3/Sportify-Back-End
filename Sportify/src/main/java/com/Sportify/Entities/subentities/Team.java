@@ -14,8 +14,11 @@
 package com.Sportify.Entities.subentities;
 
 import com.Sportify.DAO.ORMConstants;
+import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -26,7 +29,12 @@ import javax.persistence.*;
 public class Team extends com.Sportify.Entities.subentities.SubscriptionEntity implements Serializable {
 	public Team() {
 	}
-	
+
+	public Team(String name) {
+		this.name = name;
+		this.ORM_athletes = new HashSet();
+	}
+
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_TEAM_ATHLETES) {
 			return ORM_athletes;
@@ -59,21 +67,16 @@ public class Team extends com.Sportify.Entities.subentities.SubscriptionEntity i
 		return name;
 	}
 	
-	private void setORM_Athletes(java.util.Set value) {
+	public void setORM_Athletes(java.util.Set value) {
 		this.ORM_athletes = value;
 	}
 	
-	private java.util.Set getORM_Athletes() {
+	public java.util.Set getORM_Athletes() {
 		return ORM_athletes;
 	}
 	
 	@Transient	
 	public final com.Sportify.Entities.subentities.AthleteSetCollection athletes = new com.Sportify.Entities.subentities.AthleteSetCollection(this, _ormAdapter, ORMConstants.KEY_TEAM_ATHLETES, ORMConstants.KEY_ATHLETE_TEAM, ORMConstants.KEY_MUL_ONE_TO_MANY);
-	
-	public Team(String name) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
 	
 	public String toString() {
 		return super.toString();
