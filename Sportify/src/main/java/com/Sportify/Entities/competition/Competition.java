@@ -16,8 +16,6 @@ package com.Sportify.Entities.competition;
 import com.Sportify.DAO.ORMConstants;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -146,26 +144,6 @@ public class Competition implements Serializable {
 	public final com.Sportify.Entities.competition.MatchEventSetCollection matchEvents = new com.Sportify.Entities.competition.MatchEventSetCollection(this, _ormAdapter, ORMConstants.KEY_COMPETITION_MATCHEVENTS, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
 	public Competition(String name, String location, java.util.Date startDate, java.util.Date endDate, String description, boolean active) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public Date getStartTime() {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public Date getEndTime() {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public List<MatchEvent> getMatchEvents() {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public void setMatchEvents(List<MatchEvent> matchEvents) {
 		//TODO: Implement Method
 		throw new UnsupportedOperationException();
 	}

@@ -14,10 +14,8 @@
 package com.Sportify.Entities.user;
 
 import com.Sportify.DAO.ORMConstants;
-import com.Sportify.Entities.event.Event;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -89,16 +87,6 @@ public class NotificationTracker implements Serializable {
 	public final com.Sportify.Entities.event.EventSetCollection notificationHistory = new com.Sportify.Entities.event.EventSetCollection(this, _ormAdapter, ORMConstants.KEY_NOTIFICATIONTRACKER_NOTIFICATIONHISTORY, ORMConstants.KEY_MUL_MANY_TO_MANY);
 	
 	public NotificationTracker(String notificationPolicy) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public List<Event> getNotificationHistory() {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public void setNotificationHistory(List<Event> notificationHistory) {
 		//TODO: Implement Method
 		throw new UnsupportedOperationException();
 	}

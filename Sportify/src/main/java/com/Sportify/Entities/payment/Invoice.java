@@ -14,10 +14,8 @@
 package com.Sportify.Entities.payment;
 
 import com.Sportify.DAO.ORMConstants;
-import com.Sportify.Entities.user.Subscription;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -101,16 +99,6 @@ public class Invoice implements Serializable {
 	public final com.Sportify.Entities.user.SubscriptionSetCollection subscriptions = new com.Sportify.Entities.user.SubscriptionSetCollection(this, _ormAdapter, ORMConstants.KEY_INVOICE_SUBSCRIPTIONS, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
 	public Invoice(java.util.Date date) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public List<Subscription> getSubscriptions() {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public void setSubscriptions(List<Subscription> subscriptions) {
 		//TODO: Implement Method
 		throw new UnsupportedOperationException();
 	}

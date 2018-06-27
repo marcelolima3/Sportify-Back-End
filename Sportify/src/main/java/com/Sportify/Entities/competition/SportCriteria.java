@@ -22,14 +22,12 @@ import org.orm.criteria.*;
 public class SportCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression name;
-	public final CollectionExpression competitions;
 	public final CollectionExpression modalities;
 	
 	public SportCriteria(Criteria criteria) {
 		super(criteria);
 		ID = new IntegerExpression("ID", this);
 		name = new StringExpression("name", this);
-		competitions = new CollectionExpression("ORM_competitions", this);
 		modalities = new CollectionExpression("ORM_modalities", this);
 	}
 	
@@ -39,10 +37,6 @@ public class SportCriteria extends AbstractORMCriteria {
 	
 	public SportCriteria() throws PersistentException {
 		this(EAClassDiagramPersistentManager.instance().getSession());
-	}
-	
-	public CompetitionCriteria createCompetitionsCriteria() {
-		return new CompetitionCriteria(createCriteria("ORM_competitions"));
 	}
 	
 	public ModalityCriteria createModalitiesCriteria() {

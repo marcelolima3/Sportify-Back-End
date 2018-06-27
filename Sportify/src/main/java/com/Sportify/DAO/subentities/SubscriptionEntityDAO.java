@@ -15,9 +15,12 @@ package com.Sportify.DAO.subentities;
 
 import com.Sportify.DAO.EAClassDiagramPersistentManager;
 import com.Sportify.DAO.competition.MatchEventDAO;
+import com.Sportify.Entities.subentities.Athlete;
+import com.Sportify.Entities.subentities.Team;
 import org.orm.*;
 import org.hibernate.Query;
-import com.Sportify.Entities.subentities.*;
+import com.Sportify.Entities.subentities.SubscriptionEntity;
+import com.Sportify.Entities.subentities.SubscriptionEntityCriteria;
 
 import java.util.List;
 

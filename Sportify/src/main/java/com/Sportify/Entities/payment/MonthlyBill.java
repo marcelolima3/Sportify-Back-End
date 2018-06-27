@@ -16,7 +16,6 @@ package com.Sportify.Entities.payment;
 import com.Sportify.DAO.ORMConstants;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -84,16 +83,6 @@ public class MonthlyBill extends com.Sportify.Entities.payment.PaymentMethod imp
 	public final com.Sportify.Entities.payment.InvoiceSetCollection payments = new com.Sportify.Entities.payment.InvoiceSetCollection(this, _ormAdapter, ORMConstants.KEY_MONTHLYBILL_PAYMENTS, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
 	public MonthlyBill(java.math.BigDecimal limitAmount, java.math.BigDecimal currentAmount) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public List<Invoice> getPayments() {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public void setPayments(List<Invoice> payments) {
 		//TODO: Implement Method
 		throw new UnsupportedOperationException();
 	}

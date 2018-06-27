@@ -14,12 +14,8 @@
 package com.Sportify.Entities.competition;
 
 import com.Sportify.DAO.ORMConstants;
-import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -27,18 +23,9 @@ import javax.persistence.*;
 public class Sport implements Serializable {
 	public Sport() {
 	}
-
-	public Sport(String name) {
-		this.name = name;
-		this.ORM_competitions = new HashSet();
-		this.ORM_modalities = new HashSet();
-	}
-
+	
 	private java.util.Set this_getSet (int key) {
-		if (key == ORMConstants.KEY_SPORT_COMPETITIONS) {
-			return ORM_competitions;
-		}
-		else if (key == ORMConstants.KEY_SPORT_MODALITIES) {
+		if (key == ORMConstants.KEY_SPORT_MODALITIES) {
 			return ORM_modalities;
 		}
 		
@@ -61,12 +48,6 @@ public class Sport implements Serializable {
 	
 	@Column(name="Name", nullable=true, length=255)	
 	private String name;
-	
-	@OneToMany(targetEntity= com.Sportify.Entities.competition.Competition.class)
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="SportID", nullable=false) })	
-	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private java.util.Set ORM_competitions = new java.util.HashSet();
 	
 	@OneToMany(targetEntity= com.Sportify.Entities.competition.Modality.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
@@ -94,27 +75,21 @@ public class Sport implements Serializable {
 		return name;
 	}
 	
-	public void setORM_Competitions(java.util.Set value) {
-		this.ORM_competitions = value;
-	}
-	
-	public java.util.Set getORM_Competitions() {
-		return ORM_competitions;
-	}
-	
-	@Transient	
-	public final com.Sportify.Entities.competition.CompetitionSetCollection competitions = new com.Sportify.Entities.competition.CompetitionSetCollection(this, _ormAdapter, ORMConstants.KEY_SPORT_COMPETITIONS, ORMConstants.KEY_MUL_ONE_TO_MANY);
-	
 	public void setORM_Modalities(java.util.Set value) {
 		this.ORM_modalities = value;
 	}
 	
-	public java.util.Set getORM_Modalities() {
+	private java.util.Set getORM_Modalities() {
 		return ORM_modalities;
 	}
 	
 	@Transient	
 	public final com.Sportify.Entities.competition.ModalitySetCollection modalities = new com.Sportify.Entities.competition.ModalitySetCollection(this, _ormAdapter, ORMConstants.KEY_SPORT_MODALITIES, ORMConstants.KEY_MUL_ONE_TO_MANY);
+	
+	public Sport(String name) {
+		//TODO: Implement Method
+		throw new UnsupportedOperationException();
+	}
 	
 	public String toString() {
 		return String.valueOf(getID());

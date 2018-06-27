@@ -14,11 +14,8 @@
 package com.Sportify.Entities.competition;
 
 import com.Sportify.DAO.ORMConstants;
-import com.Sportify.Entities.event.Event;
-import com.Sportify.Entities.subentities.Athlete;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -140,26 +137,6 @@ public class MatchEvent extends com.Sportify.Entities.subentities.SubscriptionEn
 	public final com.Sportify.Entities.subentities.AthleteSetCollection athletes = new com.Sportify.Entities.subentities.AthleteSetCollection(this, _ormAdapter, ORMConstants.KEY_MATCHEVENT_ATHLETES, ORMConstants.KEY_ATHLETE_MATCHEVENTS, ORMConstants.KEY_MUL_MANY_TO_MANY);
 	
 	public MatchEvent(String description, java.util.Date startTime, java.util.Date endTime, String location, boolean active) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public List<Athlete> getAthletes() {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public void setAthletes(List<Athlete> athletes) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public List<Event> getEvents() {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public void setEvents(List<Event> events) {
 		//TODO: Implement Method
 		throw new UnsupportedOperationException();
 	}

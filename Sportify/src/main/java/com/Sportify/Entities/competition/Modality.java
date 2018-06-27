@@ -14,31 +14,16 @@
 package com.Sportify.Entities.competition;
 
 import com.Sportify.DAO.ORMConstants;
-import com.Sportify.Entities.event.EventCategory;
-import com.Sportify.Entities.subentities.Team;
-import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Modality")
 public class Modality implements Serializable {
-
 	public Modality() {
 	}
-
-	public Modality(String name) {
-		this.name = name;
-		this.ORM__eventCategories = new HashSet();
-		this.ORM_competitions = new HashSet();
-		this.ORM_teams = new HashSet();
-	}
-
+	
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_MODALITY__EVENTCATEGORIES) {
 			return ORM__eventCategories;
@@ -108,11 +93,11 @@ public class Modality implements Serializable {
 		return name;
 	}
 	
-	public void setORM__eventCategories(java.util.Set value) {
+	private void setORM__eventCategories(java.util.Set value) {
 		this.ORM__eventCategories = value;
 	}
 	
-	public java.util.Set getORM__eventCategories() {
+	private java.util.Set getORM__eventCategories() {
 		return ORM__eventCategories;
 	}
 	
@@ -141,32 +126,7 @@ public class Modality implements Serializable {
 	@Transient	
 	public final com.Sportify.Entities.subentities.TeamSetCollection teams = new com.Sportify.Entities.subentities.TeamSetCollection(this, _ormAdapter, ORMConstants.KEY_MODALITY_TEAMS, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
-	public List<Team> getTeams() {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public void setTeams(List<Team> teams) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public List<EventCategory> getEventCategories() {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public void setEventCategories(List<EventCategory> eventCategories) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public List<Competition> getCompetitions() {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public void setCompetitions(List<Competition> competitions) {
+	public Modality(String name) {
 		//TODO: Implement Method
 		throw new UnsupportedOperationException();
 	}

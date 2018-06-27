@@ -16,7 +16,6 @@ package com.Sportify.Entities.subentities;
 import com.Sportify.DAO.ORMConstants;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -72,16 +71,6 @@ public class Team extends com.Sportify.Entities.subentities.SubscriptionEntity i
 	public final com.Sportify.Entities.subentities.AthleteSetCollection athletes = new com.Sportify.Entities.subentities.AthleteSetCollection(this, _ormAdapter, ORMConstants.KEY_TEAM_ATHLETES, ORMConstants.KEY_ATHLETE_TEAM, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
 	public Team(String name) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public List<Athlete> getAthletes() {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public void setAthlete(List<Athlete> athletes) {
 		//TODO: Implement Method
 		throw new UnsupportedOperationException();
 	}

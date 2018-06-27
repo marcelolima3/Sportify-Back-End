@@ -40,8 +40,6 @@ public interface ORMConstants extends org.orm.util.ORMBaseConstants {
 	
 	final int KEY_NOTIFICATIONTRACKER_NOTIFICATIONHISTORY = -1003619945;
 	
-	final int KEY_SPORT_COMPETITIONS = -894606945;
-	
 	final int KEY_SPORT_MODALITIES = -6905590;
 	
 	final int KEY_SUBSCRIPTIONENTITY_SUBSCRIPTIONS = 237459575;

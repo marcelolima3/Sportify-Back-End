@@ -14,10 +14,8 @@
 package com.Sportify.Entities.subentities;
 
 import com.Sportify.DAO.ORMConstants;
-import com.Sportify.Entities.user.Subscription;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -77,16 +75,6 @@ public abstract class SubscriptionEntity implements Serializable {
 	
 	@Transient	
 	public final com.Sportify.Entities.user.SubscriptionSetCollection subscriptions = new com.Sportify.Entities.user.SubscriptionSetCollection(this, _ormAdapter, ORMConstants.KEY_SUBSCRIPTIONENTITY_SUBSCRIPTIONS, ORMConstants.KEY_SUBSCRIPTION_SUBSCRIBEDENTITY, ORMConstants.KEY_MUL_ONE_TO_MANY);
-	
-	public List<Subscription> getSubscriptions() {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public void setSubscriptions(List<Subscription> subscriptions) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
 	
 	public String toString() {
 		return String.valueOf(getID());

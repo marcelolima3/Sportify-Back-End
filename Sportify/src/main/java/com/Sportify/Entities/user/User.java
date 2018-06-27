@@ -17,10 +17,7 @@ import com.Sportify.DAO.ORMConstants;
 import com.Sportify.Entities.payment.PaymentMethod;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.TreeSet;
+import java.math.BigDecimal;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -28,16 +25,7 @@ import javax.persistence.*;
 public class User implements Serializable {
 	public User() {
 	}
-
-	public User(PaymentMethod paymentManager, String name, String email, String password) {
-		this.paymentManager = paymentManager;
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.ORM_subscriptions = new TreeSet<Subscription>();
-		this.registrationDate = new Date();
-	}
-
+	
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_USER_SUBSCRIPTIONS) {
 			return ORM_subscriptions;
@@ -147,17 +135,7 @@ public class User implements Serializable {
 	@Transient	
 	public final com.Sportify.Entities.user.SubscriptionSetCollection subscriptions = new com.Sportify.Entities.user.SubscriptionSetCollection(this, _ormAdapter, ORMConstants.KEY_USER_SUBSCRIPTIONS, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
-	public User(String name, String email, String password) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public List<Subscription> getSubscriptions() {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public void setSubscriptions(List<Subscription> subscriptions) {
+	public User(PaymentMethod pd, String name, String email, String password) {
 		//TODO: Implement Method
 		throw new UnsupportedOperationException();
 	}

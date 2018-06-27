@@ -65,7 +65,7 @@ public class CreateEAClassDiagramData {
 			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : matchEvents, team
 			AthleteDAO.save(lsubEntitiesAthlete);
 			com.Sportify.Entities.competition.Sport lcompetitionSport = SportDAO.createSport();
-			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : modalities, competitions
+			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : modalities
 			SportDAO.save(lcompetitionSport);
 			com.Sportify.Entities.payment.MonthlyBill lpaymentMonthlyBill = MonthlyBillDAO.createMonthlyBill();
 			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : payments
