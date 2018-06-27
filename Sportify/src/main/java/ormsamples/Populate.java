@@ -66,9 +66,9 @@ public class Populate {
             //ModalityDAO.save(modality);
             SportDAO.save(sport);
 
-            CompetitionsManagement competitionsManagement = new CompetitionsManagement();
-            competitionsManagement.createCompetition(1, "Competition1", "Braga", new Date(), new Date(), "Description");
-            competitionsManagement.createMatch(1, "Description1", new Date(), new Date(), "Braga");
+            //CompetitionsManagement competitionsManagement = new CompetitionsManagement();
+            //competitionsManagement.createCompetition(1, "Competition1", "Braga", new Date(), new Date(), "Description");
+            //competitionsManagement.createMatch(1, "Description1", new Date(), new Date(), "Braga");
 
             t.commit();
         } catch (Exception e) {
