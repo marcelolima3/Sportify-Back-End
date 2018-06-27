@@ -17,6 +17,9 @@ import java.util.Date;
 
 public class CompetitionsManagement {
 
+    public CompetitionsManagement() {
+    }
+
     public void createCompetition(int modalityID, String name, String location, Date startDate, Date endDate, String description){
         try {
             Modality m = ModalityDAO.getModalityByORMID(modalityID);

@@ -14,9 +14,12 @@
 package com.Sportify.Entities.competition;
 
 import com.Sportify.DAO.ORMConstants;
+import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -24,7 +27,13 @@ import javax.persistence.*;
 public class Sport implements Serializable {
 	public Sport() {
 	}
-	
+
+	public Sport(String name) {
+		this.name = name;
+		this.ORM_competitions = new HashSet();
+		this.ORM_modalities = new HashSet();
+	}
+
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_SPORT_COMPETITIONS) {
 			return ORM_competitions;
@@ -85,42 +94,27 @@ public class Sport implements Serializable {
 		return name;
 	}
 	
-	private void setORM_Competitions(java.util.Set value) {
+	public void setORM_Competitions(java.util.Set value) {
 		this.ORM_competitions = value;
 	}
 	
-	private java.util.Set getORM_Competitions() {
+	public java.util.Set getORM_Competitions() {
 		return ORM_competitions;
 	}
 	
 	@Transient	
 	public final com.Sportify.Entities.competition.CompetitionSetCollection competitions = new com.Sportify.Entities.competition.CompetitionSetCollection(this, _ormAdapter, ORMConstants.KEY_SPORT_COMPETITIONS, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
-	private void setORM_Modalities(java.util.Set value) {
+	public void setORM_Modalities(java.util.Set value) {
 		this.ORM_modalities = value;
 	}
 	
-	private java.util.Set getORM_Modalities() {
+	public java.util.Set getORM_Modalities() {
 		return ORM_modalities;
 	}
 	
 	@Transient	
 	public final com.Sportify.Entities.competition.ModalitySetCollection modalities = new com.Sportify.Entities.competition.ModalitySetCollection(this, _ormAdapter, ORMConstants.KEY_SPORT_MODALITIES, ORMConstants.KEY_MUL_ONE_TO_MANY);
-	
-	public Sport(String name) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public List<Modality> getModalities() {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
-	public void setModalities(List<Modality> modalities) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
 	
 	public String toString() {
 		return String.valueOf(getID());
