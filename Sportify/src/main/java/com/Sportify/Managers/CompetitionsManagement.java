@@ -17,40 +17,100 @@ import java.util.Date;
 
 public class CompetitionsManagement {
 
-    public CompetitionsManagement() {
-    }
+    public CompetitionsManagement() { }
 
     public void createCompetition(int modalityID, String name, String location, Date startDate, Date endDate, String description){
         try {
-            Modality m = ModalityDAO.getModalityByORMID(modalityID);
-            Competition c = new Competition();
-            c.setName(name);
-            c.setLocation(location);
-            c.setStartDate(startDate);
-            c.setEndDate(endDate);
-            c.setDescription(description);
-            c.setActive(true);
-            CompetitionDAO.save(c);
-            m.competitions.add(c);
-            ModalityDAO.save(m);
+            Modality modality = ModalityDAO.getModalityByORMID(modalityID);
+
+            Competition competition = new Competition();
+            competition.setName(name);
+            competition.setLocation(location);
+            competition.setStartDate(startDate);
+            competition.setEndDate(endDate);
+            competition.setDescription(description);
+
+            modality.competitions.add(competition);
+            ModalityDAO.save(modality);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
     }
 
-    public void createMatch(int competitionID, String description, Date startTime, Date endTime, String location){
+    public void removeCompetition(int competitionID){
+        try{
+            Competition competition = CompetitionDAO.getCompetitionByORMID(competitionID);
+            competition.setActive(false);
+            CompetitionDAO.save(competition);
+        }
+        catch (PersistentException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void editCompetition(int competitionID, int modalityID, String name, String location, Date startDate, Date endDate, String description){
+        try{
+            Competition competition = CompetitionDAO.getCompetitionByORMID(competitionID);
+            Modality modality = ModalityDAO.getModalityByORMID(modalityID);
+
+            competition.setName(name);
+            competition.setLocation(location);
+            competition.setStartDate(startDate);
+            competition.setEndDate(endDate);
+            competition.setDescription(description);
+
+            modality.competitions.add(competition);
+            ModalityDAO.save(modality);
+        }
+        catch (PersistentException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void createMatch(int competitionID, String description, Date startDate, Date endDate, String location){
         try {
-            Competition c = CompetitionDAO.getCompetitionByORMID(competitionID);
-            MatchEvent m = new MatchEvent();
-            m.setDescription(description);
-            m.setLocation(location);
-            m.setStartTime(startTime);
-            m.setEndTime(endTime);
-            m.setActive(true);
-            MatchEventDAO.save(m);
-            c.matchEvents.add(m);
-            CompetitionDAO.save(c);
+            Competition competition = CompetitionDAO.getCompetitionByORMID(competitionID);
+
+            MatchEvent matchEvent = new MatchEvent();
+            matchEvent.setDescription(description);
+            matchEvent.setLocation(location);
+            matchEvent.setStartTime(startDate);
+            matchEvent.setEndTime(endDate);
+            matchEvent.setActive(true);
+
+            competition.matchEvents.add(matchEvent);
+            CompetitionDAO.save(competition);
         } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeMatch(int matchID){
+        try{
+            MatchEvent matchEvent = MatchEventDAO.getMatchEventByORMID(matchID);
+            matchEvent.setActive(false);
+            MatchEventDAO.save(matchEvent);
+        }
+        catch (PersistentException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void editMatch(int matchID, int competitionID, int modalityID, String name, String location, Date startDate, Date endDate, String description){
+        try{
+            MatchEvent matchEvent = MatchEventDAO.getMatchEventByORMID(matchID);
+            Competition competition = CompetitionDAO.getCompetitionByORMID(competitionID);
+
+            matchEvent.setDescription(description);
+            matchEvent.setLocation(location);
+            matchEvent.setStartTime(startDate);
+            matchEvent.setEndTime(endDate);
+            matchEvent.setActive(true);
+
+            competition.matchEvents.add(matchEvent);
+            CompetitionDAO.save(competition);
+        }
+        catch (PersistentException e){
             e.printStackTrace();
         }
     }
@@ -64,7 +124,6 @@ public class CompetitionsManagement {
             e.setTextFormat(textFormat);
             e.setImageFormat(imageFormat);
             e.setVideoFormat(videoFormat);
-            EventDAO.save(e);
 
             m.events.add(e);
 

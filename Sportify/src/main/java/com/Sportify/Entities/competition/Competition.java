@@ -14,8 +14,12 @@
 package com.Sportify.Entities.competition;
 
 import com.Sportify.DAO.ORMConstants;
+import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -23,7 +27,17 @@ import javax.persistence.*;
 public class Competition implements Serializable {
 	public Competition() {
 	}
-	
+
+	public Competition(String name, String location, Date startDate, Date endDate, String description) {
+		this.name = name;
+		this.location = location;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.description = description;
+		this.active = true;
+		this.ORM_matchEvents = new HashSet();
+	}
+
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_COMPETITION_MATCHEVENTS) {
 			return ORM_matchEvents;
