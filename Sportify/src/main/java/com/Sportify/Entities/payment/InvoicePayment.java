@@ -14,9 +14,13 @@
 package com.Sportify.Entities.payment;
 
 import com.Sportify.DAO.ORMConstants;
+import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -27,7 +31,12 @@ import javax.persistence.*;
 public class InvoicePayment extends com.Sportify.Entities.payment.PaymentMethod implements Serializable {
 	public InvoicePayment() {
 	}
-	
+
+	public InvoicePayment(BigDecimal currentAmount) {
+		this.currentAmount = currentAmount;
+		this.ORM_payments = new TreeSet();
+	}
+
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_INVOICEPAYMENT_PAYMENTS) {
 			return ORM_payments;
@@ -71,11 +80,7 @@ public class InvoicePayment extends com.Sportify.Entities.payment.PaymentMethod 
 	
 	@Transient	
 	public final com.Sportify.Entities.payment.InvoiceSetCollection payments = new com.Sportify.Entities.payment.InvoiceSetCollection(this, _ormAdapter, ORMConstants.KEY_INVOICEPAYMENT_PAYMENTS, ORMConstants.KEY_MUL_ONE_TO_MANY);
-	
-	public InvoicePayment(java.math.BigDecimal currentAmount) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
+
 	
 	public List<Invoice> getPayments() {
 		//TODO: Implement Method

@@ -15,6 +15,8 @@ public class SportifyApplication extends SpringBootServletInitializer{
     }
 
 	public static void main(String[] args) {
-		SpringApplication.run(SportifyApplication.class, args);
+        SpringApplication.run(SportifyApplication.class, args);
+
+
 	}
 }

@@ -14,9 +14,13 @@
 package com.Sportify.Entities.user;
 
 import com.Sportify.DAO.ORMConstants;
+import com.Sportify.Entities.payment.PaymentMethod;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TreeSet;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -24,7 +28,16 @@ import javax.persistence.*;
 public class User implements Serializable {
 	public User() {
 	}
-	
+
+	public User(PaymentMethod paymentManager, String name, String email, String password) {
+		this.paymentManager = paymentManager;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.ORM_subscriptions = new TreeSet<Subscription>();
+		this.registrationDate = new Date();
+	}
+
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_USER_SUBSCRIPTIONS) {
 			return ORM_subscriptions;
