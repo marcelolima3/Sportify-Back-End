@@ -14,8 +14,11 @@
 package com.Sportify.Entities.subentities;
 
 import com.Sportify.DAO.ORMConstants;
+import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -26,7 +29,14 @@ import javax.persistence.*;
 public class Athlete extends com.Sportify.Entities.subentities.SubscriptionEntity implements Serializable {
 	public Athlete() {
 	}
-	
+
+	public Athlete(String name, String nationality, String genre) {
+		this.name = name;
+		this.nationality = nationality;
+		this.genre = genre;
+		this.ORM_matchEvents = new HashSet();
+	}
+
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_ATHLETE_MATCHEVENTS) {
 			return ORM_matchEvents;
@@ -131,11 +141,6 @@ public class Athlete extends com.Sportify.Entities.subentities.SubscriptionEntit
 	
 	@Transient	
 	public final com.Sportify.Entities.competition.MatchEventSetCollection matchEvents = new com.Sportify.Entities.competition.MatchEventSetCollection(this, _ormAdapter, ORMConstants.KEY_ATHLETE_MATCHEVENTS, ORMConstants.KEY_MATCHEVENT_ATHLETES, ORMConstants.KEY_MUL_MANY_TO_MANY);
-	
-	public Athlete(String name, String nationality, String genre) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
 	
 	public String toString() {
 		return super.toString();

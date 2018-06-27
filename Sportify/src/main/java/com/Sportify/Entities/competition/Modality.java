@@ -125,11 +125,11 @@ public class Modality implements Serializable {
 	@Transient	
 	public final com.Sportify.Entities.competition.CompetitionSetCollection competitions = new com.Sportify.Entities.competition.CompetitionSetCollection(this, _ormAdapter, ORMConstants.KEY_MODALITY_COMPETITIONS, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
-	private void setORM_Teams(java.util.Set value) {
+	public void setORM_Teams(java.util.Set value) {
 		this.ORM_teams = value;
 	}
 	
-	private java.util.Set getORM_Teams() {
+	public java.util.Set getORM_Teams() {
 		return ORM_teams;
 	}
 	
