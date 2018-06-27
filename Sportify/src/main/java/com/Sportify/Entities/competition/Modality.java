@@ -14,8 +14,11 @@
 package com.Sportify.Entities.competition;
 
 import com.Sportify.DAO.ORMConstants;
+import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -23,7 +26,14 @@ import javax.persistence.*;
 public class Modality implements Serializable {
 	public Modality() {
 	}
-	
+
+	public Modality(String name) {
+		this.name = name;
+		this.ORM__eventCategories = new HashSet();
+		this.ORM_competitions = new HashSet();
+		this.ORM_teams = new HashSet();
+	}
+
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_MODALITY__EVENTCATEGORIES) {
 			return ORM__eventCategories;
@@ -125,11 +135,6 @@ public class Modality implements Serializable {
 	
 	@Transient	
 	public final com.Sportify.Entities.subentities.TeamSetCollection teams = new com.Sportify.Entities.subentities.TeamSetCollection(this, _ormAdapter, ORMConstants.KEY_MODALITY_TEAMS, ORMConstants.KEY_MUL_ONE_TO_MANY);
-	
-	public Modality(String name) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
 	
 	public String toString() {
 		return String.valueOf(getID());

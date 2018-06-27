@@ -15,9 +15,14 @@ package com.Sportify.Entities.user;
 
 import com.Sportify.DAO.ORMConstants;
 import com.Sportify.Entities.payment.PaymentMethod;
+import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
 import javax.persistence.*;
+
+
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="`User`")
@@ -25,7 +30,13 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public User(PaymentMethod paymentMethod, String dinis, String s, String root) {
+	public User(PaymentMethod paymentManager, String name, String email, String password) {
+		this.paymentManager = paymentManager;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.registrationDate = new Date();
+		this.ORM_subscriptions = new HashSet();
 	}
 
 	private java.util.Set this_getSet (int key) {
@@ -147,12 +158,7 @@ public class User implements Serializable {
 	
 	@Transient	
 	public final com.Sportify.Entities.user.SubscriptionSetCollection subscriptions = new com.Sportify.Entities.user.SubscriptionSetCollection(this, _ormAdapter, ORMConstants.KEY_USER_SUBSCRIPTIONS, ORMConstants.KEY_MUL_ONE_TO_MANY);
-	
-	public User(String name, String email, String password) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
-	
+
 	public String toString() {
 		return String.valueOf(getID());
 	}
