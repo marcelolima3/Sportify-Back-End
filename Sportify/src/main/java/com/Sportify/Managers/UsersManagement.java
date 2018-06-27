@@ -8,24 +8,30 @@ import com.Sportify.Entities.subentities.SubscriptionEntity;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.User;
 import org.orm.PersistentException;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 
+@Repository
 public class UsersManagement {
 
     public UsersManagement() {
     }
 
     // Tem de dar throw de uma exception se o utilizador não for criado!
-    public Integer registerUser(String name, String email, String password, PaymentMethod p) throws PersistentException {
+    public Integer registerUser(String name, String email, String password, PaymentMethod p) throws Exception{
         boolean exist = false;
-        for (User u : (List<User>) UserDAO.queryUser(null, null)) {
-            if (u.getEmail().equals(email)) {
-                exist = true;
-                break;
+        try {
+            for (User u : (List<User>) UserDAO.queryUser(null, null)) {
+                if (u.getEmail().equals(email)) {
+                    exist = true;
+                    break;
+                }
             }
+        } catch (PersistentException e) {
+            e.printStackTrace();
         }
         if (!exist) {
             User u = new User();
@@ -36,14 +42,39 @@ public class UsersManagement {
             u.setRegistrationDate(new Date());
             try {
                 UserDAO.save(u);
-
             } catch (PersistentException e) {
                 e.printStackTrace();
             }
             return u.getID();
         } else {
-            return null;
+            throw new Exception("Email already in use!");
         }
+    }
+
+    public void changeOptions(int id, String defaultNotificationType, PaymentMethod p){
+        try {
+            User u = UserDAO.getUserByORMID(id);
+            u.setDefaultNotificationType(defaultNotificationType);
+            u.setPaymentManager(p);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public List<EventCategory> getSEEventCategories(int userID, int subscriptionEntityID){
+        try {
+            User u = UserDAO.getUserByORMID(userID);
+
+            for (Subscription subscription : u.subscriptions.toArray()) {
+                if(subscription.getSubscribedEntity().getID() == subscriptionEntityID){
+                    return Arrays.asList(subscription.subscribedEvents.toArray());
+                }
+            }
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
     // Aqui falta o AddToBill
@@ -73,6 +104,16 @@ public class UsersManagement {
         } catch (PersistentException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Subscription> getSubscriptions(int id){
+        try {
+            User u = UserDAO.getUserByORMID(id);
+            return Arrays.asList(u.subscriptions.toArray());
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
     public List<Event> consult_notifications(int id) throws PersistentException {
