@@ -14,6 +14,7 @@ import com.Sportify.DAO.user.UserDAO;
 import com.Sportify.Entities.payment.InvoicePayment;
 import com.Sportify.Entities.payment.PaymentMethod;
 import com.Sportify.Entities.user.User;
+import com.Sportify.Managers.UsersManagement;
 import org.orm.*;
 
 import java.math.BigDecimal;
@@ -30,14 +31,26 @@ public class Populate {
         } catch (Exception e) {
             t.rollback();
         }
+    }
 
+    public void testUsersManagement() throws PersistentException {
+        PersistentTransaction t = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
+        try {
+            UsersManagement usersManagement = new UsersManagement();
+            int id = usersManagement.registerUser("Dinis", "mail3@gmail.com", "root", new InvoicePayment(new BigDecimal(10)));
+            System.out.println("ID: " + id);
+            t.commit();
+        }
+        catch (Exception e){
+            t.rollback();
+        }
     }
 
     public static void main(String[] args) {
         try {
             Populate createAAData = new Populate();
             try {
-                createAAData.createTestData();
+                createAAData.testUsersManagement();
             } finally {
                 EAClassDiagramPersistentManager.instance().disposePersistentManager();
             }
