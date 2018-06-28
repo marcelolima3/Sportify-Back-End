@@ -5,6 +5,8 @@ import com.Sportify.Entities.payment.PaymentMethod;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.User;
 import com.Sportify.Service.UserService;
+import com.Sportify.Views.JSONViews.event.EventCategoryView;
+import com.Sportify.Views.JSONViews.user.SubscriptionView;
 import com.Sportify.Views.JSONViews.user.UserView;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.orm.PersistentException;
@@ -27,7 +29,6 @@ public class UserController {
         return userService.getUsers();
     }
 
-    //@JsonView(UserView.class)
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public int registerUser(@RequestBody User user){
         try {
@@ -38,18 +39,18 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/{id}/changeOptions", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void changeOptions(@PathVariable("id") int id,
-                              @RequestParam("notificationType") String notificationType,
-                              @RequestParam PaymentMethod paymentMethod){
-        userService.changeOptions(id, notificationType,paymentMethod);
+    @RequestMapping(value = "/{id}/options", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void changeOptions(@PathVariable("id") int id, @RequestBody User user){
+        userService.changeOptions(id, user);
     }
 
+    @JsonView(EventCategoryView.Public.class)
     @RequestMapping(value = "/{idU}/subscriptions/{idS}/events", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<EventCategory> getSEEventCategories(@PathVariable("idU") int userID, @PathVariable("idS") int subscriptionEntityID){
         return userService.getSEEventCategories(userID, subscriptionEntityID);
     }
 
+    @JsonView(SubscriptionView.Public.class)
     @RequestMapping(value = "/{id}/subscriptions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Subscription> getSubscriptions(@PathVariable("id") int id){
         return userService.getSubscriptions(id);

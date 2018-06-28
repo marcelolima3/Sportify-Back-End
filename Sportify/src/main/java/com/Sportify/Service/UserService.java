@@ -2,6 +2,7 @@ package com.Sportify.Service;
 
 
 import com.Sportify.DAO.user.UserDAO;
+import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
 import com.Sportify.Entities.payment.InvoicePayment;
 import com.Sportify.Entities.payment.MonthlyBill;
@@ -12,6 +13,7 @@ import com.Sportify.Managers.UsersManagement;
 import org.orm.PersistentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.nio.cs.US_ASCII;
 
 import java.util.*;
 
@@ -54,11 +56,12 @@ public class UserService {
         }
     }
 
-    public void changeOptions(int id, String defaultNotificationType, PaymentMethod p){
+    public void changeOptions(int id, User user){
         try {
             User u = UserDAO.getUserByORMID(id);
-            u.setDefaultNotificationType(defaultNotificationType);
-            u.setPaymentManager(p);
+            u.setDefaultNotificationType(user.getDefaultNotificationType());
+            u.setPaymentManager(user.getPaymentManager());
+            UserDAO.save(u);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
