@@ -103,6 +103,7 @@ public class Populate {
 
         populateAthletics();
         populateFootball();
+        testUsersManagement();
 
         List<String> sports_list = Arrays.asList(
                 "Basketball",

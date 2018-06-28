@@ -16,6 +16,7 @@ package com.Sportify.Entities.user;
 import com.Sportify.DAO.ORMConstants;
 import com.Sportify.Entities.payment.PaymentMethod;
 import com.Sportify.Views.JSONViews.user.UserView;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.orm.util.ORMAdapter;
 
@@ -59,12 +60,12 @@ public class User implements Serializable {
 
 	@JsonView(UserView.Public.class)
 	@Column(name="ID", nullable=false, length=10)	
-	@Id	
+	@Id
 	@GeneratedValue(generator="USER_USER_ID_GENERATOR")	
 	@org.hibernate.annotations.GenericGenerator(name="USER_USER_ID_GENERATOR", strategy="native")	
 	private int ID;
 
-	@JsonView(UserView.Private.class)
+	@JsonView(UserView.Public.class)
 	@ManyToOne(targetEntity= com.Sportify.Entities.payment.PaymentMethod.class, fetch=FetchType.LAZY)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="PaymentMethodID", referencedColumnName="ID", nullable=false) })	
@@ -158,11 +159,11 @@ public class User implements Serializable {
 		return paymentManager;
 	}
 	
-	private void setORM_Subscriptions(java.util.Set value) {
+	public void setORM_Subscriptions(java.util.Set value) {
 		this.ORM_subscriptions = value;
 	}
 	
-	private java.util.Set getORM_Subscriptions() {
+	public java.util.Set getORM_Subscriptions() {
 		return ORM_subscriptions;
 	}
 	

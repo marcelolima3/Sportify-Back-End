@@ -11,11 +11,31 @@ License Type: Academic
    	<!-- properties -->
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="connection.url">jdbc:mysql://db:3306/sportify</property>
+		<!--<property name="connection.url">jdbc:mysql://db:3306/sportify</property>-->
+		<property name="connection.url">jdbc:mysql://localhost:3306/sportify</property>
 		<property name="connection.username">root</property>
 		<property name="connection.password">root</property>
-		<property name="show_sql">false</property>
+		<property name="show_sql">true</property>
 		<property name="query.substitutions">true 1, false 0, yes 'Y', no 'N'</property>
 		<!-- mapping files -->
+		<!--<property name="hibernate.hbm2ddl.auto">update</property>-->
+		<!-- Persistent classes -->
+		<!--<mapping class="com.Sportify.Entities.competition.Competition"/>
+		<mapping class="com.Sportify.Entities.competition.MatchEvent"/>
+		<mapping class="com.Sportify.Entities.competition.Modality"/>
+		<mapping class="com.Sportify.Entities.competition.Sport"/>
+		<mapping class="com.Sportify.Entities.event.Event"/>
+		<mapping class="com.Sportify.Entities.event.EventCategory"/>
+		<mapping class="com.Sportify.Entities.payment.PaymentMethod"/>
+		<mapping class="com.Sportify.Entities.payment.Invoice"/>
+		<mapping class="com.Sportify.Entities.payment.MonthlyBill"/>
+		<mapping class="com.Sportify.Entities.payment.PrepaidCard"/>
+		<mapping class="com.Sportify.Entities.payment.InvoicePayment"/>
+		<mapping class="com.Sportify.Entities.subentities.Athlete"/>
+		<mapping class="com.Sportify.Entities.subentities.SubscriptionEntity"/>
+		<mapping class="com.Sportify.Entities.subentities.Team"/>
+		<mapping class="com.Sportify.Entities.user.NotificationTracker"/>
+		<mapping class="com.Sportify.Entities.user.Subscription"/>
+		<mapping class="com.Sportify.Entities.user.User"/>-->
 	</session-factory>
 </hibernate-configuration>

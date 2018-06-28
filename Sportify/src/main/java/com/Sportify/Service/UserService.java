@@ -2,7 +2,10 @@ package com.Sportify.Service;
 
 
 import com.Sportify.DAO.user.UserDAO;
+import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
+import com.Sportify.Entities.payment.InvoicePayment;
+import com.Sportify.Entities.payment.MonthlyBill;
 import com.Sportify.Entities.payment.PaymentMethod;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.User;
@@ -10,20 +13,27 @@ import com.Sportify.Managers.UsersManagement;
 import org.orm.PersistentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.nio.cs.US_ASCII;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserService {
 
-    public int registerUser(String name, String email, String password, PaymentMethod p) throws Exception {
+    public List<User> getUsers(){
+        try {
+            return (List<User>)UserDAO.queryUser(null, null);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    public int registerUser(User user) throws Exception {
         boolean exist = false;
         try {
             for (User u : (List<User>) UserDAO.queryUser(null, null)) {
-                if (u.getEmail().equals(email)) {
+                if (u.getEmail().equals(user.getEmail())) {
                     exist = true;
                     break;
                 }
@@ -32,28 +42,26 @@ public class UserService {
             e.printStackTrace();
         }
         if (!exist) {
-            User u = new User();
-            u.setName(name);
-            u.setEmail(email);
-            u.setPassword(password);
-            u.setPaymentManager(p);
-            u.setRegistrationDate(new Date());
+            user.setORM_Subscriptions(new HashSet());
+            //user.setPaymentManager(new InvoicePayment(10));
+            user.setRegistrationDate(new Date());
             try {
-                UserDAO.save(u);
+                UserDAO.save(user);
             } catch (PersistentException e) {
                 e.printStackTrace();
             }
-            return u.getID();
+            return user.getID();
         } else {
             throw new Exception("Email already in use!");
         }
     }
 
-    public void changeOptions(int id, String defaultNotificationType, PaymentMethod p){
+    public void changeOptions(int id, User user){
         try {
             User u = UserDAO.getUserByORMID(id);
-            u.setDefaultNotificationType(defaultNotificationType);
-            u.setPaymentManager(p);
+            u.setDefaultNotificationType(user.getDefaultNotificationType());
+            u.setPaymentManager(user.getPaymentManager());
+            UserDAO.save(u);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
