@@ -16,6 +16,9 @@ package com.Sportify.Entities.payment;
 import com.Sportify.DAO.ORMConstants;
 import com.Sportify.Views.JSONViews.competition.ModalityView;
 import com.Sportify.Views.JSONViews.payment.MonthlyBillView;
+import com.Sportify.Views.JSONViews.payment.PaymentMethodView;
+import com.Sportify.Views.JSONViews.payment.PrepaidCardView;
+import com.Sportify.Views.JSONViews.user.UserView;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
@@ -46,11 +49,11 @@ public class MonthlyBill extends com.Sportify.Entities.payment.PaymentMethod imp
 		
 	};
 
-	@JsonView(MonthlyBillView.Public.class)
+	@JsonView({UserView.Public.class,PaymentMethodView.Public.class, MonthlyBillView.Public.class})
 	@Column(name="LimitAmount", nullable=true)	
 	private double limitAmount;
 
-	@JsonView(MonthlyBillView.Public.class)
+	@JsonView({UserView.Public.class,PaymentMethodView.Public.class, MonthlyBillView.Public.class})
 	@Column(name="CurrentAmount", nullable=true)	
 	private double currentAmount;
 

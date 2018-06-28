@@ -3,7 +3,10 @@ package com.Sportify.Controllers;
 import com.Sportify.Entities.event.EventCategory;
 import com.Sportify.Entities.payment.PaymentMethod;
 import com.Sportify.Entities.user.Subscription;
+import com.Sportify.Entities.user.User;
 import com.Sportify.Service.UserService;
+import com.Sportify.Views.JSONViews.user.UserView;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.orm.PersistentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,17 +17,23 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public int registerUser(@RequestParam("name") String name,
-                            @RequestParam("email") String email,
-                            @RequestParam("password") String password,
-                            @RequestBody PaymentMethod paymentMethod){
+    @JsonView(UserView.Public.class)
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<User> getUsers(){
+        return userService.getUsers();
+    }
+
+    //@JsonView(UserView.class)
+    @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public int registerUser(@RequestBody User user){
         try {
-            return userService.registerUser(name,email,password,paymentMethod);
+            return userService.registerUser(user);
         } catch (Exception e) {
+            e.printStackTrace();
             return -1;
         }
     }

@@ -15,6 +15,9 @@ package com.Sportify.Entities.payment;
 
 import com.Sportify.DAO.ORMConstants;
 import com.Sportify.Views.JSONViews.payment.InvoicePaymentView;
+import com.Sportify.Views.JSONViews.payment.PaymentMethodView;
+import com.Sportify.Views.JSONViews.user.UserView;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.orm.util.ORMAdapter;
 
@@ -31,9 +34,11 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(name="PaymentMethodID", referencedColumnName="ID")
 public class InvoicePayment extends com.Sportify.Entities.payment.PaymentMethod implements Serializable {
 	public InvoicePayment() {
+		super();
 	}
 
 	public InvoicePayment(double currentAmount) {
+		super();
 		this.currentAmount = currentAmount;
 		this.ORM_payments = new HashSet();
 	}
@@ -45,7 +50,7 @@ public class InvoicePayment extends com.Sportify.Entities.payment.PaymentMethod 
 		
 		return null;
 	}
-	
+
 	@Transient	
 	org.orm.util.ORMAdapter _ormAdapter = new org.orm.util.AbstractORMAdapter() {
 		public java.util.Set getSet(int key) {
@@ -54,7 +59,7 @@ public class InvoicePayment extends com.Sportify.Entities.payment.PaymentMethod 
 		
 	};
 
-	@JsonView(InvoicePaymentView.Public.class)
+	@JsonView({UserView.Public.class,PaymentMethodView.Public.class, InvoicePaymentView.Public.class})
 	@Column(name="CurrentAmount", nullable=true)	
 	private double currentAmount;
 
