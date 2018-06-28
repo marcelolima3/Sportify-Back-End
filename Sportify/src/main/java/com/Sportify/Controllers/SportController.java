@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/sports")
 public class SportController {
+
     @Autowired
     private SportService sportService;
 
