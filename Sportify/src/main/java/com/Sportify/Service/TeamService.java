@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -21,6 +22,19 @@ public class TeamService {
             e.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    public Team createTeam(int modalityID, Team team){
+        try {
+            Modality modality = ModalityDAO.getModalityByORMID(modalityID);
+            team.setORM_Athletes(new HashSet());
+            modality.teams.add(team);
+            ModalityDAO.save(modality);
+            return team;
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

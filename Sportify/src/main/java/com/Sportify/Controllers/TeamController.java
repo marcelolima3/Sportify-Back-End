@@ -6,10 +6,7 @@ import com.Sportify.Views.JSONViews.subentities.TeamView;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,4 +23,9 @@ public class TeamController {
         return teamService.getModalityTeams(id);
     }
 
+    @JsonView(TeamView.Public.class)
+    @RequestMapping(value = "/{idM}/teams", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Team createCompetition(@PathVariable("idM") int modalityID, @RequestBody Team team){
+        return teamService.createTeam(modalityID, team);
+    }
 }

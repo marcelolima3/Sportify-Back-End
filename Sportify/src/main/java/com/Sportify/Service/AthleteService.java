@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -25,6 +26,10 @@ public class AthleteService {
             e.printStackTrace();
         }
         return athletes;
+    }
+
+    public Athlete createAthlete(int modalityID, Athlete athlete){
+        return null; // has to be done
     }
 
 }
