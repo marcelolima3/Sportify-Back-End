@@ -14,6 +14,9 @@
 package com.Sportify.Entities.payment;
 
 import com.Sportify.DAO.ORMConstants;
+import com.Sportify.Views.JSONViews.competition.ModalityView;
+import com.Sportify.Views.JSONViews.payment.MonthlyBillView;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -42,13 +45,16 @@ public class MonthlyBill extends com.Sportify.Entities.payment.PaymentMethod imp
 		}
 		
 	};
-	
+
+	@JsonView(MonthlyBillView.Public.class)
 	@Column(name="LimitAmount", nullable=true)	
 	private double limitAmount;
-	
+
+	@JsonView(MonthlyBillView.Public.class)
 	@Column(name="CurrentAmount", nullable=true)	
 	private double currentAmount;
-	
+
+	@JsonView(MonthlyBillView.Private.class)
 	@OneToMany(targetEntity= com.Sportify.Entities.payment.Invoice.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="MonthlyBillPaymentMethodID", nullable=true) })	

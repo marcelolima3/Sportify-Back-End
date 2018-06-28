@@ -17,13 +17,14 @@ import com.Sportify.Entities.subentities.Team;
 import com.Sportify.Entities.user.Subscription;
 import org.orm.PersistentException;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-@Repository
+@Service
 public class CompetitionsManagement {
 
     public CompetitionsManagement() { }

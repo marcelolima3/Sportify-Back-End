@@ -14,6 +14,8 @@
 package com.Sportify.Entities.user;
 
 import com.Sportify.DAO.ORMConstants;
+import com.Sportify.Views.JSONViews.user.SubscriptionView;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -53,18 +55,21 @@ public class Subscription implements Serializable {
 		}
 		
 	};
-	
+
+	@JsonView(SubscriptionView.Public.class)
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
 	@GeneratedValue(generator="USER_SUBSCRIPTION_ID_GENERATOR")	
 	@org.hibernate.annotations.GenericGenerator(name="USER_SUBSCRIPTION_ID_GENERATOR", strategy="native")	
 	private int ID;
-	
+
+	@JsonView(SubscriptionView.Private.class)
 	@ManyToOne(targetEntity= com.Sportify.Entities.user.NotificationTracker.class, fetch=FetchType.LAZY)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="NotificationTrackerID", referencedColumnName="ID", nullable=false) })	
 	private com.Sportify.Entities.user.NotificationTracker _tracker;
-	
+
+	@JsonView(SubscriptionView.Private.class)
 	@ManyToOne(targetEntity= com.Sportify.Entities.subentities.SubscriptionEntity.class, fetch=FetchType.LAZY)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="SubscriptionEntityID", referencedColumnName="ID", nullable=false) })	

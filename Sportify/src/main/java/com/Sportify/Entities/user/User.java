@@ -15,6 +15,8 @@ package com.Sportify.Entities.user;
 
 import com.Sportify.DAO.ORMConstants;
 import com.Sportify.Entities.payment.PaymentMethod;
+import com.Sportify.Views.JSONViews.user.UserView;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
@@ -54,34 +56,42 @@ public class User implements Serializable {
 		}
 		
 	};
-	
+
+	@JsonView(UserView.Public.class)
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
 	@GeneratedValue(generator="USER_USER_ID_GENERATOR")	
 	@org.hibernate.annotations.GenericGenerator(name="USER_USER_ID_GENERATOR", strategy="native")	
 	private int ID;
-	
+
+	@JsonView(UserView.Private.class)
 	@ManyToOne(targetEntity= com.Sportify.Entities.payment.PaymentMethod.class, fetch=FetchType.LAZY)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="PaymentMethodID", referencedColumnName="ID", nullable=false) })	
 	private com.Sportify.Entities.payment.PaymentMethod paymentManager;
-	
+
+	@JsonView(UserView.Public.class)
 	@Column(name="Name", nullable=true, length=255)	
 	private String name;
-	
+
+	@JsonView(UserView.Public.class)
 	@Column(name="Email", nullable=true, length=255)	
 	private String email;
-	
+
+	@JsonView(UserView.Public.class)
 	@Column(name="Password", nullable=true, length=255)	
 	private String password;
-	
+
+	@JsonView(UserView.Public.class)
 	@Column(name="RegistrationDate", nullable=true)	
 	@Temporal(TemporalType.DATE)	
 	private java.util.Date registrationDate;
-	
+
+	@JsonView(UserView.Public.class)
 	@Column(name="DefaultNotificationType", nullable=true, length=255)	
 	private String defaultNotificationType;
-	
+
+	@JsonView(UserView.Private.class)
 	@OneToMany(targetEntity= com.Sportify.Entities.user.Subscription.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="UserID", nullable=false) })	

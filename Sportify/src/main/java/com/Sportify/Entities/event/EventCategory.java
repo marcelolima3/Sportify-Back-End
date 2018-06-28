@@ -13,6 +13,9 @@
  */
 package com.Sportify.Entities.event;
 
+import com.Sportify.Views.JSONViews.event.EventCategoryView;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import java.io.Serializable;
 import javax.persistence.*;
 @Entity
@@ -21,16 +24,19 @@ import javax.persistence.*;
 public class EventCategory implements Serializable {
 	public EventCategory() {
 	}
-	
+
+	@JsonView(EventCategoryView.Public.class)
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
 	@GeneratedValue(generator="EVENT_EVENTCATEGORY_ID_GENERATOR")	
 	@org.hibernate.annotations.GenericGenerator(name="EVENT_EVENTCATEGORY_ID_GENERATOR", strategy="native")	
 	private int ID;
-	
+
+	@JsonView(EventCategoryView.Public.class)
 	@Column(name="Name", nullable=true, length=255)	
 	private String name;
-	
+
+	@JsonView(EventCategoryView.Public.class)
 	@Column(name="Price", nullable=true)	
 	private double price;
 	

@@ -14,7 +14,11 @@
 package com.Sportify.Entities.subentities;
 
 import com.Sportify.DAO.ORMConstants;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.Sportify.Views.JSONViews.subentities.AthleteView;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
@@ -63,22 +67,28 @@ public class Athlete extends com.Sportify.Entities.subentities.SubscriptionEntit
 		}
 		
 	};
-	
+
+	@JsonView(AthleteView.Public.class)
 	@Column(name="Name", nullable=true, length=255)	
 	private String name;
-	
+
+	@JsonView(AthleteView.Public.class)
 	@Column(name="Nationality", nullable=true, length=255)	
 	private String nationality;
-	
+
+	@JsonView(AthleteView.Public.class)
 	@Column(name="Genre", nullable=true, length=255)	
 	private String genre;
 
-	@JsonIgnore
+	@JsonView(AthleteView.Private.class)
+	@JsonBackReference
 	@ManyToOne(targetEntity= com.Sportify.Entities.subentities.Team.class, fetch=FetchType.LAZY)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="TeamSubscriptionEntityID", referencedColumnName="SubscriptionEntityID", nullable=false) })	
 	private com.Sportify.Entities.subentities.Team team;
-	
+
+	@JsonView(AthleteView.Private.class)
+	@JsonManagedReference
 	@ManyToMany(targetEntity= com.Sportify.Entities.competition.MatchEvent.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinTable(name="MatchEvent_Athlete", joinColumns={ @JoinColumn(name="AthleteSubscriptionEntityID") }, inverseJoinColumns={ @JoinColumn(name="MatchEventSubscriptionEntityID") })	

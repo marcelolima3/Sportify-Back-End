@@ -14,6 +14,8 @@
 package com.Sportify.Entities.payment;
 
 import com.Sportify.DAO.ORMConstants;
+import com.Sportify.Views.JSONViews.payment.InvoiceView;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -39,20 +41,24 @@ public class Invoice implements Serializable {
 		}
 		
 	};
-	
+
+	@JsonView(InvoiceView.Public.class)
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
 	@GeneratedValue(generator="PAYMENT_INVOICE_ID_GENERATOR")	
 	@org.hibernate.annotations.GenericGenerator(name="PAYMENT_INVOICE_ID_GENERATOR", strategy="native")	
 	private int ID;
-	
+
+	@JsonView(InvoiceView.Public.class)
 	@Column(name="`Date`", nullable=true)	
 	@Temporal(TemporalType.DATE)	
 	private java.util.Date date;
-	
+
+	@JsonView(InvoiceView.Public.class)
 	@Column(name="Amount", nullable=true)	
 	private double amount;
-	
+
+	@JsonView(InvoiceView.Private.class)
 	@OneToMany(targetEntity= com.Sportify.Entities.user.Subscription.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="InvoiceID", nullable=false) })	

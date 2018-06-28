@@ -14,6 +14,8 @@
 package com.Sportify.Entities.subentities;
 
 import com.Sportify.DAO.ORMConstants;
+import com.Sportify.Views.JSONViews.subentities.SubscriptionEntityView;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -41,13 +43,15 @@ public abstract class SubscriptionEntity implements Serializable {
 		}
 		
 	};
-	
+
+	@JsonView(SubscriptionEntityView.Public.class)
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
 	@GeneratedValue(generator="SUBENTITIES_SUBSCRIPTIONENTITY_ID_GENERATOR")	
 	@org.hibernate.annotations.GenericGenerator(name="SUBENTITIES_SUBSCRIPTIONENTITY_ID_GENERATOR", strategy="native")	
 	private int ID;
-	
+
+	@JsonView(SubscriptionEntityView.Private.class)
 	@OneToMany(mappedBy="subscribedEntity", targetEntity= com.Sportify.Entities.user.Subscription.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	

@@ -14,6 +14,8 @@
 package com.Sportify.Entities.event;
 
 import com.Sportify.DAO.ORMConstants;
+import com.Sportify.Views.JSONViews.event.EventView;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -37,24 +39,29 @@ public class Event implements Serializable {
 		}
 		
 	};
-	
+
+	@JsonView(EventView.Public.class)
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
 	@GeneratedValue(generator="EVENT_EVENT_ID_GENERATOR")	
 	@org.hibernate.annotations.GenericGenerator(name="EVENT_EVENT_ID_GENERATOR", strategy="native")	
 	private int ID;
-	
+
+	@JsonView(EventView.Private.class)
 	@ManyToOne(targetEntity= com.Sportify.Entities.event.EventCategory.class, fetch=FetchType.LAZY)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="EventCategoryID", referencedColumnName="ID", nullable=false) })	
 	private com.Sportify.Entities.event.EventCategory category;
-	
+
+	@JsonView(EventView.Public.class)
 	@Column(name="TextFormat", nullable=true, length=255)	
 	private String textFormat;
-	
+
+	@JsonView(EventView.Public.class)
 	@Column(name="ImageFormat", nullable=true, length=255)	
 	private String imageFormat;
-	
+
+	@JsonView(EventView.Public.class)
 	@Column(name="VideoFormat", nullable=true, length=255)	
 	private String videoFormat;
 	
