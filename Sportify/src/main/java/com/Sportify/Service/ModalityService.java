@@ -1,44 +1,33 @@
 package com.Sportify.Service;
 
 
+import com.Sportify.DAO.competition.CompetitionDAO;
+import com.Sportify.DAO.competition.ModalityDAO;
+import com.Sportify.DAO.competition.SportDAO;
 import com.Sportify.Entities.competition.Competition;
 import com.Sportify.Entities.competition.MatchEvent;
 import com.Sportify.Entities.competition.Modality;
+import com.Sportify.Entities.competition.Sport;
 import com.Sportify.Entities.event.EventCategory;
 import com.Sportify.Entities.subentities.Athlete;
 import com.Sportify.Entities.subentities.Team;
 import com.Sportify.Managers.CompetitionsManagement;
+import org.orm.PersistentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ModalityService {
-    @Autowired
-    private CompetitionsManagement competitionsManagement;
 
     public List<Modality> getSportModalities(int id){
-        return competitionsManagement.getSportModalities(id);
-    }
-
-    public List<Competition> getModalityCompetitions(int id){
-        return competitionsManagement.getModalityCompetitions(id);
-    }
-
-    public List<Team> getModalityTeams(int id){
-        return competitionsManagement.getModalityTeams(id);
-    }
-
-    public List<Athlete> getModalityAthletes(int id){
-        return competitionsManagement.getModalityAthletes(id);
-    }
-
-    public List<MatchEvent> getCompetitionMatchEvents(int id){
-        return competitionsManagement.getCompetitionMatchEvents(id);
-    }
-
-    public List<EventCategory> getModalityEventCategories(int id){
-        return competitionsManagement.getModalityEventCategories(id);
+        try {
+            Sport s = SportDAO.getSportByORMID(id);
+            return Arrays.asList(s.modalities.toArray());
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }

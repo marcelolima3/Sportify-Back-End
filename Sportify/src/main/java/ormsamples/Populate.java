@@ -13,6 +13,7 @@ import com.Sportify.DAO.EAClassDiagramPersistentManager;
 import com.Sportify.DAO.competition.ModalityDAO;
 import com.Sportify.DAO.competition.SportDAO;
 import com.Sportify.DAO.subentities.SubscriptionEntityDAO;
+import com.Sportify.DAO.subentities.TeamDAO;
 import com.Sportify.DAO.user.UserDAO;
 import com.Sportify.Entities.competition.Competition;
 import com.Sportify.Entities.competition.Modality;
@@ -288,6 +289,7 @@ public class Populate {
             e.printStackTrace();
         }
     }
+
 
     public static void main(String[] args) {
         try {
