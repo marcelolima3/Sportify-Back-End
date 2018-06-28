@@ -13,6 +13,9 @@
  */
 package com.Sportify.Entities.payment;
 
+import com.Sportify.Views.JSONViews.payment.PaymentMethodView;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import java.io.Serializable;
 import javax.persistence.*;
 @Entity
@@ -23,7 +26,8 @@ import javax.persistence.*;
 public abstract class PaymentMethod implements Serializable {
 	public PaymentMethod() {
 	}
-	
+
+	@JsonView(PaymentMethodView.Public.class)
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
 	@GeneratedValue(generator="PAYMENT_PAYMENTMETHOD_ID_GENERATOR")	

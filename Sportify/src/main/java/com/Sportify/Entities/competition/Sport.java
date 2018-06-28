@@ -14,11 +14,14 @@
 package com.Sportify.Entities.competition;
 
 import com.Sportify.DAO.ORMConstants;
-import org.orm.util.ORMAdapter;
+import com.Sportify.Views.JSONViews.competition.ModalityView;
+import com.Sportify.Views.JSONViews.competition.SportView;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -39,24 +42,27 @@ public class Sport implements Serializable {
 		
 		return null;
 	}
-	
-	@Transient	
+
+	@Transient
 	org.orm.util.ORMAdapter _ormAdapter = new org.orm.util.AbstractORMAdapter() {
 		public java.util.Set getSet(int key) {
 			return this_getSet(key);
 		}
 		
 	};
-	
+
+	@JsonView(SportView.Public.class)
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
 	@GeneratedValue(generator="COMPETITION_SPORT_ID_GENERATOR")	
 	@org.hibernate.annotations.GenericGenerator(name="COMPETITION_SPORT_ID_GENERATOR", strategy="native")	
 	private int ID;
-	
+
+	@JsonView(SportView.Public.class)
 	@Column(name="Name", nullable=true, length=255)	
 	private String name;
-	
+
+	@JsonView(SportView.Private.class)
 	@OneToMany(targetEntity= com.Sportify.Entities.competition.Modality.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="SportID", nullable=false) })	

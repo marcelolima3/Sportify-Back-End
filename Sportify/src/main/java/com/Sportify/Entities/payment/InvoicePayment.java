@@ -14,6 +14,8 @@
 package com.Sportify.Entities.payment;
 
 import com.Sportify.DAO.ORMConstants;
+import com.Sportify.Views.JSONViews.payment.InvoicePaymentView;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
@@ -51,10 +53,12 @@ public class InvoicePayment extends com.Sportify.Entities.payment.PaymentMethod 
 		}
 		
 	};
-	
+
+	@JsonView(InvoicePaymentView.Public.class)
 	@Column(name="CurrentAmount", nullable=true)	
 	private double currentAmount;
-	
+
+	@JsonView(InvoicePaymentView.Private.class)
 	@OneToMany(targetEntity= com.Sportify.Entities.payment.Invoice.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="InvoicePaymentPaymentMethodID", nullable=true) })	

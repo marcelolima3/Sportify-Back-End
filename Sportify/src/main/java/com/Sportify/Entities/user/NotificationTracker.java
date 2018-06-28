@@ -14,6 +14,8 @@
 package com.Sportify.Entities.user;
 
 import com.Sportify.DAO.ORMConstants;
+import com.Sportify.Views.JSONViews.user.NotificationTrackerView;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -39,16 +41,19 @@ public class NotificationTracker implements Serializable {
 		}
 		
 	};
-	
+
+	@JsonView(NotificationTrackerView.Public.class)
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
 	@GeneratedValue(generator="USER_NOTIFICATIONTRACKER_ID_GENERATOR")	
 	@org.hibernate.annotations.GenericGenerator(name="USER_NOTIFICATIONTRACKER_ID_GENERATOR", strategy="native")	
 	private int ID;
-	
+
+	@JsonView(NotificationTrackerView.Public.class)
 	@Column(name="NotificationPolicy", nullable=true, length=255)	
 	private String notificationPolicy;
-	
+
+	@JsonView(NotificationTrackerView.Private.class)
 	@ManyToMany(targetEntity= com.Sportify.Entities.event.Event.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinTable(name="NotificationTracker_Event", joinColumns={ @JoinColumn(name="NotificationTrackerID") }, inverseJoinColumns={ @JoinColumn(name="EventID") })	

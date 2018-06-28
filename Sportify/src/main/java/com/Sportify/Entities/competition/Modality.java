@@ -14,6 +14,10 @@
 package com.Sportify.Entities.competition;
 
 import com.Sportify.DAO.ORMConstants;
+import com.Sportify.Views.JSONViews.competition.MatchEventView;
+import com.Sportify.Views.JSONViews.competition.ModalityView;
+import com.Sportify.Views.JSONViews.competition.SportView;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
@@ -55,28 +59,33 @@ public class Modality implements Serializable {
 		}
 		
 	};
-	
+
+	@JsonView({SportView.Private.class, ModalityView.Public.class})
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
 	@GeneratedValue(generator="COMPETITION_MODALITY_ID_GENERATOR")	
 	@org.hibernate.annotations.GenericGenerator(name="COMPETITION_MODALITY_ID_GENERATOR", strategy="native")	
 	private int ID;
-	
+
+	@JsonView({SportView.Private.class, ModalityView.Public.class})
 	@Column(name="Name", nullable=true, length=255)	
 	private String name;
-	
+
+	@JsonView({SportView.Private.class, ModalityView.Private.class})
 	@OneToMany(targetEntity= com.Sportify.Entities.event.EventCategory.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="ModalityID", nullable=false) })	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set ORM__eventCategories = new java.util.HashSet();
-	
+
+	@JsonView({SportView.Private.class, ModalityView.Private.class})
 	@OneToMany(targetEntity= com.Sportify.Entities.competition.Competition.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="ModalityID", nullable=false) })	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set ORM_competitions = new java.util.HashSet();
-	
+
+	@JsonView({SportView.Private.class, ModalityView.Private.class})
 	@OneToMany(targetEntity= com.Sportify.Entities.subentities.Team.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="ModalityID", nullable=false) })	

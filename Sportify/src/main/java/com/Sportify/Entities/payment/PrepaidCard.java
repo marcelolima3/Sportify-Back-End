@@ -13,6 +13,9 @@
  */
 package com.Sportify.Entities.payment;
 
+import com.Sportify.Views.JSONViews.payment.PrepaidCardView;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import java.io.Serializable;
 import javax.persistence.*;
 @Entity
@@ -24,23 +27,29 @@ import javax.persistence.*;
 public class PrepaidCard extends com.Sportify.Entities.payment.PaymentMethod implements Serializable {
 	public PrepaidCard() {
 	}
-	
+
+	@JsonView(PrepaidCardView.Public.class)
 	@Column(name="CardNumber", nullable=false, length=20)	
 	private long cardNumber;
-	
+
+	@JsonView(PrepaidCardView.Public.class)
 	@Column(name="SecurityCode", nullable=true, length=255)	
 	private String securityCode;
-	
+
+	@JsonView(PrepaidCardView.Public.class)
 	@Column(name="ExpirationDate", nullable=true)	
 	@Temporal(TemporalType.DATE)	
 	private java.util.Date expirationDate;
-	
+
+	@JsonView(PrepaidCardView.Public.class)
 	@Column(name="CardType", nullable=true, length=255)	
 	private String cardType;
-	
+
+	@JsonView(PrepaidCardView.Public.class)
 	@Column(name="Balance", nullable=true)	
 	private double balance;
-	
+
+	@JsonView(PrepaidCardView.Public.class)
 	@Column(name="NumRecharges", nullable=false, length=10)	
 	private int numRecharges;
 	

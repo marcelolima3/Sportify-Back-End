@@ -14,6 +14,9 @@
 package com.Sportify.Entities.competition;
 
 import com.Sportify.DAO.ORMConstants;
+import com.Sportify.Views.JSONViews.competition.CompetitionView;
+import com.Sportify.Views.JSONViews.competition.ModalityView;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
@@ -53,33 +56,41 @@ public class Competition implements Serializable {
 		}
 		
 	};
-	
+
+	@JsonView({ModalityView.Private.class, CompetitionView.Public.class})
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
 	@GeneratedValue(generator="COMPETITION_COMPETITION_ID_GENERATOR")	
 	@org.hibernate.annotations.GenericGenerator(name="COMPETITION_COMPETITION_ID_GENERATOR", strategy="native")	
 	private int ID;
-	
+
+	@JsonView({ModalityView.Private.class, CompetitionView.Public.class})
 	@Column(name="Name", nullable=true, length=255)	
 	private String name;
-	
+
+	@JsonView({ModalityView.Private.class, CompetitionView.Public.class})
 	@Column(name="Location", nullable=true, length=255)	
 	private String location;
-	
+
+	@JsonView({ModalityView.Private.class, CompetitionView.Public.class})
 	@Column(name="StartDate", nullable=true)	
 	@Temporal(TemporalType.DATE)	
 	private java.util.Date startDate;
-	
+
+	@JsonView({ModalityView.Private.class, CompetitionView.Public.class})
 	@Column(name="EndDate", nullable=true)	
 	@Temporal(TemporalType.DATE)	
 	private java.util.Date endDate;
-	
+
+	@JsonView({ModalityView.Private.class, CompetitionView.Public.class})
 	@Column(name="Description", nullable=true, length=255)	
 	private String description;
-	
+
+	@JsonView({ModalityView.Private.class, CompetitionView.Public.class})
 	@Column(name="Active", nullable=true, length=1)	
 	private boolean active;
-	
+
+	@JsonView({ModalityView.Private.class, CompetitionView.Private.class})
 	@OneToMany(targetEntity= com.Sportify.Entities.competition.MatchEvent.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="CompetitionID", nullable=false) })	
