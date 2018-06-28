@@ -14,11 +14,27 @@
 package com.Sportify.Entities.subentities;
 
 import com.Sportify.DAO.ORMConstants;
+import com.Sportify.Entities.competition.MatchEvent;
+import com.Sportify.Views.JSONViews.competition.MatchEventView;
+import com.Sportify.Views.JSONViews.subentities.AthleteView;
 import com.Sportify.Views.JSONViews.subentities.SubscriptionEntityView;
+import com.Sportify.Views.JSONViews.subentities.TeamView;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+@JsonTypeInfo(
+		use = JsonTypeInfo.Id.NAME,
+		include = JsonTypeInfo.As.PROPERTY,
+		property = "type")
+@JsonSubTypes({
+		@JsonSubTypes.Type(value = Team.class, name = "Team"),
+		@JsonSubTypes.Type(value = Athlete.class, name = "Athlete"),
+		@JsonSubTypes.Type(value = MatchEvent.class, name = "MatchEvent")
+})
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="SubscriptionEntity")
@@ -44,7 +60,7 @@ public abstract class SubscriptionEntity implements Serializable {
 		
 	};
 
-	@JsonView(SubscriptionEntityView.Public.class)
+	@JsonView({SubscriptionEntityView.Public.class, MatchEventView.Public.class, TeamView.Public.class, AthleteView.Public.class})
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
 	@GeneratedValue(generator="SUBENTITIES_SUBSCRIPTIONENTITY_ID_GENERATOR")	

@@ -18,6 +18,7 @@ import com.Sportify.DAO.ORMConstants;
 import com.Sportify.Views.JSONViews.competition.CompetitionView;
 import com.Sportify.Views.JSONViews.competition.MatchEventView;
 import com.Sportify.Views.JSONViews.competition.ModalityView;
+import com.Sportify.Views.JSONViews.subentities.SubscriptionEntityView;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -54,25 +55,25 @@ public class MatchEvent extends com.Sportify.Entities.subentities.SubscriptionEn
 		
 	};
 
-	@JsonView({CompetitionView.Private.class,MatchEventView.Public.class})
+	@JsonView({SubscriptionEntityView.Public.class,CompetitionView.Private.class,MatchEventView.Public.class})
 	@Column(name="Description", nullable=true, length=255)	
 	private String description;
 
-	@JsonView({CompetitionView.Private.class,MatchEventView.Public.class})
+	@JsonView({SubscriptionEntityView.Public.class,CompetitionView.Private.class,MatchEventView.Public.class})
 	@Column(name="StartTime", nullable=true)	
 	@Temporal(TemporalType.DATE)	
 	private java.util.Date startTime;
 
-	@JsonView({CompetitionView.Private.class,MatchEventView.Public.class})
+	@JsonView({SubscriptionEntityView.Public.class,CompetitionView.Private.class,MatchEventView.Public.class})
 	@Column(name="EndTime", nullable=true)	
 	@Temporal(TemporalType.DATE)	
 	private java.util.Date endTime;
 
-	@JsonView({CompetitionView.Private.class,MatchEventView.Public.class})
+	@JsonView({SubscriptionEntityView.Public.class,CompetitionView.Private.class,MatchEventView.Public.class})
 	@Column(name="Location", nullable=true, length=255)	
 	private String location;
 
-	@JsonView({CompetitionView.Private.class,MatchEventView.Public.class})
+	@JsonView({SubscriptionEntityView.Public.class,CompetitionView.Private.class,MatchEventView.Public.class})
 	@Column(name="Active", nullable=true, length=1)	
 	private boolean active;
 
@@ -83,8 +84,7 @@ public class MatchEvent extends com.Sportify.Entities.subentities.SubscriptionEn
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set ORM_events = new java.util.HashSet();
 
-	@JsonView({CompetitionView.Private.class,MatchEventView.Private.class})
-	@JsonBackReference
+	@JsonView({CompetitionView.Private.class})
 	@ManyToMany(mappedBy="ORM_matchEvents", targetEntity= com.Sportify.Entities.subentities.Athlete.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	

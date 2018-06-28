@@ -1,8 +1,11 @@
 package com.Sportify.Service;
 
 import com.Sportify.DAO.competition.ModalityDAO;
+import com.Sportify.DAO.subentities.AthleteDAO;
+import com.Sportify.DAO.subentities.TeamDAO;
 import com.Sportify.Entities.competition.Modality;
 import com.Sportify.Entities.subentities.Athlete;
+import com.Sportify.Entities.subentities.SubscriptionEntity;
 import com.Sportify.Entities.subentities.Team;
 import org.orm.PersistentException;
 import org.springframework.stereotype.Service;
@@ -28,8 +31,29 @@ public class AthleteService {
         return athletes;
     }
 
-    public Athlete createAthlete(int modalityID, Athlete athlete){
-        return null; // has to be done
+    public List<Athlete> getTeamAthletes(int id){
+        try {
+            Team t = TeamDAO.getTeamByORMID(id);
+            return Arrays.asList(t.athletes.toArray());
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+        return  new ArrayList<>();
+    }
+
+    public Athlete createAthlete(int teamID, Athlete athlete){
+        try {
+            Team t = TeamDAO.getTeamByORMID(teamID);
+            athlete.setORM_MatchEvents(new HashSet());
+            athlete.setTeam(t);
+            AthleteDAO.save(athlete);
+            //t.athletes.add((Athlete)athlete);
+            //TeamDAO.save(t);
+            return athlete;
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
