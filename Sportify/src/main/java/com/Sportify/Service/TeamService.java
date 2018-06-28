@@ -2,6 +2,7 @@ package com.Sportify.Service;
 
 import com.Sportify.DAO.competition.ModalityDAO;
 import com.Sportify.Entities.competition.Modality;
+import com.Sportify.Entities.subentities.SubscriptionEntity;
 import com.Sportify.Entities.subentities.Team;
 import org.orm.PersistentException;
 import org.springframework.stereotype.Service;
