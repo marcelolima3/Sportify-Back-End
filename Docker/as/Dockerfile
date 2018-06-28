@@ -1,2 +1,2 @@
 FROM jboss/wildfly
-ADD JavaWeb.war /opt/jboss/wildfly/standalone/deployments/
+ADD Sportify.war /opt/jboss/wildfly/standalone/deployments/

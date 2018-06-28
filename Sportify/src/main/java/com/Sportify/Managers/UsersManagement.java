@@ -8,6 +8,7 @@ import com.Sportify.Entities.subentities.SubscriptionEntity;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.User;
 import org.orm.PersistentException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.*;
 
 @Service
 public class UsersManagement {
+
 
     public UsersManagement() {
     }

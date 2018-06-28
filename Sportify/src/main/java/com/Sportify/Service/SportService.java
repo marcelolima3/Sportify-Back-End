@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class SportService {
     @Autowired
-    private CompetitionsManagement competitionsManagement = new CompetitionsManagement();
+    private CompetitionsManagement competitionsManagement;
 
     public List<Sport> getAllSports(){
         return competitionsManagement.getAllSports();
