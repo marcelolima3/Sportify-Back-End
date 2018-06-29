@@ -50,7 +50,7 @@ public class EventCategory implements Serializable {
 	@Column(name="RegularPrice", nullable=true)	
 	private double regularPrice;
 
-	@JsonView({EventView.Public.class, EventCategoryView.Public.class})
+	@JsonView({EventView.Public.class, SubscriptionView.Public.class, EventCategoryView.Public.class})
 	@Column(name="ExtraPrice", nullable=false)	
 	private double extraPrice;
 	

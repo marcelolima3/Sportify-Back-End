@@ -110,37 +110,41 @@ public class UserService {
         }
     }
 
-    public void subscribe(int id, int idSE, EventCategory eventCategoryID) {
+    public void subscribe(int id, int idSE, Subscription subscription) {
         try {
             boolean existSub = false; boolean regular_price;
             User u = userDAO.getUserByORMID(id);
             SubscriptionEntity subscriptionEntity = SubscriptionEntityDAO.getSubscriptionEntityByORMID(idSE);
-            EventCategory eventCategory = EventCategoryDAO.getEventCategoryByORMID(eventCategoryID.getID());
+            EventCategory eventCategory = null;
+            for(EventCategory ec : (Set<EventCategory>) subscription.getORM_SubscribedEvents()){
+                eventCategory = EventCategoryDAO.getEventCategoryByORMID(ec.getID());
+                break;
+            }
 
             if (subscriptionEntity instanceof MatchEvent)
                 regular_price = true;
             else regular_price = false;
 
-            for (Subscription subscription : u.subscriptions.toArray()) {
-                if (subscription.getSubscribedEntity().equals(subscriptionEntity) && !subscription.subscribedEvents.contains(eventCategory)) {
+            for (Subscription sub : u.subscriptions.toArray()) {
+                if (sub.getSubscribedEntity().equals(subscriptionEntity) && !sub.getPaid() && !sub.subscribedEvents.contains(eventCategory)) {
                     existSub = true;
-                    subscription.subscribedEvents.add(eventCategory);
+                    sub.subscribedEvents.add(eventCategory);
                     if(regular_price)
                         u.getPaymentManager().addToBill(eventCategory.getRegularPrice());
                     else
                         u.getPaymentManager().addToBill(eventCategory.getExtraPrice());
                     userDAO.save(u);
-                } else if (subscription.getSubscribedEntity().equals(subscriptionEntity)) {
+                } else if (sub.getSubscribedEntity().equals(subscriptionEntity) && !sub.getPaid()) {
                     existSub = true;
                 }
             }
             if (!existSub) {
                 Subscription s = new Subscription();
-                s.setDate(new Date());
+                s.setDate(subscription.getDate());
                 s.setSubscribedEntity(subscriptionEntity);
                 s.setPaid(false);
                 NotificationTracker nt = new NotificationTracker();
-                nt.setNotificationPolicy(u.getDefaultNotificationType());
+                nt.setNotificationPolicy(subscription.get_tracker().getNotificationPolicy());
                 s.set_tracker(nt);
                 s.subscribedEvents.add(eventCategory);
                 u.subscriptions.add(s);
@@ -152,6 +156,24 @@ public class UserService {
             }
         }
         catch (PersistentException e) { e.printStackTrace(); }
+    }
+
+    public static void main(String[] args){
+        UserService us = new UserService();
+        Subscription s = new Subscription();
+        s.setDate(new Date());
+        s.setPaid(false);
+        NotificationTracker nt = new NotificationTracker();
+        nt.setNotificationPolicy("HEHE");
+        s.set_tracker(nt);
+
+        try {
+            s.subscribedEvents.add(EventCategoryDAO.getEventCategoryByORMID(1));
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        us.subscribe(1, 29, s);
     }
 
     public Invoice payService(int id) {

@@ -138,11 +138,11 @@ public class Subscription implements Serializable {
 		return _tracker;
 	}
 	
-	private void setORM_SubscribedEvents(java.util.Set value) {
+	public void setORM_SubscribedEvents(java.util.Set value) {
 		this.ORM_subscribedEvents = value;
 	}
 	
-	private java.util.Set getORM_SubscribedEvents() {
+	public java.util.Set getORM_SubscribedEvents() {
 		return ORM_subscribedEvents;
 	}
 	

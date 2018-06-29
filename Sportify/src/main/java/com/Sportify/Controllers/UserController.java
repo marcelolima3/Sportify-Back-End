@@ -66,8 +66,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{idU}/subscribe/{idSE}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void subscribe(@PathVariable("idU") int id, @PathVariable("idSE") int idSE, @RequestBody EventCategory eventCategory){
-        userService.subscribe(id, idSE, eventCategory);
+    public void subscribe(@PathVariable("idU") int id, @PathVariable("idSE") int idSE, @RequestBody Subscription subscription){
+        userService.subscribe(id, idSE, subscription);
     }
 
     @JsonView(PaymentMethodView.Public.class)
