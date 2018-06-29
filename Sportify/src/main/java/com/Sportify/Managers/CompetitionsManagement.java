@@ -9,6 +9,8 @@ import com.Sportify.Entities.competition.MatchEvent;
 import com.Sportify.Entities.competition.Modality;
 import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
+import com.Sportify.Entities.subentities.Athlete;
+import com.Sportify.Entities.subentities.Team;
 import com.Sportify.Entities.user.Subscription;
 import org.orm.PersistentException;
 import org.springframework.stereotype.Service;
@@ -116,20 +118,24 @@ public class CompetitionsManagement {
         }
     }
 
-    public void submitEvent(int matchID, int eventCategoryID, String textFormat, String imageFormat, String videoFormat){
+    public void submitEvent(int matchID, int eventCategoryID, Event event){
         try {
             MatchEvent m = MatchEventDAO.getMatchEventByORMID(matchID);
             EventCategory ec = EventCategoryDAO.getEventCategoryByORMID(eventCategoryID);
-            Event e = new Event();
-            e.setCategory(ec);
-            e.setTextFormat(textFormat);
-            e.setImageFormat(imageFormat);
-            e.setVideoFormat(videoFormat);
-
-            m.events.add(e);
+            event.setCategory(ec);
+            m.events.add(event);
 
             for(Subscription s : m.subscriptions.toArray()){
-                s.get_tracker().notificationHistory.add(e);
+                s.get_tracker().notificationHistory.add(event);
+            }
+
+            for(Athlete a : m.athletes.toArray()){
+                for(Subscription sa : a.subscriptions.toArray()){
+                    sa.get_tracker().notificationHistory.add(event);
+                }
+                for(Subscription st : a.getTeam().subscriptions.toArray()){
+                    st.get_tracker().notificationHistory.add(event);
+                }
             }
 
             MatchEventDAO.save(m);
