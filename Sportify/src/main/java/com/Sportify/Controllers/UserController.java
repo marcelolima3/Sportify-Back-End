@@ -1,10 +1,12 @@
 package com.Sportify.Controllers;
 
+import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.User;
 import com.Sportify.Service.UserService;
 import com.Sportify.Views.JSONViews.event.EventCategoryView;
+import com.Sportify.Views.JSONViews.event.EventView;
 import com.Sportify.Views.JSONViews.user.SubscriptionView;
 import com.Sportify.Views.JSONViews.user.UserView;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -62,5 +64,11 @@ public class UserController {
     @RequestMapping(value = "/{idU}/subscribe/{idSE}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void subscribe(@PathVariable("idU") int id, @PathVariable("idSE") int idSE, @RequestBody EventCategory eventCategory){
         userService.subscribe(id, idSE, eventCategory);
+    }
+
+    @JsonView(EventView.Public.class)
+    @RequestMapping(value = "/{idU}/notifications", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Event> getNotifications(@PathVariable("idU") int id){
+        return userService.consultNotifications(id);
     }
 }

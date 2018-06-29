@@ -3,6 +3,7 @@ package com.Sportify.Service;
 
 import com.Sportify.DAO.subentities.SubscriptionEntityDAO;
 import com.Sportify.DAO.user.UserDAO;
+import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
 import com.Sportify.Entities.subentities.SubscriptionEntity;
 import com.Sportify.Entities.user.NotificationTracker;
@@ -131,5 +132,19 @@ public class UserService {
             }
         }
         catch (PersistentException e) { e.printStackTrace(); }
+    }
+
+    public List<Event> consultNotifications(int id) {
+        try {
+            User u = UserDAO.getUserByORMID(id);
+            List<Event> notificationList = new ArrayList<>();
+            for (Subscription subscription : u.subscriptions.toArray()) {
+                notificationList.addAll(Arrays.asList(subscription.get_tracker().notificationHistory.toArray()));
+            }
+            return notificationList;
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }
