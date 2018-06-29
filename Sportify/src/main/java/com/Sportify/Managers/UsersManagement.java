@@ -58,7 +58,7 @@ public class UsersManagement {
         return notificationList;
     }
 
-    public void payService(int id) {
+    /**public void payService(int id) {
         try {
             User u = UserDAO.getUserByORMID(id);
             PaymentMethod paymentMethod = u.getPaymentManager();
@@ -93,7 +93,7 @@ public class UsersManagement {
         } catch (PersistentException e) {
             e.printStackTrace();
         }
-    }
+    }**/
 
     // Tem de dar throw de uma exception se o utilizador não for criado!
     public Integer registerUser(String name, String email, String password, PaymentMethod p) throws Exception{

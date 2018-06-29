@@ -66,7 +66,7 @@ public class Invoice implements Serializable {
 	@Column(name="Amount", nullable=true)	
 	private double amount;
 
-	@JsonView(InvoiceView.Private.class)
+	@JsonView(InvoiceView.Public.class)
 	@OneToMany(targetEntity= com.Sportify.Entities.user.Subscription.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="InvoiceID", nullable=true) })	

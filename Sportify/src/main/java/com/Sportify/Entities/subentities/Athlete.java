@@ -16,9 +16,12 @@ package com.Sportify.Entities.subentities;
 import com.Sportify.DAO.ORMConstants;
 import com.Sportify.Entities.competition.MatchEvent;
 import com.Sportify.Entities.competition.MatchEventSetCollection;
+import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Views.JSONViews.competition.MatchEventView;
+import com.Sportify.Views.JSONViews.payment.InvoiceView;
 import com.Sportify.Views.JSONViews.subentities.AthleteView;
 import com.Sportify.Views.JSONViews.subentities.SubscriptionEntityView;
+import com.Sportify.Views.JSONViews.user.SubscriptionView;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
@@ -67,7 +70,7 @@ public class Athlete extends com.Sportify.Entities.subentities.SubscriptionEntit
 		
 	};
 
-	@JsonView({SubscriptionEntityView.Public.class, AthleteView.Public.class, MatchEventView.Public.class})
+	@JsonView({InvoiceView.Public.class, SubscriptionView.Public.class, SubscriptionEntityView.Public.class, AthleteView.Public.class, MatchEventView.Public.class})
 	@Column(name="Name", nullable=true, length=255)	
 	private String name;
 

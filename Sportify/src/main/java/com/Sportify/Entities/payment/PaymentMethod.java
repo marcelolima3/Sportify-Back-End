@@ -62,5 +62,7 @@ public abstract class PaymentMethod implements Serializable {
 	public String toString() {
 		return String.valueOf(getID());
 	}
+
+	public abstract void addToBill(double price);
 	
 }

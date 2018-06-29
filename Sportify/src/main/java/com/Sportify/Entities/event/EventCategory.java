@@ -13,7 +13,10 @@
  */
 package com.Sportify.Entities.event;
 
+import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Views.JSONViews.event.EventCategoryView;
+import com.Sportify.Views.JSONViews.payment.InvoiceView;
+import com.Sportify.Views.JSONViews.user.SubscriptionView;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
@@ -31,22 +34,22 @@ public class EventCategory implements Serializable {
 		this.extraPrice = extraPrice;
 	}
 
-	@JsonView(EventCategoryView.Public.class)
+	@JsonView({InvoiceView.Public.class, SubscriptionView.Public.class, EventCategoryView.Public.class})
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
 	@GeneratedValue(generator="EVENT_EVENTCATEGORY_ID_GENERATOR")	
 	@org.hibernate.annotations.GenericGenerator(name="EVENT_EVENTCATEGORY_ID_GENERATOR", strategy="native")	
 	private int ID;
 
-	@JsonView(EventCategoryView.Public.class)
+	@JsonView({InvoiceView.Public.class, SubscriptionView.Public.class, EventCategoryView.Public.class})
 	@Column(name="Name", nullable=true, length=255)	
 	private String name;
 
-	@JsonView(EventCategoryView.Public.class)
+	@JsonView({InvoiceView.Public.class, SubscriptionView.Public.class, EventCategoryView.Public.class})
 	@Column(name="RegularPrice", nullable=true)	
 	private double regularPrice;
 
-	@JsonView(EventCategoryView.Public.class)
+	@JsonView({InvoiceView.Public.class, SubscriptionView.Public.class, EventCategoryView.Public.class})
 	@Column(name="ExtraPrice", nullable=false)	
 	private double extraPrice;
 	
