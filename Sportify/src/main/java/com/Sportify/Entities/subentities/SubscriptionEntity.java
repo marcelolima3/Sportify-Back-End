@@ -99,5 +99,9 @@ public abstract class SubscriptionEntity implements Serializable {
 	public String toString() {
 		return String.valueOf(getID());
 	}
+
+	public boolean equals(SubscriptionEntity se){
+		return this.ID == se.getID();
+	}
 	
 }
