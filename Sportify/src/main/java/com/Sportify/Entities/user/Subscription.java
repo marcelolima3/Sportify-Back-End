@@ -14,6 +14,7 @@
 package com.Sportify.Entities.user;
 
 import com.Sportify.DAO.ORMConstants;
+import com.Sportify.Entities.event.EventCategory;
 import com.Sportify.Views.JSONViews.payment.InvoiceView;
 import com.Sportify.Views.JSONViews.user.SubscriptionView;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -100,7 +101,7 @@ public class Subscription implements Serializable {
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinTable(name="Subscription_EventCategory", joinColumns={ @JoinColumn(name="SubscriptionID") }, inverseJoinColumns={ @JoinColumn(name="EventCategoryID") })	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private java.util.Set ORM_subscribedEvents = new java.util.HashSet();
+	private java.util.Set<EventCategory> ORM_subscribedEvents = new java.util.HashSet();
 	
 	private void setID(int value) {
 		this.ID = value;
