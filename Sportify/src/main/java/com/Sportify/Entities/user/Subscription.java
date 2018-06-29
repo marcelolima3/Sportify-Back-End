@@ -16,8 +16,11 @@ package com.Sportify.Entities.user;
 import com.Sportify.DAO.ORMConstants;
 import com.Sportify.Views.JSONViews.user.SubscriptionView;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.Sportify.Entities.subentities.SubscriptionEntity;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -25,7 +28,14 @@ import javax.persistence.*;
 public class Subscription implements Serializable {
 	public Subscription() {
 	}
-	
+
+	public Subscription(SubscriptionEntity subscribedEntity, Date date, boolean paid) {
+		this.subscribedEntity = subscribedEntity;
+		this.date = date;
+		this.paid = paid;
+		this.ORM_subscribedEvents = new HashSet();
+	}
+
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_SUBSCRIPTION_SUBSCRIBEDEVENTS) {
 			return ORM_subscribedEvents;
@@ -157,11 +167,6 @@ public class Subscription implements Serializable {
 	
 	private com.Sportify.Entities.subentities.SubscriptionEntity getORM_SubscribedEntity() {
 		return subscribedEntity;
-	}
-	
-	public Subscription(java.util.Date date, Boolean paid) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
 	}
 	
 	public String toString() {

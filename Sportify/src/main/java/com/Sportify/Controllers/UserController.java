@@ -1,8 +1,6 @@
 package com.Sportify.Controllers;
 
 import com.Sportify.Entities.event.EventCategory;
-import com.Sportify.Entities.payment.PaymentMethod;
-import com.Sportify.Entities.subentities.SubscriptionEntity;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.User;
 import com.Sportify.Service.UserService;
@@ -10,7 +8,6 @@ import com.Sportify.Views.JSONViews.event.EventCategoryView;
 import com.Sportify.Views.JSONViews.user.SubscriptionView;
 import com.Sportify.Views.JSONViews.user.UserView;
 import com.fasterxml.jackson.annotation.JsonView;
-import org.orm.PersistentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

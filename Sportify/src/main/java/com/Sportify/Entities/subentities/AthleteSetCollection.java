@@ -74,6 +74,7 @@ public class AthleteSetCollection extends org.orm.util.ORMSet {
 	 * <li>name</li>
 	 * <li>nationality</li>
 	 * <li>genre</li>
+	 * <li>imgUrl</li>
 	 * </ul>
 	 * @return The persistent objects sorted array
 	 */
@@ -87,6 +88,7 @@ public class AthleteSetCollection extends org.orm.util.ORMSet {
 	 * <li>name</li>
 	 * <li>nationality</li>
 	 * <li>genre</li>
+	 * <li>imgUrl</li>
 	 * </ul>
 	 * @param ascending true for ascending, false for descending
 	 * @return The persistent objects sorted array

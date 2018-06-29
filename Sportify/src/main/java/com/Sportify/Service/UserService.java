@@ -3,29 +3,24 @@ package com.Sportify.Service;
 
 import com.Sportify.DAO.subentities.SubscriptionEntityDAO;
 import com.Sportify.DAO.user.UserDAO;
-import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
-import com.Sportify.Entities.payment.InvoicePayment;
-import com.Sportify.Entities.payment.MonthlyBill;
-import com.Sportify.Entities.payment.PaymentMethod;
 import com.Sportify.Entities.subentities.SubscriptionEntity;
 import com.Sportify.Entities.user.NotificationTracker;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.User;
-import com.Sportify.Managers.UsersManagement;
 import org.orm.PersistentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.nio.cs.US_ASCII;
 
 import java.util.*;
 
 @Service
 public class UserService {
+    @Autowired private UserDAO userDAO;
 
     public List<User> getUsers(){
         try {
-            return (List<User>)UserDAO.queryUser(null, null);
+            return (List<User>) userDAO.queryUser(null, null);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -35,7 +30,7 @@ public class UserService {
     public int registerUser(User user) throws Exception {
         boolean exist = false;
         try {
-            for (User u : (List<User>) UserDAO.queryUser(null, null)) {
+            for (User u : (List<User>) userDAO.queryUser(null, null)) {
                 if (u.getEmail().equals(user.getEmail())) {
                     exist = true;
                     break;
@@ -46,10 +41,10 @@ public class UserService {
         }
         if (!exist) {
             user.setORM_Subscriptions(new HashSet());
-            //user.setPaymentManager(new InvoicePayment(10));
+            //com.Sportify.Entities.user.setPaymentManager(new InvoicePayment(10));
             user.setRegistrationDate(new Date());
             try {
-                UserDAO.save(user);
+                userDAO.save(user);
             } catch (PersistentException e) {
                 e.printStackTrace();
             }
@@ -61,10 +56,10 @@ public class UserService {
 
     public void changeOptions(int id, User user){
         try {
-            User u = UserDAO.getUserByORMID(id);
+            User u = userDAO.getUserByORMID(id);
             u.setDefaultNotificationType(user.getDefaultNotificationType());
             u.setPaymentManager(user.getPaymentManager());
-            UserDAO.save(u);
+            userDAO.save(u);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -72,7 +67,7 @@ public class UserService {
 
     public List<EventCategory> getSEEventCategories(int userID, int subscriptionEntityID){
         try {
-            User u = UserDAO.getUserByORMID(userID);
+            User u = userDAO.getUserByORMID(userID);
 
             for (Subscription subscription : u.subscriptions.toArray()) {
                 if(subscription.getSubscribedEntity().getID() == subscriptionEntityID){
@@ -87,7 +82,7 @@ public class UserService {
 
     public List<Subscription> getSubscriptions(int id){
         try {
-            User u = UserDAO.getUserByORMID(id);
+            User u = userDAO.getUserByORMID(id);
             return Arrays.asList(u.subscriptions.toArray());
         } catch (PersistentException e) {
             e.printStackTrace();
@@ -99,7 +94,7 @@ public class UserService {
         try {
             String email = user.getEmail();
             String password = user.getPassword();
-            List list = UserDAO.queryUser("Email = '" + email + "' and Password = '" + password + "'", null);
+            List list = userDAO.queryUser("Email = '" + email + "' and Password = '" + password + "'", null);
             return list.size() > 0;
         } catch (PersistentException e) {
             e.printStackTrace();
@@ -110,14 +105,14 @@ public class UserService {
     public void subscribe(int id, int idSE, EventCategory eventCategory) {
         try {
             boolean existSub = false;
-            User u = UserDAO.getUserByORMID(id);
+            User u = userDAO.getUserByORMID(id);
             SubscriptionEntity subscriptionEntity = SubscriptionEntityDAO.getSubscriptionEntityByORMID(idSE);
             for (Subscription subscription : u.subscriptions.toArray()) {
                 if (subscription.getSubscribedEntity().equals(subscriptionEntity) && !subscription.subscribedEvents.contains(eventCategory)) {
                     existSub = true;
                     subscription.subscribedEvents.add(eventCategory);
                     //u.getPaymentManager().addToBill(eventCategory.getPrice());
-                    UserDAO.save(u);
+                    userDAO.save(u);
                 } else if (subscription.getSubscribedEntity().equals(subscriptionEntity)) {
                     existSub = true;
                 }
@@ -132,10 +127,9 @@ public class UserService {
                 s.subscribedEvents.add(eventCategory);
                 u.subscriptions.add(s);
                 //u.getPaymentManager().addToBill(eventCategory.getPrice());
-                UserDAO.save(u);
+                userDAO.save(u);
             }
-        } catch (PersistentException e) {
-            e.printStackTrace();
         }
+        catch (PersistentException e) { e.printStackTrace(); }
     }
 }

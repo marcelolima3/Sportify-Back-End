@@ -1,9 +1,7 @@
 package com.Sportify.Controllers;
 
-import com.Sportify.Entities.subentities.SubscriptionEntity;
 import com.Sportify.Entities.subentities.Team;
 import com.Sportify.Service.TeamService;
-import com.Sportify.Views.JSONViews.subentities.SubscriptionEntityView;
 import com.Sportify.Views.JSONViews.subentities.TeamView;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;

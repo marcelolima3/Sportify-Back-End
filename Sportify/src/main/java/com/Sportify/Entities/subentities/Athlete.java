@@ -14,18 +14,15 @@
 package com.Sportify.Entities.subentities;
 
 import com.Sportify.DAO.ORMConstants;
-
+import com.Sportify.Entities.competition.MatchEvent;
+import com.Sportify.Entities.competition.MatchEventSetCollection;
 import com.Sportify.Views.JSONViews.competition.MatchEventView;
 import com.Sportify.Views.JSONViews.subentities.AthleteView;
 import com.Sportify.Views.JSONViews.subentities.SubscriptionEntityView;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
-import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -34,9 +31,7 @@ import javax.persistence.*;
 @DiscriminatorValue("Athlete")
 @PrimaryKeyJoinColumn(name="SubscriptionEntityID", referencedColumnName="ID")
 public class Athlete extends com.Sportify.Entities.subentities.SubscriptionEntity implements Serializable {
-	public Athlete() {
-		super();
-	}
+	public Athlete() { super(); }
 
 	public Athlete(String name, String nationality, String genre) {
 		super();
@@ -45,7 +40,7 @@ public class Athlete extends com.Sportify.Entities.subentities.SubscriptionEntit
 		this.genre = genre;
 		this.ORM_matchEvents = new HashSet();
 	}
-
+	
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_ATHLETE_MATCHEVENTS) {
 			return ORM_matchEvents;
@@ -84,14 +79,18 @@ public class Athlete extends com.Sportify.Entities.subentities.SubscriptionEntit
 	@Column(name="Genre", nullable=true, length=255)	
 	private String genre;
 
+	@JsonView({SubscriptionEntityView.Public.class, AthleteView.Public.class, MatchEventView.Public.class})
+	@Column(name="ImgUrl", nullable=true, length=255)	
+	private String imgUrl;
+
 	@JsonView(AthleteView.Private.class)
 	@ManyToOne(targetEntity= com.Sportify.Entities.subentities.Team.class, fetch=FetchType.LAZY)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="TeamSubscriptionEntityID", referencedColumnName="SubscriptionEntityID", nullable=false) })	
+	@JoinColumns({ @JoinColumn(name="TeamSubscriptionEntityID", referencedColumnName="SubscriptionEntityID") })	
 	private com.Sportify.Entities.subentities.Team team;
 
 	@JsonView(AthleteView.Private.class)
-	@ManyToMany(targetEntity= com.Sportify.Entities.competition.MatchEvent.class)
+	@ManyToMany(targetEntity=MatchEvent.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinTable(name="MatchEvent_Athlete", joinColumns={ @JoinColumn(name="AthleteSubscriptionEntityID") }, inverseJoinColumns={ @JoinColumn(name="MatchEventSubscriptionEntityID") })	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
@@ -119,6 +118,14 @@ public class Athlete extends com.Sportify.Entities.subentities.SubscriptionEntit
 	
 	public String getGenre() {
 		return genre;
+	}
+	
+	public void setImgUrl(String value) {
+		this.imgUrl = value;
+	}
+	
+	public String getImgUrl() {
+		return imgUrl;
 	}
 	
 	public void setTeam(com.Sportify.Entities.subentities.Team value) {
@@ -154,7 +161,8 @@ public class Athlete extends com.Sportify.Entities.subentities.SubscriptionEntit
 	}
 	
 	@Transient	
-	public final com.Sportify.Entities.competition.MatchEventSetCollection matchEvents = new com.Sportify.Entities.competition.MatchEventSetCollection(this, _ormAdapter, ORMConstants.KEY_ATHLETE_MATCHEVENTS, ORMConstants.KEY_MATCHEVENT_ATHLETES, ORMConstants.KEY_MUL_MANY_TO_MANY);
+	public final MatchEventSetCollection matchEvents = new MatchEventSetCollection(this, _ormAdapter, ORMConstants.KEY_ATHLETE_MATCHEVENTS, ORMConstants.KEY_MATCHEVENT_ATHLETES, ORMConstants.KEY_MUL_MANY_TO_MANY);
+
 	
 	public String toString() {
 		return super.toString();

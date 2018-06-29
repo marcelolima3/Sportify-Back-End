@@ -12,8 +12,6 @@ package ormsamples;
 import com.Sportify.DAO.EAClassDiagramPersistentManager;
 import com.Sportify.DAO.competition.ModalityDAO;
 import com.Sportify.DAO.competition.SportDAO;
-import com.Sportify.DAO.subentities.SubscriptionEntityDAO;
-import com.Sportify.DAO.subentities.TeamDAO;
 import com.Sportify.DAO.user.UserDAO;
 import com.Sportify.Entities.competition.Competition;
 import com.Sportify.Entities.competition.Modality;
@@ -22,9 +20,7 @@ import com.Sportify.Entities.event.EventCategory;
 import com.Sportify.Entities.payment.InvoicePayment;
 import com.Sportify.Entities.payment.PaymentMethod;
 import com.Sportify.Entities.subentities.Athlete;
-import com.Sportify.Entities.subentities.SubscriptionEntity;
 import com.Sportify.Entities.subentities.Team;
-import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.User;
 import com.Sportify.Managers.CompetitionsManagement;
 import com.Sportify.Managers.UsersManagement;
@@ -90,7 +86,7 @@ public class Populate {
     public void createTeam() throws PersistentException {
         Modality modality = ModalityDAO.getModalityByORMID(1);
 
-        Team benfica = new Team("Benfica");
+        Team benfica = new Team("Benfica", "img");
         HashSet<Athlete> atletas = new HashSet<Athlete>();
         Athlete atleta = new Athlete("João Pereira", "Portuguese", "Male");
         atleta.setTeam(benfica);
@@ -124,13 +120,13 @@ public class Populate {
                 );
 
         List<Team> teams_list = Arrays.asList(
-                new Team("Cleveland Cavaliers"),
-                new Team("Roger Federer"),
-                new Team("New York Yankees"),
-                new Team("S.L. Benfica"),
-                new Team("S.L. Benfica"),
-                new Team("Tiger Woods"),
-                new Team("SC Braga")
+                new Team("Cleveland Cavaliers", "img"),
+                new Team("Roger Federer", "img"),
+                new Team("New York Yankees", "img"),
+                new Team("S.L. Benfica", "img"),
+                new Team("S.L. Benfica", "img"),
+                new Team("Tiger Woods", "img"),
+                new Team("SC Braga", "img")
                 );
 
         List<Athlete> athletes_list = Arrays.asList(
@@ -180,7 +176,7 @@ public class Populate {
 
             HashSet<Team> sprint_teams = new HashSet<Team>();
 
-            Team team_benfica_sprint = new Team("S.L. Benfica");
+            Team team_benfica_sprint = new Team("S.L. Benfica", "img");
             Athlete athlete_benfica_print_1 = new Athlete("João Pereira", "Portuguese", "Male");
             athlete_benfica_print_1.setTeam(team_benfica_sprint);
             Athlete athlete_benfica_print_2 = new Athlete("Maria Silva", "Portuguese", "Female");
@@ -189,7 +185,7 @@ public class Populate {
             athlete_benfica_print_3.setTeam(team_benfica_sprint);
             sprint_teams.add(team_benfica_sprint);
 
-            Team team_porto_sprint = new Team("FC Porto");
+            Team team_porto_sprint = new Team("FC Porto", "img");
             Athlete athlete_porto_print_1 = new Athlete("Ana Miranda", "Portuguese", "Female");
             athlete_porto_print_1.setTeam(team_porto_sprint);
             Athlete athlete_porto_print_2 = new Athlete("Maria Peixoto", "Portuguese", "Female");
@@ -198,7 +194,7 @@ public class Populate {
             athlete_porto_print_3.setTeam(team_porto_sprint);
             sprint_teams.add(team_porto_sprint);
 
-            Team team_sporting_sprint = new Team("Sporting CP");
+            Team team_sporting_sprint = new Team("Sporting CP", "img");
             Athlete athlete_sporting_print_1 = new Athlete("Manuel Pereira", "Portuguese", "Male");
             athlete_sporting_print_1.setTeam(team_sporting_sprint);
             Athlete athlete_sporting_print_2 = new Athlete("António Sá", "Portuguese", "Male");
@@ -220,7 +216,7 @@ public class Populate {
             HashSet hurdling_teams = new HashSet<Team>();
             athletics_modalities.add(modality_hurdling);
 
-            Team team_benfica_hurdling = new Team("S.L. Benfica");
+            Team team_benfica_hurdling = new Team("S.L. Benfica", "img");
             Athlete hurdling_athlete_benfica_print_1 = new Athlete("Luís António", "Portuguese", "Male");
             hurdling_athlete_benfica_print_1.setTeam(team_benfica_hurdling);
             Athlete hurdling_athlete_benfica_print_2 = new Athlete("Mariana Silva", "Portuguese", "Female");
@@ -229,7 +225,7 @@ public class Populate {
             hurdling_athlete_benfica_print_3.setTeam(team_benfica_hurdling);
             hurdling_teams.add(team_benfica_hurdling);
 
-            Team team_porto_hurdling = new Team("FC Porto");
+            Team team_porto_hurdling = new Team("FC Porto", "img");
             Athlete hurdling_athlete_porto_print_1 = new Athlete("Ana Guedes", "Portuguese", "Female");
             hurdling_athlete_porto_print_1.setTeam(team_porto_hurdling);
             Athlete hurdling_athlete_porto_print_2 = new Athlete("Maria Pires", "Portuguese", "Female");
@@ -238,7 +234,7 @@ public class Populate {
             hurdling_athlete_porto_print_3.setTeam(team_porto_hurdling);
             hurdling_teams.add(team_porto_hurdling);
 
-            Team team_sporting_hurdling = new Team("Sporting CP");
+            Team team_sporting_hurdling = new Team("Sporting CP", "img");
             Athlete hurdling_athlete_sporting_print_1 = new Athlete("Manuel Ferreira", "Portuguese", "Male");
             hurdling_athlete_sporting_print_1.setTeam(team_sporting_hurdling);
             Athlete hurdling_athlete_sporting_print_2 = new Athlete("João Sá", "Portuguese", "Male");
@@ -272,37 +268,37 @@ public class Populate {
 
             HashSet<Team> teams = new HashSet<Team>();
 
-            Team benfica = new Team("S.L. Benfica");
+            Team benfica = new Team("S.L. Benfica", "img");
             Athlete benfica_athlete = new Athlete("Luisão", "Brazilian", "Male");
             benfica_athlete.setTeam(benfica);
             teams.add(benfica);
 
-            Team porto = new Team("FC Porto");
+            Team porto = new Team("FC Porto", "img");
             Athlete porto_athlete = new Athlete("Herrera", "Mexican", "Male");
             porto_athlete.setTeam(porto);
             teams.add(porto);
 
-            Team sporting = new Team("Sporting CP");
+            Team sporting = new Team("Sporting CP", "img");
             Athlete sporting_athlete = new Athlete("Fábio Coentão", "Portuguese", "Male");
             sporting_athlete.setTeam(sporting);
             teams.add(sporting);
 
-            Team braga = new Team("S.C. Braga");
+            Team braga = new Team("S.C. Braga", "img");
             Athlete braga_athlete = new Athlete("Paulinho", "Portuguese", "Male");
             braga_athlete.setTeam(braga);
             teams.add(braga);
 
-            Team real_madrid = new Team("Real Madrid C.F.");
+            Team real_madrid = new Team("Real Madrid C.F.", "img");
             Athlete real_madrid_athlete = new Athlete("Cristiano Ronaldo", "Portuguese", "Male");
             real_madrid_athlete.setTeam(real_madrid);
             teams.add(real_madrid);
 
-            Team juventus = new Team("Juventus F.C.");
+            Team juventus = new Team("Juventus F.C.", "img");
             Athlete juventus_athlete = new Athlete("Buffon", "Italian", "Male");
             juventus_athlete.setTeam(juventus);
             teams.add(juventus);
 
-            Team manchester_city = new Team("Manchester City F.C.");
+            Team manchester_city = new Team("Manchester City F.C.", "img");
             Athlete manchester_city_athlete = new Athlete("David Silva", "Spanish","Male");
             manchester_city_athlete.setTeam(manchester_city);
             teams.add(manchester_city);

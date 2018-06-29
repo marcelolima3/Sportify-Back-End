@@ -12,12 +12,11 @@ import java.util.List;
 
 @Service
 public class SportService {
-    @Autowired
-    private CompetitionsManagement competitionsManagement;
+    @Autowired private SportDAO sportDAO;
 
     public List<Sport> getAllSports(){
         try {
-            return (List<Sport>)SportDAO.querySport(null, null);
+            return (List<Sport>) sportDAO.querySport(null, null);
         } catch (PersistentException e) {
             e.printStackTrace();
         }

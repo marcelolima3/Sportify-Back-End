@@ -18,6 +18,7 @@ import com.Sportify.Views.JSONViews.user.NotificationTrackerView;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -25,7 +26,12 @@ import javax.persistence.*;
 public class NotificationTracker implements Serializable {
 	public NotificationTracker() {
 	}
-	
+
+	public NotificationTracker(String notificationPolicy) {
+		this.notificationPolicy = notificationPolicy;
+		this.ORM_notificationHistory = new HashSet();
+	}
+
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_NOTIFICATIONTRACKER_NOTIFICATIONHISTORY) {
 			return ORM_notificationHistory;
@@ -90,11 +96,6 @@ public class NotificationTracker implements Serializable {
 	
 	@Transient	
 	public final com.Sportify.Entities.event.EventSetCollection notificationHistory = new com.Sportify.Entities.event.EventSetCollection(this, _ormAdapter, ORMConstants.KEY_NOTIFICATIONTRACKER_NOTIFICATIONHISTORY, ORMConstants.KEY_MUL_MANY_TO_MANY);
-	
-	public NotificationTracker(String notificationPolicy) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
 	
 	public String toString() {
 		return String.valueOf(getID());

@@ -14,11 +14,9 @@
 package com.Sportify.Entities.user;
 
 import com.Sportify.DAO.ORMConstants;
-import com.Sportify.Entities.payment.PaymentMethod;
 import com.Sportify.Views.JSONViews.user.UserView;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
-import org.orm.util.ORMAdapter;
+import com.Sportify.Entities.payment.PaymentMethod;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -41,7 +39,7 @@ public class User implements Serializable {
 		this.registrationDate = new Date();
 		this.ORM_subscriptions = new HashSet();
 	}
-
+	
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_USER_SUBSCRIPTIONS) {
 			return ORM_subscriptions;
@@ -60,7 +58,7 @@ public class User implements Serializable {
 
 	@JsonView(UserView.Public.class)
 	@Column(name="ID", nullable=false, length=10)	
-	@Id
+	@Id	
 	@GeneratedValue(generator="USER_USER_ID_GENERATOR")	
 	@org.hibernate.annotations.GenericGenerator(name="USER_USER_ID_GENERATOR", strategy="native")	
 	private int ID;
@@ -76,20 +74,20 @@ public class User implements Serializable {
 	private String name;
 
 	@JsonView(UserView.Public.class)
-	@Column(name="Email", nullable=true, length=255)	
+	@Column(name="Email", nullable=true, length=255)
 	private String email;
 
 	@JsonView(UserView.Public.class)
-	@Column(name="Password", nullable=true, length=255)	
+	@Column(name="Password", nullable=true, length=255)
 	private String password;
 
 	@JsonView(UserView.Public.class)
-	@Column(name="RegistrationDate", nullable=true)	
+	@Column(name="RegistrationDate", nullable=true)
 	@Temporal(TemporalType.DATE)	
 	private java.util.Date registrationDate;
 
 	@JsonView(UserView.Public.class)
-	@Column(name="DefaultNotificationType", nullable=true, length=255)	
+	@Column(name="DefaultNotificationType", nullable=true, length=255)
 	private String defaultNotificationType;
 
 	@JsonView(UserView.Private.class)
@@ -169,7 +167,7 @@ public class User implements Serializable {
 	
 	@Transient	
 	public final com.Sportify.Entities.user.SubscriptionSetCollection subscriptions = new com.Sportify.Entities.user.SubscriptionSetCollection(this, _ormAdapter, ORMConstants.KEY_USER_SUBSCRIPTIONS, ORMConstants.KEY_MUL_ONE_TO_MANY);
-
+	
 	public String toString() {
 		return String.valueOf(getID());
 	}

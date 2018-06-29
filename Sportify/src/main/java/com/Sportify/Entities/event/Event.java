@@ -108,10 +108,11 @@ public class Event implements Serializable {
 	public com.Sportify.Entities.event.EventCategory getCategory() {
 		return category;
 	}
-	
+
 	public Event(String textFormat, String imageFormat, String videoFormat) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
+		this.textFormat = textFormat;
+		this.imageFormat = imageFormat;
+		this.videoFormat = videoFormat;
 	}
 	
 	public String toString() {

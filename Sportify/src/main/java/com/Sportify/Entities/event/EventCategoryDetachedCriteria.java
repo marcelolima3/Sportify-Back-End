@@ -21,20 +21,23 @@ import org.orm.criteria.*;
 public class EventCategoryDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression name;
-	public final DoubleExpression price;
+	public final DoubleExpression regularPrice;
+	public final DoubleExpression extraPrice;
 	
 	public EventCategoryDetachedCriteria() {
 		super(com.Sportify.Entities.event.EventCategory.class, com.Sportify.Entities.event.EventCategoryCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		name = new StringExpression("name", this.getDetachedCriteria());
-		price = new DoubleExpression("price", this.getDetachedCriteria());
+		regularPrice = new DoubleExpression("regularPrice", this.getDetachedCriteria());
+		extraPrice = new DoubleExpression("extraPrice", this.getDetachedCriteria());
 	}
 	
 	public EventCategoryDetachedCriteria(DetachedCriteria aDetachedCriteria) {
 		super(aDetachedCriteria, com.Sportify.Entities.event.EventCategoryCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		name = new StringExpression("name", this.getDetachedCriteria());
-		price = new DoubleExpression("price", this.getDetachedCriteria());
+		regularPrice = new DoubleExpression("regularPrice", this.getDetachedCriteria());
+		extraPrice = new DoubleExpression("extraPrice", this.getDetachedCriteria());
 	}
 	
 	public EventCategory uniqueEventCategory(PersistentSession session) {

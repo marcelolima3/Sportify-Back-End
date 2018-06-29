@@ -14,13 +14,15 @@
 package com.Sportify.DAO.user;
 
 import com.Sportify.DAO.EAClassDiagramPersistentManager;
-import org.orm.*;
-import org.hibernate.Query;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.SubscriptionCriteria;
+import org.orm.*;
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class SubscriptionDAO {
 	public static Subscription loadSubscriptionByORMID(int ID) throws PersistentException {
 		try {

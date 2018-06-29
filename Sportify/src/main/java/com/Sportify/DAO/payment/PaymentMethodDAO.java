@@ -14,13 +14,15 @@
 package com.Sportify.DAO.payment;
 
 import com.Sportify.DAO.EAClassDiagramPersistentManager;
-import org.orm.*;
-import org.hibernate.Query;
 import com.Sportify.Entities.payment.PaymentMethod;
 import com.Sportify.Entities.payment.PaymentMethodCriteria;
+import org.orm.*;
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class PaymentMethodDAO {
 	public static PaymentMethod loadPaymentMethodByORMID(int ID) throws PersistentException {
 		try {

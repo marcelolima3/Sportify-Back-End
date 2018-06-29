@@ -14,11 +14,8 @@
 package com.Sportify.Entities.competition;
 
 import com.Sportify.DAO.ORMConstants;
-import com.Sportify.Views.JSONViews.competition.ModalityView;
 import com.Sportify.Views.JSONViews.competition.SportView;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -42,8 +39,8 @@ public class Sport implements Serializable {
 		
 		return null;
 	}
-
-	@Transient
+	
+	@Transient	
 	org.orm.util.ORMAdapter _ormAdapter = new org.orm.util.AbstractORMAdapter() {
 		public java.util.Set getSet(int key) {
 			return this_getSet(key);
@@ -61,6 +58,14 @@ public class Sport implements Serializable {
 	@JsonView(SportView.Public.class)
 	@Column(name="Name", nullable=true, length=255)	
 	private String name;
+
+	@JsonView(SportView.Public.class)
+	@Column(name="ImgUrl", nullable=true, length=255)	
+	private String imgUrl;
+
+	@JsonView(SportView.Public.class)
+	@Column(name="OnlySport", nullable=false, length=1)	
+	private boolean onlySport;
 
 	@JsonView(SportView.Private.class)
 	@OneToMany(targetEntity= com.Sportify.Entities.competition.Modality.class)
@@ -87,6 +92,22 @@ public class Sport implements Serializable {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public void setImgUrl(String value) {
+		this.imgUrl = value;
+	}
+	
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	
+	public void setOnlySport(boolean value) {
+		this.onlySport = value;
+	}
+	
+	public boolean getOnlySport() {
+		return onlySport;
 	}
 	
 	public void setORM_Modalities(java.util.Set value) {

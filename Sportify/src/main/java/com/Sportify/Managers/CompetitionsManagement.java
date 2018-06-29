@@ -3,26 +3,17 @@ package com.Sportify.Managers;
 import com.Sportify.DAO.competition.CompetitionDAO;
 import com.Sportify.DAO.competition.MatchEventDAO;
 import com.Sportify.DAO.competition.ModalityDAO;
-import com.Sportify.DAO.competition.SportDAO;
 import com.Sportify.DAO.event.EventCategoryDAO;
-import com.Sportify.DAO.event.EventDAO;
 import com.Sportify.Entities.competition.Competition;
 import com.Sportify.Entities.competition.MatchEvent;
 import com.Sportify.Entities.competition.Modality;
-import com.Sportify.Entities.competition.Sport;
 import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
-import com.Sportify.Entities.subentities.Athlete;
-import com.Sportify.Entities.subentities.Team;
 import com.Sportify.Entities.user.Subscription;
 import org.orm.PersistentException;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class CompetitionsManagement {

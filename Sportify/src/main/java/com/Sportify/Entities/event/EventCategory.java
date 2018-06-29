@@ -25,6 +25,11 @@ public class EventCategory implements Serializable {
 	public EventCategory() {
 	}
 
+	public EventCategory(String name, double regularPrice, double extraPrice) {
+		this.name = name;
+		this.regularPrice = regularPrice;
+		this.extraPrice = extraPrice;
+	}
 
 	@JsonView(EventCategoryView.Public.class)
 	@Column(name="ID", nullable=false, length=10)	
@@ -38,8 +43,12 @@ public class EventCategory implements Serializable {
 	private String name;
 
 	@JsonView(EventCategoryView.Public.class)
-	@Column(name="Price", nullable=true)	
-	private double price;
+	@Column(name="RegularPrice", nullable=true)	
+	private double regularPrice;
+
+	@JsonView(EventCategoryView.Public.class)
+	@Column(name="ExtraPrice", nullable=false)	
+	private double extraPrice;
 	
 	private void setID(int value) {
 		this.ID = value;
@@ -61,19 +70,23 @@ public class EventCategory implements Serializable {
 		return name;
 	}
 	
-	public void setPrice(double value) {
-		this.price = value;
+	public void setRegularPrice(double value) {
+		this.regularPrice = value;
 	}
 	
-	public double getPrice() {
-		return price;
+	public double getRegularPrice() {
+		return regularPrice;
 	}
 	
-	public EventCategory(String name, double normalPrice, double extraPrice) {
-		this.name = name;
-		this.price = normalPrice;
+	public void setExtraPrice(double value) {
+		this.extraPrice = value;
 	}
 	
+	public double getExtraPrice() {
+		return extraPrice;
+	}
+
+
 	public String toString() {
 		return String.valueOf(getID());
 	}

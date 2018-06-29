@@ -8,12 +8,8 @@ import com.Sportify.Entities.subentities.SubscriptionEntity;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.User;
 import org.orm.PersistentException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service

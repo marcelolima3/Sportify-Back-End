@@ -18,6 +18,8 @@ import com.Sportify.Views.JSONViews.payment.InvoiceView;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -25,7 +27,13 @@ import javax.persistence.*;
 public class Invoice implements Serializable {
 	public Invoice() {
 	}
-	
+
+	public Invoice(Date date, double amount) {
+		this.date = date;
+		this.amount = amount;
+		this.ORM_subscriptions = new HashSet();
+	}
+
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_INVOICE_SUBSCRIPTIONS) {
 			return ORM_subscriptions;
@@ -61,7 +69,7 @@ public class Invoice implements Serializable {
 	@JsonView(InvoiceView.Private.class)
 	@OneToMany(targetEntity= com.Sportify.Entities.user.Subscription.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="InvoiceID", nullable=false) })	
+	@JoinColumns({ @JoinColumn(name="InvoiceID", nullable=true) })	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set ORM_subscriptions = new java.util.HashSet();
 	

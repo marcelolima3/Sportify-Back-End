@@ -14,15 +14,10 @@
 package com.Sportify.Entities.competition;
 
 import com.Sportify.DAO.ORMConstants;
-
 import com.Sportify.Views.JSONViews.competition.CompetitionView;
 import com.Sportify.Views.JSONViews.competition.MatchEventView;
-import com.Sportify.Views.JSONViews.competition.ModalityView;
 import com.Sportify.Views.JSONViews.subentities.SubscriptionEntityView;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
-
 
 import java.io.Serializable;
 import javax.persistence.*;

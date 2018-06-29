@@ -21,6 +21,7 @@ import org.orm.criteria.*;
 public class ModalityDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression name;
+	public final StringExpression imgUrl;
 	public final CollectionExpression _eventCategories;
 	public final CollectionExpression competitions;
 	public final CollectionExpression teams;
@@ -29,6 +30,7 @@ public class ModalityDetachedCriteria extends AbstractORMDetachedCriteria {
 		super(com.Sportify.Entities.competition.Modality.class, com.Sportify.Entities.competition.ModalityCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		name = new StringExpression("name", this.getDetachedCriteria());
+		imgUrl = new StringExpression("imgUrl", this.getDetachedCriteria());
 		_eventCategories = new CollectionExpression("ORM__eventCategories", this.getDetachedCriteria());
 		competitions = new CollectionExpression("ORM_competitions", this.getDetachedCriteria());
 		teams = new CollectionExpression("ORM_teams", this.getDetachedCriteria());
@@ -38,6 +40,7 @@ public class ModalityDetachedCriteria extends AbstractORMDetachedCriteria {
 		super(aDetachedCriteria, com.Sportify.Entities.competition.ModalityCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		name = new StringExpression("name", this.getDetachedCriteria());
+		imgUrl = new StringExpression("imgUrl", this.getDetachedCriteria());
 		_eventCategories = new CollectionExpression("ORM__eventCategories", this.getDetachedCriteria());
 		competitions = new CollectionExpression("ORM_competitions", this.getDetachedCriteria());
 		teams = new CollectionExpression("ORM_teams", this.getDetachedCriteria());

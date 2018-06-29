@@ -14,6 +14,9 @@
 package com.Sportify.Entities.subentities;
 
 import java.util.List;
+
+import com.Sportify.Entities.competition.MatchEventDetachedCriteria;
+import com.Sportify.Entities.user.SubscriptionDetachedCriteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.orm.PersistentSession;
 import org.orm.criteria.*;
@@ -24,6 +27,7 @@ public class AthleteDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final StringExpression name;
 	public final StringExpression nationality;
 	public final StringExpression genre;
+	public final StringExpression imgUrl;
 	public final IntegerExpression teamId;
 	public final AssociationExpression team;
 	public final CollectionExpression matchEvents;
@@ -35,6 +39,7 @@ public class AthleteDetachedCriteria extends AbstractORMDetachedCriteria {
 		name = new StringExpression("name", this.getDetachedCriteria());
 		nationality = new StringExpression("nationality", this.getDetachedCriteria());
 		genre = new StringExpression("genre", this.getDetachedCriteria());
+		imgUrl = new StringExpression("imgUrl", this.getDetachedCriteria());
 		teamId = new IntegerExpression("team.", this.getDetachedCriteria());
 		team = new AssociationExpression("team", this.getDetachedCriteria());
 		matchEvents = new CollectionExpression("ORM_matchEvents", this.getDetachedCriteria());
@@ -47,6 +52,7 @@ public class AthleteDetachedCriteria extends AbstractORMDetachedCriteria {
 		name = new StringExpression("name", this.getDetachedCriteria());
 		nationality = new StringExpression("nationality", this.getDetachedCriteria());
 		genre = new StringExpression("genre", this.getDetachedCriteria());
+		imgUrl = new StringExpression("imgUrl", this.getDetachedCriteria());
 		teamId = new IntegerExpression("team.", this.getDetachedCriteria());
 		team = new AssociationExpression("team", this.getDetachedCriteria());
 		matchEvents = new CollectionExpression("ORM_matchEvents", this.getDetachedCriteria());
@@ -56,12 +62,12 @@ public class AthleteDetachedCriteria extends AbstractORMDetachedCriteria {
 		return new TeamDetachedCriteria(createCriteria("team"));
 	}
 	
-	public com.Sportify.Entities.competition.MatchEventDetachedCriteria createMatchEventsCriteria() {
-		return new com.Sportify.Entities.competition.MatchEventDetachedCriteria(createCriteria("ORM_matchEvents"));
+	public MatchEventDetachedCriteria createMatchEventsCriteria() {
+		return new MatchEventDetachedCriteria(createCriteria("ORM_matchEvents"));
 	}
 	
-	public com.Sportify.Entities.user.SubscriptionDetachedCriteria createSubscriptionsCriteria() {
-		return new com.Sportify.Entities.user.SubscriptionDetachedCriteria(createCriteria("ORM_subscriptions"));
+	public SubscriptionDetachedCriteria createSubscriptionsCriteria() {
+		return new SubscriptionDetachedCriteria(createCriteria("ORM_subscriptions"));
 	}
 	
 	public Athlete uniqueAthlete(PersistentSession session) {

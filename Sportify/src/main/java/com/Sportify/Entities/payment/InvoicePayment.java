@@ -17,14 +17,10 @@ import com.Sportify.DAO.ORMConstants;
 import com.Sportify.Views.JSONViews.payment.InvoicePaymentView;
 import com.Sportify.Views.JSONViews.payment.PaymentMethodView;
 import com.Sportify.Views.JSONViews.user.UserView;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonView;
-import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -34,7 +30,6 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(name="PaymentMethodID", referencedColumnName="ID")
 public class InvoicePayment extends com.Sportify.Entities.payment.PaymentMethod implements Serializable {
 	public InvoicePayment() {
-		super();
 	}
 
 	public InvoicePayment(double currentAmount) {
@@ -42,7 +37,7 @@ public class InvoicePayment extends com.Sportify.Entities.payment.PaymentMethod 
 		this.currentAmount = currentAmount;
 		this.ORM_payments = new HashSet();
 	}
-
+	
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_INVOICEPAYMENT_PAYMENTS) {
 			return ORM_payments;
@@ -50,7 +45,7 @@ public class InvoicePayment extends com.Sportify.Entities.payment.PaymentMethod 
 		
 		return null;
 	}
-
+	
 	@Transient	
 	org.orm.util.ORMAdapter _ormAdapter = new org.orm.util.AbstractORMAdapter() {
 		public java.util.Set getSet(int key) {
@@ -88,7 +83,7 @@ public class InvoicePayment extends com.Sportify.Entities.payment.PaymentMethod 
 	
 	@Transient	
 	public final com.Sportify.Entities.payment.InvoiceSetCollection payments = new com.Sportify.Entities.payment.InvoiceSetCollection(this, _ormAdapter, ORMConstants.KEY_INVOICEPAYMENT_PAYMENTS, ORMConstants.KEY_MUL_ONE_TO_MANY);
-
+	
 	public String toString() {
 		return super.toString();
 	}

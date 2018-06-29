@@ -1,15 +1,12 @@
 package com.Sportify.Controllers;
 
 import com.Sportify.Entities.subentities.Athlete;
-import com.Sportify.Entities.subentities.SubscriptionEntity;
 import com.Sportify.Service.AthleteService;
 import com.Sportify.Views.JSONViews.subentities.AthleteView;
-import com.Sportify.Views.JSONViews.subentities.SubscriptionEntityView;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.theme.AbstractThemeResolver;
 
 import java.util.List;
 

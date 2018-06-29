@@ -14,13 +14,15 @@
 package com.Sportify.DAO.user;
 
 import com.Sportify.DAO.EAClassDiagramPersistentManager;
-import org.orm.*;
-import org.hibernate.Query;
 import com.Sportify.Entities.user.NotificationTracker;
 import com.Sportify.Entities.user.NotificationTrackerCriteria;
+import org.orm.*;
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class NotificationTrackerDAO {
 	public static NotificationTracker loadNotificationTrackerByORMID(int ID) throws PersistentException {
 		try {

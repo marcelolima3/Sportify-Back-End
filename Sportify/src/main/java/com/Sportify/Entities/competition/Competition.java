@@ -17,12 +17,10 @@ import com.Sportify.DAO.ORMConstants;
 import com.Sportify.Views.JSONViews.competition.CompetitionView;
 import com.Sportify.Views.JSONViews.competition.ModalityView;
 import com.fasterxml.jackson.annotation.JsonView;
-import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -40,7 +38,7 @@ public class Competition implements Serializable {
 		this.active = true;
 		this.ORM_matchEvents = new HashSet();
 	}
-
+	
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_COMPETITION_MATCHEVENTS) {
 			return ORM_matchEvents;

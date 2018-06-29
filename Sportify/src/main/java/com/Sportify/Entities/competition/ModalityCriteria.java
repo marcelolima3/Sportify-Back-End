@@ -22,6 +22,7 @@ import org.orm.criteria.*;
 public class ModalityCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression name;
+	public final StringExpression imgUrl;
 	public final CollectionExpression _eventCategories;
 	public final CollectionExpression competitions;
 	public final CollectionExpression teams;
@@ -30,6 +31,7 @@ public class ModalityCriteria extends AbstractORMCriteria {
 		super(criteria);
 		ID = new IntegerExpression("ID", this);
 		name = new StringExpression("name", this);
+		imgUrl = new StringExpression("imgUrl", this);
 		_eventCategories = new CollectionExpression("ORM__eventCategories", this);
 		competitions = new CollectionExpression("ORM_competitions", this);
 		teams = new CollectionExpression("ORM_teams", this);

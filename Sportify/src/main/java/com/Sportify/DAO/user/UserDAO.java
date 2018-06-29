@@ -14,13 +14,15 @@
 package com.Sportify.DAO.user;
 
 import com.Sportify.DAO.EAClassDiagramPersistentManager;
-import org.orm.*;
-import org.hibernate.Query;
 import com.Sportify.Entities.user.User;
 import com.Sportify.Entities.user.UserCriteria;
+import org.orm.*;
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class UserDAO {
 	public static User loadUserByORMID(int ID) throws PersistentException {
 		try {

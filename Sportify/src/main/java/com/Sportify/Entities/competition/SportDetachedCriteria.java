@@ -21,12 +21,16 @@ import org.orm.criteria.*;
 public class SportDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression name;
+	public final StringExpression imgUrl;
+	public final BooleanExpression onlySport;
 	public final CollectionExpression modalities;
 	
 	public SportDetachedCriteria() {
 		super(com.Sportify.Entities.competition.Sport.class, com.Sportify.Entities.competition.SportCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		name = new StringExpression("name", this.getDetachedCriteria());
+		imgUrl = new StringExpression("imgUrl", this.getDetachedCriteria());
+		onlySport = new BooleanExpression("onlySport", this.getDetachedCriteria());
 		modalities = new CollectionExpression("ORM_modalities", this.getDetachedCriteria());
 	}
 	
@@ -34,6 +38,8 @@ public class SportDetachedCriteria extends AbstractORMDetachedCriteria {
 		super(aDetachedCriteria, com.Sportify.Entities.competition.SportCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		name = new StringExpression("name", this.getDetachedCriteria());
+		imgUrl = new StringExpression("imgUrl", this.getDetachedCriteria());
+		onlySport = new BooleanExpression("onlySport", this.getDetachedCriteria());
 		modalities = new CollectionExpression("ORM_modalities", this.getDetachedCriteria());
 	}
 	

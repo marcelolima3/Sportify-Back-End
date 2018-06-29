@@ -2,7 +2,6 @@ package com.Sportify.Controllers;
 
 import com.Sportify.Entities.competition.MatchEvent;
 import com.Sportify.Entities.subentities.Athlete;
-import com.Sportify.Entities.subentities.SubscriptionEntity;
 import com.Sportify.Service.MatchEventService;
 import com.Sportify.Views.JSONViews.competition.MatchEventView;
 import com.Sportify.Views.JSONViews.subentities.SubscriptionEntityView;

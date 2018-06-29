@@ -14,6 +14,7 @@
 package com.Sportify.Entities.subentities;
 
 import com.Sportify.DAO.EAClassDiagramPersistentManager;
+import com.Sportify.Entities.user.SubscriptionCriteria;
 import org.hibernate.Criteria;
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
@@ -23,6 +24,7 @@ public class TeamCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
 	public final CollectionExpression subscriptions;
 	public final StringExpression name;
+	public final StringExpression imgUrl;
 	public final CollectionExpression athletes;
 	
 	public TeamCriteria(Criteria criteria) {
@@ -30,6 +32,7 @@ public class TeamCriteria extends AbstractORMCriteria {
 		ID = new IntegerExpression("ID", this);
 		subscriptions = new CollectionExpression("ORM_subscriptions", this);
 		name = new StringExpression("name", this);
+		imgUrl = new StringExpression("imgUrl", this);
 		athletes = new CollectionExpression("ORM_athletes", this);
 	}
 	
@@ -45,8 +48,8 @@ public class TeamCriteria extends AbstractORMCriteria {
 		return new com.Sportify.Entities.subentities.AthleteCriteria(createCriteria("ORM_athletes"));
 	}
 	
-	public com.Sportify.Entities.user.SubscriptionCriteria createSubscriptionsCriteria() {
-		return new com.Sportify.Entities.user.SubscriptionCriteria(createCriteria("ORM_subscriptions"));
+	public SubscriptionCriteria createSubscriptionsCriteria() {
+		return new SubscriptionCriteria(createCriteria("ORM_subscriptions"));
 	}
 	
 	public Team uniqueTeam() {

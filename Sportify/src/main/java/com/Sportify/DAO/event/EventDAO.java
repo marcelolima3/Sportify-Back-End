@@ -18,9 +18,11 @@ import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCriteria;
 import org.orm.*;
 import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class EventDAO {
 	public static Event loadEventByORMID(int ID) throws PersistentException {
 		try {

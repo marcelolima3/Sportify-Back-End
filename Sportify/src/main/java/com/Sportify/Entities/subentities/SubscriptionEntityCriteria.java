@@ -14,6 +14,7 @@
 package com.Sportify.Entities.subentities;
 
 import com.Sportify.DAO.EAClassDiagramPersistentManager;
+import com.Sportify.Entities.user.SubscriptionCriteria;
 import org.hibernate.Criteria;
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
@@ -37,8 +38,8 @@ public class SubscriptionEntityCriteria extends AbstractORMCriteria {
 		this(EAClassDiagramPersistentManager.instance().getSession());
 	}
 	
-	public com.Sportify.Entities.user.SubscriptionCriteria createSubscriptionsCriteria() {
-		return new com.Sportify.Entities.user.SubscriptionCriteria(createCriteria("ORM_subscriptions"));
+	public SubscriptionCriteria createSubscriptionsCriteria() {
+		return new SubscriptionCriteria(createCriteria("ORM_subscriptions"));
 	}
 	
 	public SubscriptionEntity uniqueSubscriptionEntity() {

@@ -5,9 +5,9 @@ import com.Sportify.DAO.subentities.AthleteDAO;
 import com.Sportify.DAO.subentities.TeamDAO;
 import com.Sportify.Entities.competition.Modality;
 import com.Sportify.Entities.subentities.Athlete;
-import com.Sportify.Entities.subentities.SubscriptionEntity;
 import com.Sportify.Entities.subentities.Team;
 import org.orm.PersistentException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,11 +17,14 @@ import java.util.List;
 
 @Service
 public class AthleteService {
+    @Autowired private ModalityDAO modalityDAO;
+    @Autowired private TeamDAO teamDAO;
+    @Autowired private AthleteDAO athleteDAO;
 
     public List<Athlete> getModalityAthletes(int id){
         List<Athlete> athletes = new ArrayList<>();
         try {
-            Modality m = ModalityDAO.getModalityByORMID(id);
+            Modality m = modalityDAO.getModalityByORMID(id);
             for(Team t : m.teams.toArray()){
                 athletes.addAll(new ArrayList<>(Arrays.asList(t.athletes.toArray())));
             }
@@ -33,7 +36,7 @@ public class AthleteService {
 
     public List<Athlete> getTeamAthletes(int id){
         try {
-            Team t = TeamDAO.getTeamByORMID(id);
+            Team t = teamDAO.getTeamByORMID(id);
             return Arrays.asList(t.athletes.toArray());
         } catch (PersistentException e) {
             e.printStackTrace();
@@ -43,10 +46,10 @@ public class AthleteService {
 
     public Athlete createAthlete(int teamID, Athlete athlete){
         try {
-            Team t = TeamDAO.getTeamByORMID(teamID);
+            Team t = teamDAO.getTeamByORMID(teamID);
             athlete.setORM_MatchEvents(new HashSet());
             athlete.setTeam(t);
-            AthleteDAO.save(athlete);
+            athleteDAO.save(athlete);
             //t.athletes.add((Athlete)athlete);
             //TeamDAO.save(t);
             return athlete;

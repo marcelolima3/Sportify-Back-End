@@ -14,14 +14,13 @@
 package com.Sportify.Entities.payment;
 
 import com.Sportify.DAO.ORMConstants;
-import com.Sportify.Views.JSONViews.competition.ModalityView;
 import com.Sportify.Views.JSONViews.payment.MonthlyBillView;
 import com.Sportify.Views.JSONViews.payment.PaymentMethodView;
-import com.Sportify.Views.JSONViews.payment.PrepaidCardView;
 import com.Sportify.Views.JSONViews.user.UserView;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -32,7 +31,14 @@ import javax.persistence.*;
 public class MonthlyBill extends com.Sportify.Entities.payment.PaymentMethod implements Serializable {
 	public MonthlyBill() {
 	}
-	
+
+	public MonthlyBill(double limitAmount, double currentAmount) {
+		super();
+		this.limitAmount = limitAmount;
+		this.currentAmount = currentAmount;
+		this.ORM_payments = new HashSet();
+	}
+
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_MONTHLYBILL_PAYMENTS) {
 			return ORM_payments;
@@ -54,7 +60,7 @@ public class MonthlyBill extends com.Sportify.Entities.payment.PaymentMethod imp
 	private double limitAmount;
 
 	@JsonView({UserView.Public.class,PaymentMethodView.Public.class, MonthlyBillView.Public.class})
-	@Column(name="CurrentAmount", nullable=true)	
+	@Column(name="CurrentAmount", nullable=true)
 	private double currentAmount;
 
 	@JsonView(MonthlyBillView.Private.class)
@@ -90,11 +96,6 @@ public class MonthlyBill extends com.Sportify.Entities.payment.PaymentMethod imp
 	
 	@Transient	
 	public final com.Sportify.Entities.payment.InvoiceSetCollection payments = new com.Sportify.Entities.payment.InvoiceSetCollection(this, _ormAdapter, ORMConstants.KEY_MONTHLYBILL_PAYMENTS, ORMConstants.KEY_MUL_ONE_TO_MANY);
-	
-	public MonthlyBill(double limitAmount, double currentAmount) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
 	
 	public String toString() {
 		return super.toString();

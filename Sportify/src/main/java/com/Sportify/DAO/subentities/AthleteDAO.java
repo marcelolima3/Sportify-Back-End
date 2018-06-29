@@ -14,13 +14,15 @@
 package com.Sportify.DAO.subentities;
 
 import com.Sportify.DAO.EAClassDiagramPersistentManager;
-import org.orm.*;
-import org.hibernate.Query;
 import com.Sportify.Entities.subentities.Athlete;
 import com.Sportify.Entities.subentities.AthleteCriteria;
+import org.orm.*;
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class AthleteDAO {
 	public static Athlete loadAthleteByORMID(int ID) throws PersistentException {
 		try {

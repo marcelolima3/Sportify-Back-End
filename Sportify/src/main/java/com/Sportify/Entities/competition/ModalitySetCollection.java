@@ -73,6 +73,7 @@ public class ModalitySetCollection extends org.orm.util.ORMSet {
 	 * @param propertyName Name of the property for sorting:<ul>
 	 * <li>ID</li>
 	 * <li>name</li>
+	 * <li>imgUrl</li>
 	 * </ul>
 	 * @return The persistent objects sorted array
 	 */
@@ -85,6 +86,7 @@ public class ModalitySetCollection extends org.orm.util.ORMSet {
 	 * @param propertyName Name of the property for sorting:<ul>
 	 * <li>ID</li>
 	 * <li>name</li>
+	 * <li>imgUrl</li>
 	 * </ul>
 	 * @param ascending true for ascending, false for descending
 	 * @return The persistent objects sorted array

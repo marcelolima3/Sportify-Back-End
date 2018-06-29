@@ -19,6 +19,7 @@ import com.Sportify.Views.JSONViews.user.UserView;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -30,29 +31,39 @@ public class PrepaidCard extends com.Sportify.Entities.payment.PaymentMethod imp
 	public PrepaidCard() {
 	}
 
+	public PrepaidCard(long cardNumber, String securityCode, Date expirationDate, String cardType, double balance, int numRecharges) {
+		super();
+		this.cardNumber = cardNumber;
+		this.securityCode = securityCode;
+		this.expirationDate = expirationDate;
+		this.cardType = cardType;
+		this.balance = balance;
+		this.numRecharges = numRecharges;
+	}
+
 	@JsonView({UserView.Public.class,PaymentMethodView.Public.class, PrepaidCardView.Public.class})
-	@Column(name="CardNumber", nullable=false, length=20)	
+	@Column(name="CardNumber", nullable=false, length=20)
 	private long cardNumber;
 
 	@JsonView({UserView.Public.class,PaymentMethodView.Public.class, PrepaidCardView.Public.class})
-	@Column(name="SecurityCode", nullable=true, length=255)	
+	@Column(name="SecurityCode", nullable=true, length=255)
 	private String securityCode;
 
 	@JsonView({UserView.Public.class,PaymentMethodView.Public.class, PrepaidCardView.Public.class})
-	@Column(name="ExpirationDate", nullable=true)	
+	@Column(name="ExpirationDate", nullable=true)
 	@Temporal(TemporalType.DATE)	
 	private java.util.Date expirationDate;
 
 	@JsonView({UserView.Public.class,PaymentMethodView.Public.class, PrepaidCardView.Public.class})
-	@Column(name="CardType", nullable=true, length=255)	
+	@Column(name="CardType", nullable=true, length=255)
 	private String cardType;
 
 	@JsonView({UserView.Public.class,PaymentMethodView.Public.class, PrepaidCardView.Public.class})
-	@Column(name="Balance", nullable=true)	
+	@Column(name="Balance", nullable=true)
 	private double balance;
 
 	@JsonView({UserView.Public.class,PaymentMethodView.Public.class, PrepaidCardView.Public.class})
-	@Column(name="NumRecharges", nullable=false, length=10)	
+	@Column(name="NumRecharges", nullable=false, length=10)
 	private int numRecharges;
 	
 	public void setCardNumber(long value) {
@@ -101,11 +112,6 @@ public class PrepaidCard extends com.Sportify.Entities.payment.PaymentMethod imp
 	
 	public int getNumRecharges() {
 		return numRecharges;
-	}
-	
-	public PrepaidCard(long cardNumber, String securityCode, java.util.Date expriationDate, String cardType, double balance, int numRecharges) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
 	}
 	
 	public String toString() {

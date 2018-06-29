@@ -22,12 +22,16 @@ import org.orm.criteria.*;
 public class SportCriteria extends AbstractORMCriteria {
 	public final IntegerExpression ID;
 	public final StringExpression name;
+	public final StringExpression imgUrl;
+	public final BooleanExpression onlySport;
 	public final CollectionExpression modalities;
 	
 	public SportCriteria(Criteria criteria) {
 		super(criteria);
 		ID = new IntegerExpression("ID", this);
 		name = new StringExpression("name", this);
+		imgUrl = new StringExpression("imgUrl", this);
+		onlySport = new BooleanExpression("onlySport", this);
 		modalities = new CollectionExpression("ORM_modalities", this);
 	}
 	

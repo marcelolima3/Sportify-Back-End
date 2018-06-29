@@ -14,15 +14,12 @@
 package com.Sportify.Entities.competition;
 
 import com.Sportify.DAO.ORMConstants;
-import com.Sportify.Views.JSONViews.competition.MatchEventView;
 import com.Sportify.Views.JSONViews.competition.ModalityView;
 import com.Sportify.Views.JSONViews.competition.SportView;
 import com.fasterxml.jackson.annotation.JsonView;
-import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -37,7 +34,7 @@ public class Modality implements Serializable {
 		this.ORM_competitions = new HashSet();
 		this.ORM_teams = new HashSet();
 	}
-
+	
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_MODALITY__EVENTCATEGORIES) {
 			return ORM__eventCategories;
@@ -71,10 +68,14 @@ public class Modality implements Serializable {
 	@Column(name="Name", nullable=true, length=255)	
 	private String name;
 
+	@JsonView({SportView.Private.class, ModalityView.Public.class})
+	@Column(name="ImgUrl", nullable=true, length=255)	
+	private String imgUrl;
+
 	@JsonView({SportView.Private.class, ModalityView.Private.class})
-	@OneToMany(targetEntity= com.Sportify.Entities.event.EventCategory.class)
+	@ManyToMany(targetEntity= com.Sportify.Entities.event.EventCategory.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="ModalityID", nullable=false) })	
+	@JoinTable(name="Modality_EventCategory", joinColumns={ @JoinColumn(name="ModalityID") }, inverseJoinColumns={ @JoinColumn(name="EventCategoryID") })	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set ORM__eventCategories = new java.util.HashSet();
 
@@ -112,6 +113,14 @@ public class Modality implements Serializable {
 		return name;
 	}
 	
+	public void setImgUrl(String value) {
+		this.imgUrl = value;
+	}
+	
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	
 	private void setORM__eventCategories(java.util.Set value) {
 		this.ORM__eventCategories = value;
 	}
@@ -121,7 +130,7 @@ public class Modality implements Serializable {
 	}
 	
 	@Transient	
-	public final com.Sportify.Entities.event.EventCategorySetCollection _eventCategories = new com.Sportify.Entities.event.EventCategorySetCollection(this, _ormAdapter, ORMConstants.KEY_MODALITY__EVENTCATEGORIES, ORMConstants.KEY_MUL_ONE_TO_MANY);
+	public final com.Sportify.Entities.event.EventCategorySetCollection _eventCategories = new com.Sportify.Entities.event.EventCategorySetCollection(this, _ormAdapter, ORMConstants.KEY_MODALITY__EVENTCATEGORIES, ORMConstants.KEY_MUL_MANY_TO_MANY);
 	
 	private void setORM_Competitions(java.util.Set value) {
 		this.ORM_competitions = value;

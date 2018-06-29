@@ -14,6 +14,8 @@
 package com.Sportify.Entities.subentities;
 
 import java.util.List;
+
+import com.Sportify.Entities.user.SubscriptionDetachedCriteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.orm.PersistentSession;
 import org.orm.criteria.*;
@@ -22,6 +24,7 @@ public class TeamDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression ID;
 	public final CollectionExpression subscriptions;
 	public final StringExpression name;
+	public final StringExpression imgUrl;
 	public final CollectionExpression athletes;
 	
 	public TeamDetachedCriteria() {
@@ -29,6 +32,7 @@ public class TeamDetachedCriteria extends AbstractORMDetachedCriteria {
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		subscriptions = new CollectionExpression("ORM_subscriptions", this.getDetachedCriteria());
 		name = new StringExpression("name", this.getDetachedCriteria());
+		imgUrl = new StringExpression("imgUrl", this.getDetachedCriteria());
 		athletes = new CollectionExpression("ORM_athletes", this.getDetachedCriteria());
 	}
 	
@@ -37,6 +41,7 @@ public class TeamDetachedCriteria extends AbstractORMDetachedCriteria {
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		subscriptions = new CollectionExpression("ORM_subscriptions", this.getDetachedCriteria());
 		name = new StringExpression("name", this.getDetachedCriteria());
+		imgUrl = new StringExpression("imgUrl", this.getDetachedCriteria());
 		athletes = new CollectionExpression("ORM_athletes", this.getDetachedCriteria());
 	}
 	
@@ -44,8 +49,8 @@ public class TeamDetachedCriteria extends AbstractORMDetachedCriteria {
 		return new com.Sportify.Entities.subentities.AthleteDetachedCriteria(createCriteria("ORM_athletes"));
 	}
 	
-	public com.Sportify.Entities.user.SubscriptionDetachedCriteria createSubscriptionsCriteria() {
-		return new com.Sportify.Entities.user.SubscriptionDetachedCriteria(createCriteria("ORM_subscriptions"));
+	public SubscriptionDetachedCriteria createSubscriptionsCriteria() {
+		return new SubscriptionDetachedCriteria(createCriteria("ORM_subscriptions"));
 	}
 	
 	public Team uniqueTeam(PersistentSession session) {

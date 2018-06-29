@@ -15,11 +15,12 @@ package com.Sportify.Entities.payment;
 
 import com.Sportify.Views.JSONViews.payment.PaymentMethodView;
 import com.Sportify.Views.JSONViews.user.UserView;
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 
 @JsonTypeInfo(
 		use = JsonTypeInfo.Id.NAME,
@@ -40,7 +41,7 @@ public abstract class PaymentMethod implements Serializable {
 	}
 
 	@JsonView({UserView.Public.class, PaymentMethodView.Public.class})
-	@Column(name="ID", nullable=false, length=10)
+	@Column(name="ID", nullable=false, length=10)	
 	@Id	
 	@GeneratedValue(generator="PAYMENT_PAYMENTMETHOD_ID_GENERATOR")	
 	@org.hibernate.annotations.GenericGenerator(name="PAYMENT_PAYMENTMETHOD_ID_GENERATOR", strategy="native")	

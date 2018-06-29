@@ -16,13 +16,10 @@ package com.Sportify.Entities.subentities;
 import com.Sportify.DAO.ORMConstants;
 import com.Sportify.Views.JSONViews.subentities.SubscriptionEntityView;
 import com.Sportify.Views.JSONViews.subentities.TeamView;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
-import org.orm.util.ORMAdapter;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -34,10 +31,12 @@ public class Team extends com.Sportify.Entities.subentities.SubscriptionEntity i
 	public Team() {
 	}
 
-	public Team(String name) {
+	public Team(String name, String imgUrl) {
 		this.name = name;
+		this.imgUrl = imgUrl;
 		this.ORM_athletes = new HashSet();
 	}
+
 
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_TEAM_ATHLETES) {
@@ -56,8 +55,12 @@ public class Team extends com.Sportify.Entities.subentities.SubscriptionEntity i
 	};
 
 	@JsonView({SubscriptionEntityView.Public.class, TeamView.Public.class})
-	@Column(name="Name", nullable=true, length=255)
+	@Column(name="Name", nullable=true, length=255)	
 	private String name;
+
+	@JsonView({SubscriptionEntityView.Public.class, TeamView.Public.class})
+	@Column(name="ImgUrl", nullable=true, length=255)
+	private String imgUrl;
 
 	@JsonView(TeamView.Private.class)
 	@OneToMany(mappedBy="team", targetEntity= com.Sportify.Entities.subentities.Athlete.class)
@@ -73,6 +76,14 @@ public class Team extends com.Sportify.Entities.subentities.SubscriptionEntity i
 		return name;
 	}
 	
+	public void setImgUrl(String value) {
+		this.imgUrl = value;
+	}
+	
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	
 	public void setORM_Athletes(java.util.Set value) {
 		this.ORM_athletes = value;
 	}
@@ -83,7 +94,7 @@ public class Team extends com.Sportify.Entities.subentities.SubscriptionEntity i
 	
 	@Transient	
 	public final com.Sportify.Entities.subentities.AthleteSetCollection athletes = new com.Sportify.Entities.subentities.AthleteSetCollection(this, _ormAdapter, ORMConstants.KEY_TEAM_ATHLETES, ORMConstants.KEY_ATHLETE_TEAM, ORMConstants.KEY_MUL_ONE_TO_MANY);
-	
+
 	public String toString() {
 		return super.toString();
 	}

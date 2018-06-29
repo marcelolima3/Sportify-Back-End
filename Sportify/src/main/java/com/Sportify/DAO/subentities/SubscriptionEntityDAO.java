@@ -16,14 +16,16 @@ package com.Sportify.DAO.subentities;
 import com.Sportify.DAO.EAClassDiagramPersistentManager;
 import com.Sportify.DAO.competition.MatchEventDAO;
 import com.Sportify.Entities.subentities.Athlete;
+import com.Sportify.Entities.subentities.SubscriptionEntity;
+import com.Sportify.Entities.subentities.SubscriptionEntityCriteria;
 import com.Sportify.Entities.subentities.Team;
 import org.orm.*;
 import org.hibernate.Query;
-import com.Sportify.Entities.subentities.SubscriptionEntity;
-import com.Sportify.Entities.subentities.SubscriptionEntityCriteria;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class SubscriptionEntityDAO {
 	public static SubscriptionEntity loadSubscriptionEntityByORMID(int ID) throws PersistentException {
 		try {
