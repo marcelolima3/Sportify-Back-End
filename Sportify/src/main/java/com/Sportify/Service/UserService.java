@@ -26,6 +26,16 @@ import java.util.*;
 public class UserService {
     @Autowired private UserDAO userDAO;
 
+    public User getUser(int id){
+        try {
+            User u = userDAO.getUserByORMID(id);
+            return u;
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public List<User> getUsers(){
         try {
             return (List<User>) userDAO.queryUser(null, null);

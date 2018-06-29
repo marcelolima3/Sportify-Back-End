@@ -14,6 +14,15 @@ import java.util.List;
 public class SportService {
     @Autowired private SportDAO sportDAO;
 
+    public Sport getSport(int id){
+        try {
+            return sportDAO.getSportByORMID(id);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public List<Sport> getAllSports(){
         try {
             return (List<Sport>) sportDAO.querySport(null, null);

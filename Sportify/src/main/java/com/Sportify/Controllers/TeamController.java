@@ -18,6 +18,12 @@ public class TeamController {
     private TeamService teamService;
 
     @JsonView(TeamView.Public.class)
+    @RequestMapping(value = "/teams/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Team getModalityTeam(@PathVariable("id") int id){
+        return teamService.getModalityTeam(id);
+    }
+
+    @JsonView(TeamView.Public.class)
     @RequestMapping(value = "/{idM}/teams", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Team> getModalityTeams(@PathVariable("idM") int id){
         return teamService.getModalityTeams(id);

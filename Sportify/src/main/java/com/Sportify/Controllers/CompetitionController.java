@@ -20,15 +20,15 @@ public class CompetitionController {
     private CompetitionService competitionService;
 
     @JsonView(CompetitionView.Public.class)
+    @RequestMapping(value = "/competitions/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Competition getCompetition(@PathVariable("id") int id){
+        return competitionService.getCompetition(id);
+    }
+
+    @JsonView(CompetitionView.Public.class)
     @RequestMapping(value = "/{idM}/competitions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Competition> getModalityCompetitions(@PathVariable("idM") int id){
         return competitionService.getModalityCompetitions(id);
-    }
-
-    @JsonView(MatchEventView.Public.class)
-    @RequestMapping(value = "/competitions/{idC}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<MatchEvent> getCompetitionMatchEvents(@PathVariable("idC") int id){
-        return competitionService.getCompetitionMatchEvents(id);
     }
 
     @JsonView(CompetitionView.Public.class)

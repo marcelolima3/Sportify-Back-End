@@ -19,6 +19,12 @@ public class ModalityController {
     private ModalityService modalityService;
 
     @JsonView(ModalityView.Public.class)
+    @RequestMapping(value = "/modalities/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Modality getModality(@PathVariable("id") int id){
+        return modalityService.getModality(id);
+    }
+
+    @JsonView(ModalityView.Public.class)
     @RequestMapping(value = "/{id}/modalities", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Modality> getSportModalities(@PathVariable("id") int id){
         return modalityService.getSportModalities(id);

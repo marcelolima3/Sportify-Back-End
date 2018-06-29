@@ -28,6 +28,12 @@ public class UserController {
     private UserService userService;
 
     @JsonView(UserView.Public.class)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public User getUser(@PathVariable("id") int id){
+        return userService.getUser(id);
+    }
+
+    @JsonView(UserView.Public.class)
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getUsers(){
         return userService.getUsers();

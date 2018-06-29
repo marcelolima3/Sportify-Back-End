@@ -1,6 +1,7 @@
 package com.Sportify.Service;
 
 import com.Sportify.DAO.competition.ModalityDAO;
+import com.Sportify.DAO.subentities.TeamDAO;
 import com.Sportify.Entities.competition.Modality;
 import com.Sportify.Entities.subentities.Team;
 import org.orm.PersistentException;
@@ -15,6 +16,18 @@ import java.util.List;
 @Service
 public class TeamService {
     @Autowired private ModalityDAO modalityDAO;
+    @Autowired private TeamDAO teamDAO;
+
+    public Team getModalityTeam(int id){
+
+        try {
+            return teamDAO.getTeamByORMID(id);
+
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public List<Team> getModalityTeams(int id){
         try {
