@@ -1,6 +1,7 @@
 package com.Sportify.Controllers;
 
 import com.Sportify.Entities.competition.MatchEvent;
+import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.subentities.Athlete;
 import com.Sportify.Service.MatchEventService;
 import com.Sportify.Views.JSONViews.competition.MatchEventView;
@@ -33,5 +34,10 @@ public class MatchEventController {
     @RequestMapping(value = "/matches/{idM}/athlete", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addAthleteToMatch(@PathVariable("idM") int id, @RequestBody Athlete athlete){
         matchEventService.addAthleteToMatch(id, athlete);
+    }
+
+    @RequestMapping(value = "/matches/{idM}/events", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void submitEvent(@PathVariable("idM") int id, @RequestBody Event event){
+        matchEventService.submitEvent(id, event);
     }
 }

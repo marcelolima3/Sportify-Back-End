@@ -5,6 +5,7 @@ import com.Sportify.DAO.event.EventCategoryDAO;
 import com.Sportify.DAO.subentities.SubscriptionEntityDAO;
 import com.Sportify.DAO.user.UserDAO;
 import com.Sportify.Entities.competition.MatchEvent;
+
 import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
 import com.Sportify.Entities.payment.*;
@@ -213,16 +214,29 @@ public class UserService {
         return null;
     }
 
-    private void saveTransaction(int user_id, double price, Date date){
+    private void saveTransaction(int user_id, double price, Date date) {
         try {
-            String transaction = "["+date.toString()+"] User: " + user_id + " ------------------> " + price + " €. \n";
+            String transaction = "[" + date.toString() + "] User: " + user_id + " ------------------> " + price + " €. \n";
             String filename = "user_transactions.txt";
-            FileWriter fw = new FileWriter(filename,true);
+            FileWriter fw = new FileWriter(filename, true);
             fw.write(transaction);
             fw.close();
-        }
-        catch(IOException ioe) {
+        } catch (IOException ioe) {
             System.err.println("IOException: " + ioe.getMessage());
         }
+    }
+
+    public List<Event> consultNotifications(int id) {
+        try {
+            User u = UserDAO.getUserByORMID(id);
+            List<Event> notificationList = new ArrayList<>();
+            for (Subscription subscription : u.subscriptions.toArray()) {
+                notificationList.addAll(Arrays.asList(subscription.get_tracker().notificationHistory.toArray()));
+            }
+            return notificationList;
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }

@@ -1,5 +1,6 @@
 package com.Sportify.Controllers;
 
+import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
 import com.Sportify.Entities.payment.Invoice;
 import com.Sportify.Entities.payment.PaymentMethod;
@@ -9,6 +10,7 @@ import com.Sportify.Service.UserService;
 import com.Sportify.Views.JSONViews.event.EventCategoryView;
 import com.Sportify.Views.JSONViews.payment.InvoiceView;
 import com.Sportify.Views.JSONViews.payment.PaymentMethodView;
+import com.Sportify.Views.JSONViews.event.EventView;
 import com.Sportify.Views.JSONViews.user.SubscriptionView;
 import com.Sportify.Views.JSONViews.user.UserView;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -76,7 +78,13 @@ public class UserController {
 
     @JsonView(InvoiceView.Private.class)
     @RequestMapping(value = "/{idU}/payments", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Invoice payService(@PathVariable("idU") int id){
+    public Invoice payService(@PathVariable("idU") int id) {
         return userService.payService(id);
+    }
+
+    @JsonView(EventView.Public.class)
+    @RequestMapping(value = "/{idU}/notifications", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Event> getNotifications(@PathVariable("idU") int id){
+        return userService.consultNotifications(id);
     }
 }

@@ -47,7 +47,7 @@ public class Event implements Serializable {
 	@org.hibernate.annotations.GenericGenerator(name="EVENT_EVENT_ID_GENERATOR", strategy="native")	
 	private int ID;
 
-	@JsonView(EventView.Private.class)
+	@JsonView(EventView.Public.class)
 	@ManyToOne(targetEntity= com.Sportify.Entities.event.EventCategory.class, fetch=FetchType.LAZY)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="EventCategoryID", referencedColumnName="ID", nullable=false) })	
