@@ -14,6 +14,7 @@
 package com.Sportify.Entities.subentities;
 
 import com.Sportify.DAO.ORMConstants;
+import com.Sportify.Views.JSONViews.subentities.SubscriptionEntityView;
 import com.Sportify.Views.JSONViews.subentities.TeamView;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -54,12 +55,11 @@ public class Team extends com.Sportify.Entities.subentities.SubscriptionEntity i
 		
 	};
 
-	@JsonView(TeamView.Public.class)
-	@Column(name="Name", nullable=true, length=255)	
+	@JsonView({SubscriptionEntityView.Public.class, TeamView.Public.class})
+	@Column(name="Name", nullable=true, length=255)
 	private String name;
 
 	@JsonView(TeamView.Private.class)
-	@JsonManagedReference
 	@OneToMany(mappedBy="team", targetEntity= com.Sportify.Entities.subentities.Athlete.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	

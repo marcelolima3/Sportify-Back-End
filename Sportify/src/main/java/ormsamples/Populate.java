@@ -18,6 +18,7 @@ import com.Sportify.DAO.user.UserDAO;
 import com.Sportify.Entities.competition.Competition;
 import com.Sportify.Entities.competition.Modality;
 import com.Sportify.Entities.competition.Sport;
+import com.Sportify.Entities.event.EventCategory;
 import com.Sportify.Entities.payment.InvoicePayment;
 import com.Sportify.Entities.payment.PaymentMethod;
 import com.Sportify.Entities.subentities.Athlete;
@@ -99,6 +100,13 @@ public class Populate {
         ModalityDAO.save(modality);
     }
 
+    public static EventCategory eventCategory_PersonalRecord = new EventCategory("Personal Record", 0.2, 2);
+    public static EventCategory eventCategory_BeforeMatch = new EventCategory("Before Match", 0.2, 2);
+    public static EventCategory eventCategory_AfterMatch = new EventCategory("After Match", 0.2, 2);
+    public static EventCategory eventCategory_Goal = new EventCategory("Goal", 0.2, 2);
+    public static EventCategory eventCategory_Fault = new EventCategory("Fault", 0.2, 2);
+    public static EventCategory eventCategory_Results = new EventCategory("Results", 0.2, 2);
+
     public void populate() throws PersistentException {
 
         populateAthletics();
@@ -164,6 +172,12 @@ public class Populate {
             HashSet<Modality> athletics_modalities = new HashSet<Modality>();
 
             Modality modality_sprint = new Modality("Sprint");
+
+            modality_sprint._eventCategories.add(eventCategory_BeforeMatch);
+            modality_sprint._eventCategories.add(eventCategory_AfterMatch);
+            modality_sprint._eventCategories.add(eventCategory_PersonalRecord);
+            modality_sprint._eventCategories.add(eventCategory_Results);
+
             HashSet<Team> sprint_teams = new HashSet<Team>();
 
             Team team_benfica_sprint = new Team("S.L. Benfica");
@@ -197,6 +211,12 @@ public class Populate {
             athletics_modalities.add(modality_sprint);
 
             Modality modality_hurdling = new Modality("Hurdling");
+
+            modality_sprint._eventCategories.add(eventCategory_BeforeMatch);
+            modality_sprint._eventCategories.add(eventCategory_AfterMatch);
+            modality_sprint._eventCategories.add(eventCategory_PersonalRecord);
+            modality_sprint._eventCategories.add(eventCategory_Results);
+
             HashSet hurdling_teams = new HashSet<Team>();
             athletics_modalities.add(modality_hurdling);
 
@@ -244,6 +264,12 @@ public class Populate {
             HashSet<Modality> sport_modalities = new HashSet<Modality>();
 
             Modality modality = new Modality("Football");
+
+            modality._eventCategories.add(eventCategory_BeforeMatch);
+            modality._eventCategories.add(eventCategory_Goal);
+            modality._eventCategories.add(eventCategory_Fault);
+            modality._eventCategories.add(eventCategory_Results);
+
             HashSet<Team> teams = new HashSet<Team>();
 
             Team benfica = new Team("S.L. Benfica");

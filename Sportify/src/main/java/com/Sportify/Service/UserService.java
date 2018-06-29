@@ -1,12 +1,15 @@
 package com.Sportify.Service;
 
 
+import com.Sportify.DAO.subentities.SubscriptionEntityDAO;
 import com.Sportify.DAO.user.UserDAO;
 import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
 import com.Sportify.Entities.payment.InvoicePayment;
 import com.Sportify.Entities.payment.MonthlyBill;
 import com.Sportify.Entities.payment.PaymentMethod;
+import com.Sportify.Entities.subentities.SubscriptionEntity;
+import com.Sportify.Entities.user.NotificationTracker;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.User;
 import com.Sportify.Managers.UsersManagement;
@@ -93,15 +96,46 @@ public class UserService {
     }
 
     public boolean login(User user) {
-        try{
+        try {
             String email = user.getEmail();
             String password = user.getPassword();
-            List list = UserDAO.queryUser("Email = '" + email + "' and Password = '" + password +"'", null);
+            List list = UserDAO.queryUser("Email = '" + email + "' and Password = '" + password + "'", null);
             return list.size() > 0;
-        }
-        catch(PersistentException e){
+        } catch (PersistentException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public void subscribe(int id, int idSE, EventCategory eventCategory) {
+        try {
+            boolean existSub = false;
+            User u = UserDAO.getUserByORMID(id);
+            SubscriptionEntity subscriptionEntity = SubscriptionEntityDAO.getSubscriptionEntityByORMID(idSE);
+            for (Subscription subscription : u.subscriptions.toArray()) {
+                if (subscription.getSubscribedEntity().equals(subscriptionEntity) && !subscription.subscribedEvents.contains(eventCategory)) {
+                    existSub = true;
+                    subscription.subscribedEvents.add(eventCategory);
+                    //u.getPaymentManager().addToBill(eventCategory.getPrice());
+                    UserDAO.save(u);
+                } else if (subscription.getSubscribedEntity().equals(subscriptionEntity)) {
+                    existSub = true;
+                }
+            }
+            if (!existSub) {
+                Subscription s = new Subscription();
+                s.setDate(new Date());
+                s.setSubscribedEntity(subscriptionEntity);
+                NotificationTracker nt = new NotificationTracker();
+                nt.setNotificationPolicy(u.getDefaultNotificationType());
+                s.set_tracker(nt);
+                s.subscribedEvents.add(eventCategory);
+                u.subscriptions.add(s);
+                //u.getPaymentManager().addToBill(eventCategory.getPrice());
+                UserDAO.save(u);
+            }
+        } catch (PersistentException e) {
+            e.printStackTrace();
         }
     }
 }

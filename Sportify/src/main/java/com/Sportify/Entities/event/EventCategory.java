@@ -25,6 +25,7 @@ public class EventCategory implements Serializable {
 	public EventCategory() {
 	}
 
+
 	@JsonView(EventCategoryView.Public.class)
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
@@ -68,9 +69,9 @@ public class EventCategory implements Serializable {
 		return price;
 	}
 	
-	public EventCategory(String name, double price) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
+	public EventCategory(String name, double normalPrice, double extraPrice) {
+		this.name = name;
+		this.price = normalPrice;
 	}
 	
 	public String toString() {

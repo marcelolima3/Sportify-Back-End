@@ -3,6 +3,7 @@ package com.Sportify.Controllers;
 import com.Sportify.Entities.subentities.SubscriptionEntity;
 import com.Sportify.Entities.subentities.Team;
 import com.Sportify.Service.TeamService;
+import com.Sportify.Views.JSONViews.subentities.SubscriptionEntityView;
 import com.Sportify.Views.JSONViews.subentities.TeamView;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class TeamController {
 
     @JsonView(TeamView.Public.class)
     @RequestMapping(value = "/{idM}/teams", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Team createCompetition(@PathVariable("idM") int modalityID, @RequestBody Team team){
+    public Team createTeam(@PathVariable("idM") int modalityID, @RequestBody Team team){
         return teamService.createTeam(modalityID, team);
     }
 }

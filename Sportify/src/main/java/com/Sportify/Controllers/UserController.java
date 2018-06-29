@@ -2,6 +2,7 @@ package com.Sportify.Controllers;
 
 import com.Sportify.Entities.event.EventCategory;
 import com.Sportify.Entities.payment.PaymentMethod;
+import com.Sportify.Entities.subentities.SubscriptionEntity;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.User;
 import com.Sportify.Service.UserService;
@@ -56,9 +57,13 @@ public class UserController {
         return userService.getSubscriptions(id);
     }
 
-
     @RequestMapping(value = "/login", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean login(@RequestBody User user){
+    public boolean login(@RequestBody User user) {
         return userService.login(user);
+    }
+
+    @RequestMapping(value = "/{idU}/subscribe/{idSE}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void subscribe(@PathVariable("idU") int id, @PathVariable("idSE") int idSE, @RequestBody EventCategory eventCategory){
+        userService.subscribe(id, idSE, eventCategory);
     }
 }
