@@ -15,6 +15,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
 -- -----------------------------------------------------
 -- Schema data
 -- -----------------------------------------------------
@@ -32,8 +33,9 @@ CREATE TABLE `Athlete` (
   `Name` varchar(255) DEFAULT NULL,
   `Nationality` varchar(255) DEFAULT NULL,
   `Genre` varchar(255) DEFAULT NULL,
+  `ImgUrl` varchar(255) DEFAULT NULL,
   `SubscriptionEntityID` int(10) NOT NULL,
-  `TeamSubscriptionEntityID` int(10) NOT NULL,
+  `TeamSubscriptionEntityID` int(10) DEFAULT NULL,
   PRIMARY KEY (`SubscriptionEntityID`),
   KEY `FKAthlete668286` (`TeamSubscriptionEntityID`),
   CONSTRAINT `FKAthlete450927` FOREIGN KEY (`SubscriptionEntityID`) REFERENCES `SubscriptionEntity` (`ID`),
@@ -47,7 +49,7 @@ CREATE TABLE `Athlete` (
 
 LOCK TABLES `Athlete` WRITE;
 /*!40000 ALTER TABLE `Athlete` DISABLE KEYS */;
-INSERT INTO `Athlete` VALUES ('Maria Peixoto','Portuguese','Female',2,1),('Carlos Rocha','Portuguese','Male',3,1),('Ana Miranda','Portuguese','Female',4,1),('João Pereira','Portuguese','Male',6,5),('Maria Silva','Portuguese','Female',7,5),('Luísa Rocha','Portuguese','Female',8,5),('Manuel Pereira','Portuguese','Male',10,9),('José Pedro','Portuguese','Male',11,9),('António Sá','Portuguese','Male',12,9),('Carlos Costa','Portuguese','Male',14,13),('Ana Guedes','Portuguese','Female',15,13),('Maria Pires','Portuguese','Female',16,13),('Bruno Pedro','Portuguese','Male',18,17),('Manuel Ferreira','Portuguese','Male',19,17),('João Sá','Portuguese','Male',20,17),('Mariana Silva','Portuguese','Female',22,21),('Luís António','Portuguese','Male',23,21),('Teresa Rocha','Portuguese','Female',24,21),('Cristiano Ronaldo','Portuguese','Male',26,25),('Herrera','Mexican','Male',28,27),('David Silva','Spanish','Male',30,29),('Luisão','Brazilian','Male',32,31),('Fábio Coentão','Portuguese','Male',34,33),('Paulinho','Portuguese','Male',36,35),('Buffon','Italian','Male',38,37),('LeBron James','American','Male',40,39),('Roger Federer','Swiss','Male',42,41),('Aaron Judge','American','Male',44,43),('Rui Costa','Portuguese','Male',46,45),('Miroslav','Bulgarian','Male',48,47),('Tiger Woods','American','Male',50,49),('Rúben Vieira','Portuguese','Male',52,51),('João Pereira','Portuguese','Male',54,53),('Luísa Rocha','Portuguese','Female',55,53),('Maria Silva','Portuguese','Female',56,53),('Ana Miranda','Portuguese','Female',58,57),('Maria Peixoto','Portuguese','Female',59,57),('Carlos Rocha','Portuguese','Male',60,57),('Manuel Pereira','Portuguese','Male',62,61),('José Pedro','Portuguese','Male',63,61),('António Sá','Portuguese','Male',64,61),('Ana Guedes','Portuguese','Female',66,65),('Carlos Costa','Portuguese','Male',67,65),('Maria Pires','Portuguese','Female',68,65),('Luís António','Portuguese','Male',70,69),('Teresa Rocha','Portuguese','Female',71,69),('Mariana Silva','Portuguese','Female',72,69),('Manuel Ferreira','Portuguese','Male',74,73),('Bruno Pedro','Portuguese','Male',75,73),('João Sá','Portuguese','Male',76,73),('Cristiano Ronaldo','Portuguese','Male',78,77),('Luisão','Brazilian','Male',80,79),('Herrera','Mexican','Male',82,81),('Buffon','Italian','Male',84,83),('Paulinho','Portuguese','Male',86,85),('Fábio Coentão','Portuguese','Male',88,87),('David Silva','Spanish','Male',90,89),('LeBron James','American','Male',92,91),('Roger Federer','Swiss','Male',94,93),('Aaron Judge','American','Male',96,95),('Rui Costa','Portuguese','Male',98,97),('Miroslav','Bulgarian','Male',100,99),('Tiger Woods','American','Male',102,101),('Rúben Vieira','Portuguese','Male',104,103);
+INSERT INTO `Athlete` VALUES ('António Sá','Portuguese','Male',NULL,2,1),('José Pedro','Portuguese','Male',NULL,3,1),('Manuel Pereira','Portuguese','Male',NULL,4,1),('Ana Miranda','Portuguese','Female',NULL,6,5),('Carlos Rocha','Portuguese','Male',NULL,7,5),('Maria Peixoto','Portuguese','Female',NULL,8,5),('Luísa Rocha','Portuguese','Female',NULL,10,9),('Maria Silva','Portuguese','Female',NULL,11,9),('João Pereira','Portuguese','Male',NULL,12,9),('João Sá','Portuguese','Male',NULL,14,13),('Manuel Ferreira','Portuguese','Male',NULL,15,13),('Bruno Pedro','Portuguese','Male',NULL,16,13),('Teresa Rocha','Portuguese','Female',NULL,18,17),('Luís António','Portuguese','Male',NULL,19,17),('Mariana Silva','Portuguese','Female',NULL,20,17),('Maria Pires','Portuguese','Female',NULL,22,21),('Carlos Costa','Portuguese','Male',NULL,23,21),('Ana Guedes','Portuguese','Female',NULL,24,21),('Fábio Coentão','Portuguese','Male',NULL,26,25),('David Silva','Spanish','Male',NULL,28,27),('Cristiano Ronaldo','Portuguese','Male',NULL,30,29),('Paulinho','Portuguese','Male',NULL,32,31),('Herrera','Mexican','Male',NULL,34,33),('Luisão','Brazilian','Male',NULL,36,35),('Buffon','Italian','Male',NULL,38,37),('LeBron James','American','Male',NULL,40,39),('Roger Federer','Swiss','Male',NULL,42,41),('Aaron Judge','American','Male',NULL,44,43),('Rui Costa','Portuguese','Male',NULL,46,45),('Miroslav','Bulgarian','Male',NULL,48,47),('Tiger Woods','American','Male',NULL,50,49),('Rúben Vieira','Portuguese','Male',NULL,52,51);
 /*!40000 ALTER TABLE `Athlete` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,13 +124,11 @@ DROP TABLE IF EXISTS `EventCategory`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `EventCategory` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
-  `ModalityID` int(10) NOT NULL,
   `Name` varchar(255) DEFAULT NULL,
-  `Price` double DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `FKEventCateg673747` (`ModalityID`),
-  CONSTRAINT `FKEventCateg673747` FOREIGN KEY (`ModalityID`) REFERENCES `Modality` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `RegularPrice` double DEFAULT NULL,
+  `ExtraPrice` double NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,6 +137,7 @@ CREATE TABLE `EventCategory` (
 
 LOCK TABLES `EventCategory` WRITE;
 /*!40000 ALTER TABLE `EventCategory` DISABLE KEYS */;
+INSERT INTO `EventCategory` VALUES (1,'After Match',0.2,2),(2,'Before Match',0.2,2),(3,'Results',0.2,2),(4,'Personal Record',0.2,2),(5,'Fault',0.2,2),(6,'Goal',0.2,2);
 /*!40000 ALTER TABLE `EventCategory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,6 +192,7 @@ CREATE TABLE `InvoicePayment` (
 
 LOCK TABLES `InvoicePayment` WRITE;
 /*!40000 ALTER TABLE `InvoicePayment` DISABLE KEYS */;
+INSERT INTO `InvoicePayment` VALUES (10,1),(10,2),(10,3);
 /*!40000 ALTER TABLE `InvoicePayment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -262,10 +264,11 @@ CREATE TABLE `Modality` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
   `SportID` int(10) NOT NULL,
   `Name` varchar(255) DEFAULT NULL,
+  `ImgUrl` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `FKModality97613` (`SportID`),
   CONSTRAINT `FKModality97613` FOREIGN KEY (`SportID`) REFERENCES `Sport` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,8 +277,35 @@ CREATE TABLE `Modality` (
 
 LOCK TABLES `Modality` WRITE;
 /*!40000 ALTER TABLE `Modality` DISABLE KEYS */;
-INSERT INTO `Modality` VALUES (1,1,'Sprint'),(2,1,'Hurdling'),(3,2,'Football'),(4,3,'Basketball'),(5,4,'Tennis'),(6,5,'Baseball'),(7,6,'Cycling'),(8,7,'Volleyball'),(9,8,'Golf'),(10,9,'Badminton'),(11,10,'Sprint'),(12,10,'Hurdling'),(13,11,'Football'),(14,12,'Basketball'),(15,13,'Tennis'),(16,14,'Baseball'),(17,15,'Cycling'),(18,16,'Volleyball'),(19,17,'Golf'),(20,18,'Badminton');
+INSERT INTO `Modality` VALUES (1,1,'Sprint',NULL),(2,1,'Hurdling',NULL),(3,2,'Football',NULL),(4,3,'Basketball',NULL),(5,4,'Tennis',NULL),(6,5,'Baseball',NULL),(7,6,'Cycling',NULL),(8,7,'Volleyball',NULL),(9,8,'Golf',NULL),(10,9,'Badminton',NULL);
 /*!40000 ALTER TABLE `Modality` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Modality_EventCategory`
+--
+
+DROP TABLE IF EXISTS `Modality_EventCategory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Modality_EventCategory` (
+  `ModalityID` int(10) NOT NULL,
+  `EventCategoryID` int(10) NOT NULL,
+  PRIMARY KEY (`ModalityID`,`EventCategoryID`),
+  KEY `FKModality_E862695` (`EventCategoryID`),
+  CONSTRAINT `FKModality_E862695` FOREIGN KEY (`EventCategoryID`) REFERENCES `EventCategory` (`ID`),
+  CONSTRAINT `FKModality_E924197` FOREIGN KEY (`ModalityID`) REFERENCES `Modality` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Modality_EventCategory`
+--
+
+LOCK TABLES `Modality_EventCategory` WRITE;
+/*!40000 ALTER TABLE `Modality_EventCategory` DISABLE KEYS */;
+INSERT INTO `Modality_EventCategory` VALUES (1,1),(1,2),(3,2),(1,3),(3,3),(1,4),(3,5),(3,6);
+/*!40000 ALTER TABLE `Modality_EventCategory` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -362,7 +392,7 @@ DROP TABLE IF EXISTS `PaymentMethod`;
 CREATE TABLE `PaymentMethod` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -371,6 +401,7 @@ CREATE TABLE `PaymentMethod` (
 
 LOCK TABLES `PaymentMethod` WRITE;
 /*!40000 ALTER TABLE `PaymentMethod` DISABLE KEYS */;
+INSERT INTO `PaymentMethod` VALUES (1),(2),(3);
 /*!40000 ALTER TABLE `PaymentMethod` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -413,8 +444,10 @@ DROP TABLE IF EXISTS `Sport`;
 CREATE TABLE `Sport` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) DEFAULT NULL,
+  `ImgUrl` varchar(255) DEFAULT NULL,
+  `OnlySport` tinyint(1) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -423,7 +456,7 @@ CREATE TABLE `Sport` (
 
 LOCK TABLES `Sport` WRITE;
 /*!40000 ALTER TABLE `Sport` DISABLE KEYS */;
-INSERT INTO `Sport` VALUES (1,'Athletics'),(2,'Football'),(3,'Basketball'),(4,'Tennis'),(5,'Baseball'),(6,'Cycling'),(7,'Volleyball'),(8,'Golf'),(9,'Badminton'),(10,'Athletics'),(11,'Football'),(12,'Basketball'),(13,'Tennis'),(14,'Baseball'),(15,'Cycling'),(16,'Volleyball'),(17,'Golf'),(18,'Badminton');
+INSERT INTO `Sport` VALUES (1,'Athletics',NULL,0),(2,'Football',NULL,0),(3,'Basketball',NULL,0),(4,'Tennis',NULL,0),(5,'Baseball',NULL,0),(6,'Cycling',NULL,0),(7,'Volleyball',NULL,0),(8,'Golf',NULL,0),(9,'Badminton',NULL,0);
 /*!40000 ALTER TABLE `Sport` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -436,7 +469,7 @@ DROP TABLE IF EXISTS `Subscription`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Subscription` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
-  `InvoiceID` int(10) NOT NULL,
+  `InvoiceID` int(10) DEFAULT NULL,
   `UserID` int(10) NOT NULL,
   `NotificationTrackerID` int(10) NOT NULL,
   `SubscriptionEntityID` int(10) NOT NULL,
@@ -473,7 +506,7 @@ DROP TABLE IF EXISTS `SubscriptionEntity`;
 CREATE TABLE `SubscriptionEntity` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -482,7 +515,7 @@ CREATE TABLE `SubscriptionEntity` (
 
 LOCK TABLES `SubscriptionEntity` WRITE;
 /*!40000 ALTER TABLE `SubscriptionEntity` DISABLE KEYS */;
-INSERT INTO `SubscriptionEntity` VALUES (1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11),(12),(13),(14),(15),(16),(17),(18),(19),(20),(21),(22),(23),(24),(25),(26),(27),(28),(29),(30),(31),(32),(33),(34),(35),(36),(37),(38),(39),(40),(41),(42),(43),(44),(45),(46),(47),(48),(49),(50),(51),(52),(53),(54),(55),(56),(57),(58),(59),(60),(61),(62),(63),(64),(65),(66),(67),(68),(69),(70),(71),(72),(73),(74),(75),(76),(77),(78),(79),(80),(81),(82),(83),(84),(85),(86),(87),(88),(89),(90),(91),(92),(93),(94),(95),(96),(97),(98),(99),(100),(101),(102),(103),(104);
+INSERT INTO `SubscriptionEntity` VALUES (1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11),(12),(13),(14),(15),(16),(17),(18),(19),(20),(21),(22),(23),(24),(25),(26),(27),(28),(29),(30),(31),(32),(33),(34),(35),(36),(37),(38),(39),(40),(41),(42),(43),(44),(45),(46),(47),(48),(49),(50),(51),(52);
 /*!40000 ALTER TABLE `SubscriptionEntity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -521,6 +554,7 @@ DROP TABLE IF EXISTS `Team`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Team` (
   `Name` varchar(255) DEFAULT NULL,
+  `ImgUrl` varchar(255) DEFAULT NULL,
   `SubscriptionEntityID` int(10) NOT NULL,
   `ModalityID` int(10) NOT NULL,
   PRIMARY KEY (`SubscriptionEntityID`),
@@ -536,7 +570,7 @@ CREATE TABLE `Team` (
 
 LOCK TABLES `Team` WRITE;
 /*!40000 ALTER TABLE `Team` DISABLE KEYS */;
-INSERT INTO `Team` VALUES ('FC Porto',1,1),('S.L. Benfica',5,1),('Sporting CP',9,1),('FC Porto',13,2),('Sporting CP',17,2),('S.L. Benfica',21,2),('Real Madrid C.F.',25,3),('FC Porto',27,3),('Manchester City F.C.',29,3),('S.L. Benfica',31,3),('Sporting CP',33,3),('S.C. Braga',35,3),('Juventus F.C.',37,3),('Cleveland Cavaliers',39,4),('Roger Federer',41,5),('New York Yankees',43,6),('S.L. Benfica',45,7),('S.L. Benfica',47,8),('Tiger Woods',49,9),('SC Braga',51,10),('S.L. Benfica',53,11),('FC Porto',57,11),('Sporting CP',61,11),('FC Porto',65,12),('S.L. Benfica',69,12),('Sporting CP',73,12),('Real Madrid C.F.',77,13),('S.L. Benfica',79,13),('FC Porto',81,13),('Juventus F.C.',83,13),('S.C. Braga',85,13),('Sporting CP',87,13),('Manchester City F.C.',89,13),('Cleveland Cavaliers',91,14),('Roger Federer',93,15),('New York Yankees',95,16),('S.L. Benfica',97,17),('S.L. Benfica',99,18),('Tiger Woods',101,19),('SC Braga',103,20);
+INSERT INTO `Team` VALUES ('Sporting CP','img',1,1),('FC Porto','img',5,1),('S.L. Benfica','img',9,1),('Sporting CP','img',13,2),('S.L. Benfica','img',17,2),('FC Porto','img',21,2),('Sporting CP','img',25,3),('Manchester City F.C.','img',27,3),('Real Madrid C.F.','img',29,3),('S.C. Braga','img',31,3),('FC Porto','img',33,3),('S.L. Benfica','img',35,3),('Juventus F.C.','img',37,3),('Cleveland Cavaliers','img',39,4),('Roger Federer','img',41,5),('New York Yankees','img',43,6),('S.L. Benfica','img',45,7),('S.L. Benfica','img',47,8),('Tiger Woods','img',49,9),('SC Braga','img',51,10);
 /*!40000 ALTER TABLE `Team` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -558,7 +592,7 @@ CREATE TABLE `User` (
   PRIMARY KEY (`ID`),
   KEY `FKUser152339` (`PaymentMethodID`),
   CONSTRAINT `FKUser152339` FOREIGN KEY (`PaymentMethodID`) REFERENCES `PaymentMethod` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -567,6 +601,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
+INSERT INTO `User` VALUES (1,1,'Dinis','mail3@gmail.com','root','2018-06-29',NULL),(2,2,'Dinis P','mail1232@mail.com','root','2018-06-29','essa mesmo'),(3,3,'Dinis F','mail12@mail.com','root','2018-06-29','essa mesmo');
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -579,4 +614,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-28 18:11:44
+-- Dump completed on 2018-06-29 14:08:32
