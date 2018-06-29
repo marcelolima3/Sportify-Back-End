@@ -27,6 +27,7 @@ public class UserDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final StringExpression password;
 	public final DateExpression registrationDate;
 	public final StringExpression defaultNotificationType;
+	public final BooleanExpression isManager;
 	public final CollectionExpression subscriptions;
 	
 	public UserDetachedCriteria() {
@@ -39,6 +40,7 @@ public class UserDetachedCriteria extends AbstractORMDetachedCriteria {
 		password = new StringExpression("password", this.getDetachedCriteria());
 		registrationDate = new DateExpression("registrationDate", this.getDetachedCriteria());
 		defaultNotificationType = new StringExpression("defaultNotificationType", this.getDetachedCriteria());
+		isManager = new BooleanExpression("isManager", this.getDetachedCriteria());
 		subscriptions = new CollectionExpression("ORM_subscriptions", this.getDetachedCriteria());
 	}
 	
@@ -52,6 +54,7 @@ public class UserDetachedCriteria extends AbstractORMDetachedCriteria {
 		password = new StringExpression("password", this.getDetachedCriteria());
 		registrationDate = new DateExpression("registrationDate", this.getDetachedCriteria());
 		defaultNotificationType = new StringExpression("defaultNotificationType", this.getDetachedCriteria());
+		isManager = new BooleanExpression("isManager", this.getDetachedCriteria());
 		subscriptions = new CollectionExpression("ORM_subscriptions", this.getDetachedCriteria());
 	}
 	

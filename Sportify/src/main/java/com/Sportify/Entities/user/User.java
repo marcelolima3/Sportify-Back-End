@@ -38,6 +38,7 @@ public class User implements Serializable {
 		this.password = password;
 		this.registrationDate = new Date();
 		this.ORM_subscriptions = new HashSet();
+		this.isManager = false;
 	}
 	
 	private java.util.Set this_getSet (int key) {
@@ -90,6 +91,10 @@ public class User implements Serializable {
 	@Column(name="DefaultNotificationType", nullable=true, length=255)
 	private String defaultNotificationType;
 
+	@JsonView(UserView.Public.class)
+	@Column(name="IsManager", nullable=false, length=1)
+	private boolean isManager;
+
 	@JsonView(UserView.Private.class)
 	@OneToMany(targetEntity= com.Sportify.Entities.user.Subscription.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
@@ -132,7 +137,15 @@ public class User implements Serializable {
 	public String getPassword() {
 		return password;
 	}
-	
+
+	public void setIsManager(boolean value) {
+		this.isManager = value;
+	}
+
+	public boolean getIsManager() {
+		return isManager;
+	}
+
 	public void setRegistrationDate(java.util.Date value) {
 		this.registrationDate = value;
 	}

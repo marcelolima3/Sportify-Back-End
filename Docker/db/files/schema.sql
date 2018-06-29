@@ -16,9 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- -----------------------------------------------------
--- Schema data
--- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `sportify` DEFAULT CHARACTER SET latin1 ;
 USE `sportify`;
 
@@ -49,7 +46,7 @@ CREATE TABLE `Athlete` (
 
 LOCK TABLES `Athlete` WRITE;
 /*!40000 ALTER TABLE `Athlete` DISABLE KEYS */;
-INSERT INTO `Athlete` VALUES ('António Sá','Portuguese','Male',NULL,2,1),('José Pedro','Portuguese','Male',NULL,3,1),('Manuel Pereira','Portuguese','Male',NULL,4,1),('Ana Miranda','Portuguese','Female',NULL,6,5),('Carlos Rocha','Portuguese','Male',NULL,7,5),('Maria Peixoto','Portuguese','Female',NULL,8,5),('Luísa Rocha','Portuguese','Female',NULL,10,9),('Maria Silva','Portuguese','Female',NULL,11,9),('João Pereira','Portuguese','Male',NULL,12,9),('João Sá','Portuguese','Male',NULL,14,13),('Manuel Ferreira','Portuguese','Male',NULL,15,13),('Bruno Pedro','Portuguese','Male',NULL,16,13),('Teresa Rocha','Portuguese','Female',NULL,18,17),('Luís António','Portuguese','Male',NULL,19,17),('Mariana Silva','Portuguese','Female',NULL,20,17),('Maria Pires','Portuguese','Female',NULL,22,21),('Carlos Costa','Portuguese','Male',NULL,23,21),('Ana Guedes','Portuguese','Female',NULL,24,21),('Fábio Coentão','Portuguese','Male',NULL,26,25),('David Silva','Spanish','Male',NULL,28,27),('Cristiano Ronaldo','Portuguese','Male',NULL,30,29),('Paulinho','Portuguese','Male',NULL,32,31),('Herrera','Mexican','Male',NULL,34,33),('Luisão','Brazilian','Male',NULL,36,35),('Buffon','Italian','Male',NULL,38,37),('LeBron James','American','Male',NULL,40,39),('Roger Federer','Swiss','Male',NULL,42,41),('Aaron Judge','American','Male',NULL,44,43),('Rui Costa','Portuguese','Male',NULL,46,45),('Miroslav','Bulgarian','Male',NULL,48,47),('Tiger Woods','American','Male',NULL,50,49),('Rúben Vieira','Portuguese','Male',NULL,52,51);
+INSERT INTO `Athlete` VALUES ('Bruno Pedro','Portuguese','Male',NULL,2,1),('Manuel Ferreira','Portuguese','Male',NULL,3,1),('João Sá','Portuguese','Male',NULL,4,1),('Ana Guedes','Portuguese','Female',NULL,6,5),('Maria Pires','Portuguese','Female',NULL,7,5),('Carlos Costa','Portuguese','Male',NULL,8,5),('Mariana Silva','Portuguese','Female',NULL,10,9),('Teresa Rocha','Portuguese','Female',NULL,11,9),('Luís António','Portuguese','Male',NULL,12,9),('José Pedro','Portuguese','Male',NULL,14,13),('Manuel Pereira','Portuguese','Male',NULL,15,13),('António Sá','Portuguese','Male',NULL,16,13),('Maria Silva','Portuguese','Female',NULL,18,17),('João Pereira','Portuguese','Male',NULL,19,17),('Luísa Rocha','Portuguese','Female',NULL,20,17),('Carlos Rocha','Portuguese','Male',NULL,22,21),('Maria Peixoto','Portuguese','Female',NULL,23,21),('Ana Miranda','Portuguese','Female',NULL,24,21),('Luisão','Brazilian','Male',NULL,26,25),('Paulinho','Portuguese','Male',NULL,28,27),('Buffon','Italian','Male',NULL,30,29),('Fábio Coentão','Portuguese','Male',NULL,32,31),('Cristiano Ronaldo','Portuguese','Male',NULL,34,33),('David Silva','Spanish','Male',NULL,36,35),('Herrera','Mexican','Male',NULL,38,37),('LeBron James','American','Male',NULL,40,39),('Roger Federer','Swiss','Male',NULL,42,41),('Aaron Judge','American','Male',NULL,44,43),('Rui Costa','Portuguese','Male',NULL,46,45),('Miroslav','Bulgarian','Male',NULL,48,47),('Tiger Woods','American','Male',NULL,50,49),('Rúben Vieira','Portuguese','Male',NULL,52,51);
 /*!40000 ALTER TABLE `Athlete` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,7 +134,7 @@ CREATE TABLE `EventCategory` (
 
 LOCK TABLES `EventCategory` WRITE;
 /*!40000 ALTER TABLE `EventCategory` DISABLE KEYS */;
-INSERT INTO `EventCategory` VALUES (1,'After Match',0.2,2),(2,'Before Match',0.2,2),(3,'Results',0.2,2),(4,'Personal Record',0.2,2),(5,'Fault',0.2,2),(6,'Goal',0.2,2);
+INSERT INTO `EventCategory` VALUES (1,'Before Match',0.2,2),(2,'Results',0.2,2),(3,'Personal Record',0.2,2),(4,'After Match',0.2,2),(5,'Goal',0.2,2),(6,'Fault',0.2,2);
 /*!40000 ALTER TABLE `EventCategory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,7 +189,7 @@ CREATE TABLE `InvoicePayment` (
 
 LOCK TABLES `InvoicePayment` WRITE;
 /*!40000 ALTER TABLE `InvoicePayment` DISABLE KEYS */;
-INSERT INTO `InvoicePayment` VALUES (10,1),(10,2),(10,3);
+INSERT INTO `InvoicePayment` VALUES (10,1),(10,2);
 /*!40000 ALTER TABLE `InvoicePayment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -277,7 +274,7 @@ CREATE TABLE `Modality` (
 
 LOCK TABLES `Modality` WRITE;
 /*!40000 ALTER TABLE `Modality` DISABLE KEYS */;
-INSERT INTO `Modality` VALUES (1,1,'Sprint',NULL),(2,1,'Hurdling',NULL),(3,2,'Football',NULL),(4,3,'Basketball',NULL),(5,4,'Tennis',NULL),(6,5,'Baseball',NULL),(7,6,'Cycling',NULL),(8,7,'Volleyball',NULL),(9,8,'Golf',NULL),(10,9,'Badminton',NULL);
+INSERT INTO `Modality` VALUES (1,1,'Hurdling',NULL),(2,1,'Sprint',NULL),(3,2,'Football',NULL),(4,3,'Basketball',NULL),(5,4,'Tennis',NULL),(6,5,'Baseball',NULL),(7,6,'Cycling',NULL),(8,7,'Volleyball',NULL),(9,8,'Golf',NULL),(10,9,'Badminton',NULL);
 /*!40000 ALTER TABLE `Modality` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,7 +301,7 @@ CREATE TABLE `Modality_EventCategory` (
 
 LOCK TABLES `Modality_EventCategory` WRITE;
 /*!40000 ALTER TABLE `Modality_EventCategory` DISABLE KEYS */;
-INSERT INTO `Modality_EventCategory` VALUES (1,1),(1,2),(3,2),(1,3),(3,3),(1,4),(3,5),(3,6);
+INSERT INTO `Modality_EventCategory` VALUES (2,1),(3,1),(2,2),(3,2),(2,3),(2,4),(3,5),(3,6);
 /*!40000 ALTER TABLE `Modality_EventCategory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -392,7 +389,7 @@ DROP TABLE IF EXISTS `PaymentMethod`;
 CREATE TABLE `PaymentMethod` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -401,7 +398,7 @@ CREATE TABLE `PaymentMethod` (
 
 LOCK TABLES `PaymentMethod` WRITE;
 /*!40000 ALTER TABLE `PaymentMethod` DISABLE KEYS */;
-INSERT INTO `PaymentMethod` VALUES (1),(2),(3);
+INSERT INTO `PaymentMethod` VALUES (1),(2);
 /*!40000 ALTER TABLE `PaymentMethod` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -570,7 +567,7 @@ CREATE TABLE `Team` (
 
 LOCK TABLES `Team` WRITE;
 /*!40000 ALTER TABLE `Team` DISABLE KEYS */;
-INSERT INTO `Team` VALUES ('Sporting CP','img',1,1),('FC Porto','img',5,1),('S.L. Benfica','img',9,1),('Sporting CP','img',13,2),('S.L. Benfica','img',17,2),('FC Porto','img',21,2),('Sporting CP','img',25,3),('Manchester City F.C.','img',27,3),('Real Madrid C.F.','img',29,3),('S.C. Braga','img',31,3),('FC Porto','img',33,3),('S.L. Benfica','img',35,3),('Juventus F.C.','img',37,3),('Cleveland Cavaliers','img',39,4),('Roger Federer','img',41,5),('New York Yankees','img',43,6),('S.L. Benfica','img',45,7),('S.L. Benfica','img',47,8),('Tiger Woods','img',49,9),('SC Braga','img',51,10);
+INSERT INTO `Team` VALUES ('Sporting CP','img',1,1),('FC Porto','img',5,1),('S.L. Benfica','img',9,1),('Sporting CP','img',13,2),('S.L. Benfica','img',17,2),('FC Porto','img',21,2),('S.L. Benfica','img',25,3),('S.C. Braga','img',27,3),('Juventus F.C.','img',29,3),('Sporting CP','img',31,3),('Real Madrid C.F.','img',33,3),('Manchester City F.C.','img',35,3),('FC Porto','img',37,3),('Cleveland Cavaliers','img',39,4),('Roger Federer','img',41,5),('New York Yankees','img',43,6),('S.L. Benfica','img',45,7),('S.L. Benfica','img',47,8),('Tiger Woods','img',49,9),('SC Braga','img',51,10);
 /*!40000 ALTER TABLE `Team` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -589,10 +586,11 @@ CREATE TABLE `User` (
   `Password` varchar(255) DEFAULT NULL,
   `RegistrationDate` date DEFAULT NULL,
   `DefaultNotificationType` varchar(255) DEFAULT NULL,
+  `IsManager` tinyint(1) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `FKUser152339` (`PaymentMethodID`),
   CONSTRAINT `FKUser152339` FOREIGN KEY (`PaymentMethodID`) REFERENCES `PaymentMethod` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -601,7 +599,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (1,1,'Dinis','mail3@gmail.com','root','2018-06-29',NULL),(2,2,'Dinis P','mail1232@mail.com','root','2018-06-29','essa mesmo'),(3,3,'Dinis F','mail12@mail.com','root','2018-06-29','essa mesmo');
+INSERT INTO `User` VALUES (1,1,'Dinis','mail3@gmail.com','root','2018-06-29',NULL,0),(2,2,'Dinis F','mail12@mail.com','root','2018-06-29','essa mesmo',0);
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -614,4 +612,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-29 14:08:32
+-- Dump completed on 2018-06-29 15:12:09
