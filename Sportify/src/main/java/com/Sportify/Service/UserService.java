@@ -91,4 +91,17 @@ public class UserService {
         }
         return new ArrayList<>();
     }
+
+    public boolean login(User user) {
+        try{
+            String email = user.getEmail();
+            String password = user.getPassword();
+            List list = UserDAO.queryUser("Email = '" + email + "' and Password = '" + password +"'", null);
+            return list.size() > 0;
+        }
+        catch(PersistentException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

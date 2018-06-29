@@ -55,4 +55,10 @@ public class UserController {
     public List<Subscription> getSubscriptions(@PathVariable("id") int id){
         return userService.getSubscriptions(id);
     }
+
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public boolean login(@RequestBody User user){
+        return userService.login(user);
+    }
 }
