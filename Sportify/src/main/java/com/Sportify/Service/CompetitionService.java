@@ -19,6 +19,15 @@ public class CompetitionService {
     @Autowired private ModalityDAO modalityDAO;
     @Autowired private CompetitionDAO competitionDAO;
 
+    public Competition getCompetition(int id){
+        try {
+            return competitionDAO.getCompetitionByORMID(id);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public List<Competition> getModalityCompetitions(int id){
         try {
             Modality m = modalityDAO.getModalityByORMID(id);

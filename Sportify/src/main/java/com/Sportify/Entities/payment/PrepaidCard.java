@@ -117,5 +117,10 @@ public class PrepaidCard extends com.Sportify.Entities.payment.PaymentMethod imp
 	public String toString() {
 		return super.toString();
 	}
-	
+
+	@Override
+	public void addToBill(double price) {
+		this.balance -= price;
+	}
+
 }

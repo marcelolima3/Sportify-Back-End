@@ -47,7 +47,7 @@ public class Populate {
         PersistentTransaction t = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             UsersManagement usersManagement = new UsersManagement();
-            int id = usersManagement.registerUser("Dinis", "mail3@gmail.com", "root", new InvoicePayment(10));
+            int id = usersManagement.registerUser("Dinis", "mail3@gmail.com", "root", new InvoicePayment(0));
             System.out.println("ID: " + id);
             t.commit();
         }

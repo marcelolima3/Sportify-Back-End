@@ -87,5 +87,10 @@ public class InvoicePayment extends com.Sportify.Entities.payment.PaymentMethod 
 	public String toString() {
 		return super.toString();
 	}
-	
+
+	@Override
+	public void addToBill(double price) {
+		this.currentAmount += price;
+	}
+
 }

@@ -14,6 +14,8 @@
 package com.Sportify.Entities.user;
 
 import com.Sportify.DAO.ORMConstants;
+import com.Sportify.Entities.event.EventCategory;
+import com.Sportify.Views.JSONViews.payment.InvoiceView;
 import com.Sportify.Views.JSONViews.user.SubscriptionView;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.Sportify.Entities.subentities.SubscriptionEntity;
@@ -66,37 +68,40 @@ public class Subscription implements Serializable {
 		
 	};
 
-	@JsonView(SubscriptionView.Public.class)
+	@JsonView({InvoiceView.Public.class, SubscriptionView.Public.class})
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
 	@GeneratedValue(generator="USER_SUBSCRIPTION_ID_GENERATOR")	
 	@org.hibernate.annotations.GenericGenerator(name="USER_SUBSCRIPTION_ID_GENERATOR", strategy="native")	
 	private int ID;
 
-	@JsonView(SubscriptionView.Private.class)
+	@JsonView({InvoiceView.Public.class, SubscriptionView.Public.class})
 	@ManyToOne(targetEntity= com.Sportify.Entities.user.NotificationTracker.class, fetch=FetchType.LAZY)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="NotificationTrackerID", referencedColumnName="ID", nullable=false) })	
 	private com.Sportify.Entities.user.NotificationTracker _tracker;
 
-	@JsonView(SubscriptionView.Private.class)
+	@JsonView({InvoiceView.Public.class, SubscriptionView.Public.class})
 	@ManyToOne(targetEntity= com.Sportify.Entities.subentities.SubscriptionEntity.class, fetch=FetchType.LAZY)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="SubscriptionEntityID", referencedColumnName="ID", nullable=false) })	
 	private com.Sportify.Entities.subentities.SubscriptionEntity subscribedEntity;
-	
+
+	@JsonView({InvoiceView.Public.class, SubscriptionView.Public.class})
 	@Column(name="`Date`", nullable=true)	
 	@Temporal(TemporalType.DATE)	
 	private java.util.Date date;
-	
+
+	@JsonView(SubscriptionView.Private.class)
 	@Column(name="Paid", nullable=true, length=1)	
 	private boolean paid;
-	
+
+	@JsonView({InvoiceView.Public.class, SubscriptionView.Public.class})
 	@ManyToMany(targetEntity= com.Sportify.Entities.event.EventCategory.class)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinTable(name="Subscription_EventCategory", joinColumns={ @JoinColumn(name="SubscriptionID") }, inverseJoinColumns={ @JoinColumn(name="EventCategoryID") })	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private java.util.Set ORM_subscribedEvents = new java.util.HashSet();
+	private java.util.Set<EventCategory> ORM_subscribedEvents = new java.util.HashSet();
 	
 	private void setID(int value) {
 		this.ID = value;
@@ -134,11 +139,11 @@ public class Subscription implements Serializable {
 		return _tracker;
 	}
 	
-	private void setORM_SubscribedEvents(java.util.Set value) {
+	public void setORM_SubscribedEvents(java.util.Set value) {
 		this.ORM_subscribedEvents = value;
 	}
 	
-	private java.util.Set getORM_SubscribedEvents() {
+	public java.util.Set getORM_SubscribedEvents() {
 		return ORM_subscribedEvents;
 	}
 	

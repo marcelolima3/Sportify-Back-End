@@ -14,7 +14,9 @@
 package com.Sportify.Entities.user;
 
 import com.Sportify.DAO.ORMConstants;
+import com.Sportify.Views.JSONViews.subentities.SubscriptionEntityView;
 import com.Sportify.Views.JSONViews.user.NotificationTrackerView;
+import com.Sportify.Views.JSONViews.user.SubscriptionView;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
@@ -55,7 +57,7 @@ public class NotificationTracker implements Serializable {
 	@org.hibernate.annotations.GenericGenerator(name="USER_NOTIFICATIONTRACKER_ID_GENERATOR", strategy="native")	
 	private int ID;
 
-	@JsonView(NotificationTrackerView.Public.class)
+	@JsonView({NotificationTrackerView.Public.class, SubscriptionView.Public.class})
 	@Column(name="NotificationPolicy", nullable=true, length=255)	
 	private String notificationPolicy;
 

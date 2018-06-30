@@ -1,10 +1,16 @@
 package com.Sportify.Controllers;
 
+import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
+import com.Sportify.Entities.payment.Invoice;
+import com.Sportify.Entities.payment.PaymentMethod;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.User;
 import com.Sportify.Service.UserService;
 import com.Sportify.Views.JSONViews.event.EventCategoryView;
+import com.Sportify.Views.JSONViews.payment.InvoiceView;
+import com.Sportify.Views.JSONViews.payment.PaymentMethodView;
+import com.Sportify.Views.JSONViews.event.EventView;
 import com.Sportify.Views.JSONViews.user.SubscriptionView;
 import com.Sportify.Views.JSONViews.user.UserView;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -21,6 +27,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @JsonView(UserView.Public.class)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public User getUser(@PathVariable("id") int id){
+        return userService.getUser(id);
+    }
 
     @JsonView(UserView.Public.class)
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -61,7 +73,25 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{idU}/subscribe/{idSE}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void subscribe(@PathVariable("idU") int id, @PathVariable("idSE") int idSE, @RequestBody EventCategory eventCategory){
-        userService.subscribe(id, idSE, eventCategory);
+    public void subscribe(@PathVariable("idU") int id, @PathVariable("idSE") int idSE, @RequestBody Subscription subscription){
+        userService.subscribe(id, idSE, subscription);
+    }
+
+    @JsonView(PaymentMethodView.Public.class)
+    @RequestMapping(value = "/{idU}/payments", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public PaymentMethod getPaymentMethod(@PathVariable("idU") int id){
+        return userService.getPaymentMethod(id);
+    }
+
+    @JsonView(InvoiceView.Private.class)
+    @RequestMapping(value = "/{idU}/payments", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Invoice payService(@PathVariable("idU") int id) {
+        return userService.payService(id);
+    }
+
+    @JsonView(EventView.Public.class)
+    @RequestMapping(value = "/{idU}/notifications", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Event> getNotifications(@PathVariable("idU") int id){
+        return userService.consultNotifications(id);
     }
 }

@@ -15,10 +15,12 @@ package com.Sportify.Entities.subentities;
 
 import com.Sportify.DAO.ORMConstants;
 import com.Sportify.Entities.competition.MatchEvent;
+import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Views.JSONViews.competition.MatchEventView;
 import com.Sportify.Views.JSONViews.subentities.AthleteView;
 import com.Sportify.Views.JSONViews.subentities.SubscriptionEntityView;
 import com.Sportify.Views.JSONViews.subentities.TeamView;
+import com.Sportify.Views.JSONViews.user.SubscriptionView;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -60,7 +62,7 @@ public abstract class SubscriptionEntity implements Serializable {
 		
 	};
 
-	@JsonView({SubscriptionEntityView.Public.class, MatchEventView.Public.class, TeamView.Public.class, AthleteView.Public.class})
+	@JsonView({SubscriptionView.Public.class, SubscriptionEntityView.Public.class, MatchEventView.Public.class, TeamView.Public.class, AthleteView.Public.class})
 	@Column(name="ID", nullable=false, length=10)	
 	@Id	
 	@GeneratedValue(generator="SUBENTITIES_SUBSCRIPTIONENTITY_ID_GENERATOR")	
