@@ -67,8 +67,9 @@ public class UserController {
         return userService.getSubscriptions(id);
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean login(@RequestBody User user) {
+    @JsonView(UserView.Public.class)
+    @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public User login(@RequestBody User user) {
         return userService.login(user);
     }
 

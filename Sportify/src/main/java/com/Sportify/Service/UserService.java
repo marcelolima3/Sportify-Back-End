@@ -59,7 +59,7 @@ public class UserService {
         }
         if (!exist) {
             user.setORM_Subscriptions(new HashSet());
-            //com.Sportify.Entities.user.setPaymentManager(new InvoicePayment(10));
+            user.setDefaultNotificationType("default");
             user.setRegistrationDate(new Date());
             try {
                 userDAO.save(user);
@@ -108,15 +108,19 @@ public class UserService {
         return new ArrayList<>();
     }
 
-    public boolean login(User user) {
+    public User login(User user) {
         try {
             String email = user.getEmail();
             String password = user.getPassword();
-            List list = userDAO.queryUser("Email = '" + email + "' and Password = '" + password + "'", null);
-            return list.size() > 0;
+            List<User> list = userDAO.queryUser("Email = '" + email + "' and Password = '" + password + "'", null);
+            if( list.size() > 0 ) {
+                return list.get(0);
+            }
+            else return null;
+
         } catch (PersistentException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 
@@ -168,7 +172,7 @@ public class UserService {
         catch (PersistentException e) { e.printStackTrace(); }
     }
 
-    public static void main(String[] args){
+    /**public static void main(String[] args){
         UserService us = new UserService();
         Subscription s = new Subscription();
         s.setDate(new Date());
@@ -184,7 +188,7 @@ public class UserService {
         }
 
         us.subscribe(1, 29, s);
-    }
+    }**/
 
     public Invoice payService(int id) {
         try {
