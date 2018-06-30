@@ -31,18 +31,6 @@ import java.util.*;
 
 public class Populate {
 
-    public void createTestData() throws PersistentException {
-        PersistentTransaction t = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
-        try {
-            PaymentMethod paymentMethod = new InvoicePayment(10);
-            User user = new User(paymentMethod, "Dinis", "mail@mail.com", "root");
-            UserDAO.save(user);
-            t.commit();
-        } catch (Exception e) {
-            t.rollback();
-        }
-    }
-
     public void testUsersManagement() throws PersistentException {
         PersistentTransaction t = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
@@ -54,46 +42,6 @@ public class Populate {
         catch (Exception e){
             t.rollback();
         }
-    }
-
-    public void testCompetitions() throws PersistentException {
-        PersistentTransaction t = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
-        try {
-            Competition competition = new Competition("Competition100", "location", new Date(), new Date(), "asdas");
-
-            Modality modality = new Modality("Modality100");
-            modality.competitions.add(competition);
-
-            Set<Modality> modalities = new HashSet<Modality>();
-            ((HashSet) modalities).add(modality);
-
-            Sport sport = new Sport("Sport100");
-            sport.setORM_Modalities(modalities);
-
-            SportDAO.save(sport);
-
-            CompetitionsManagement competitionsManagement = new CompetitionsManagement();
-            competitionsManagement.createCompetition(1, "Competition1", "Braga", new Date(), new Date(), "Description");
-            competitionsManagement.createMatch(1, "Description1", new Date(), new Date(), "Braga");
-
-            t.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            t.rollback();
-        }
-    }
-
-    public void createTeam() throws PersistentException {
-        Modality modality = ModalityDAO.getModalityByORMID(1);
-
-        Team benfica = new Team("Benfica", "img");
-        HashSet<Athlete> atletas = new HashSet<Athlete>();
-        Athlete atleta = new Athlete("João Pereira", "Portuguese", "Male", "https://image.flaticon.com/icons/svg/166/166357.svg");
-        atleta.setTeam(benfica);
-        benfica.setORM_Athletes(atletas);
-
-        modality.teams.add(benfica);
-        ModalityDAO.save(modality);
     }
 
     public static EventCategory eventCategory_PersonalRecord = new EventCategory("Personal Record", 0.2, 2);
@@ -130,13 +78,13 @@ public class Populate {
                 );
 
         List<Athlete> athletes_list = Arrays.asList(
-                new Athlete("LeBron James", "American", "Male", "https://image.flaticon.com/icons/svg/166/166362.svg"),
-                new Athlete("Roger Federer", "Swiss", "Male", "https://image.flaticon.com/icons/svg/166/166362.svg"),
-                new Athlete("Aaron Judge", "American", "Male", "https://image.flaticon.com/icons/svg/166/166362.svg"),
-                new Athlete("Rui Costa", "Portuguese", "Male", "https://image.flaticon.com/icons/svg/166/166344.svg"),
+                new Athlete("LeBron James", "American", "Male", "https://image.flaticon.com/icons/svg/166/166355.svg"),
+                new Athlete("Roger Federer", "Swiss", "Male", "https://image.flaticon.com/icons/svg/166/166368.svg"),
+                new Athlete("Aaron Judge", "American", "Male", "https://image.flaticon.com/icons/svg/166/166366.svg"),
+                new Athlete("Rui Costa", "Portuguese", "Male", "https://image.flaticon.com/icons/svg/166/166346.svg"),
                 new Athlete("Miroslav", "Bulgarian", "Male", "https://image.flaticon.com/icons/svg/166/166344.svg"),
-                new Athlete("Tiger Woods", "American", "Male", "https://image.flaticon.com/icons/svg/166/166362.svg"),
-                new Athlete("Rúben Vieira", "Portuguese", "Male",  "https://image.flaticon.com/icons/svg/166/166344.svg")
+                new Athlete("Tiger Woods", "American", "Male", "https://image.flaticon.com/icons/svg/166/166353.svg"),
+                new Athlete("Rúben Vieira", "Portuguese", "Male",  "https://image.flaticon.com/icons/svg/166/166368.svg")
                 );
 
         PersistentTransaction t = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
@@ -144,7 +92,7 @@ public class Populate {
             for(int i = 0; i < 7; i++){
                 Sport sport = sports_list.get(i);
                 HashSet<Modality> sport_modalities = new HashSet<Modality>();
-                Modality modality = new Modality(sports_list.get(i).getName());
+                Modality modality = new Modality(sports_list.get(i).getName(), sports_list.get(i).getImgUrl());
                 HashSet<Team> teams = new HashSet<Team>();
                 Team team = teams_list.get(i);
                 Athlete athlete = athletes_list.get(i);
@@ -167,7 +115,7 @@ public class Populate {
             Sport sport_athletics = new Sport("Athletics", "https://image.flaticon.com/icons/svg/123/123500.svg", true);
             HashSet<Modality> athletics_modalities = new HashSet<Modality>();
 
-            Modality modality_sprint = new Modality("Sprint");
+            Modality modality_sprint = new Modality("Sprint", "https://image.flaticon.com/icons/svg/502/502112.svg");
 
             modality_sprint._eventCategories.add(eventCategory_BeforeMatch);
             modality_sprint._eventCategories.add(eventCategory_AfterMatch);
@@ -206,7 +154,7 @@ public class Populate {
             modality_sprint.setORM_Teams(sprint_teams);
             athletics_modalities.add(modality_sprint);
 
-            Modality modality_hurdling = new Modality("Hurdling");
+            Modality modality_hurdling = new Modality("Hurdling", "https://image.flaticon.com/icons/svg/674/674729.svg");
 
             modality_sprint._eventCategories.add(eventCategory_BeforeMatch);
             modality_sprint._eventCategories.add(eventCategory_AfterMatch);
@@ -259,7 +207,7 @@ public class Populate {
             Sport sport_football = new Sport("Football", "https://image.flaticon.com/icons/svg/123/123495.svg", false);
             HashSet<Modality> sport_modalities = new HashSet<Modality>();
 
-            Modality modality = new Modality("Football");
+            Modality modality = new Modality("Football", "https://image.flaticon.com/icons/svg/123/123495.svg");
 
             modality._eventCategories.add(eventCategory_BeforeMatch);
             modality._eventCategories.add(eventCategory_Goal);

@@ -28,8 +28,9 @@ public class Modality implements Serializable {
 	public Modality() {
 	}
 
-	public Modality(String name) {
+	public Modality(String name, String imgUrl) {
 		this.name = name;
+		this.imgUrl = imgUrl;
 		this.ORM__eventCategories = new HashSet();
 		this.ORM_competitions = new HashSet();
 		this.ORM_teams = new HashSet();
