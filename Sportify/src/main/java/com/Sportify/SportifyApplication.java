@@ -20,5 +20,5 @@ public class SportifyApplication extends SpringBootServletInitializer{
         SpringApplication.run(SportifyApplication.class, args);
 
 
-	}
+    }
 }
