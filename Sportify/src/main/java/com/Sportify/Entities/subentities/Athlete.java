@@ -36,11 +36,12 @@ import javax.persistence.*;
 public class Athlete extends com.Sportify.Entities.subentities.SubscriptionEntity implements Serializable {
 	public Athlete() { super(); }
 
-	public Athlete(String name, String nationality, String genre) {
+	public Athlete(String name, String nationality, String genre, String imgUrl) {
 		super();
 		this.name = name;
 		this.nationality = nationality;
 		this.genre = genre;
+		this.imgUrl = imgUrl;
 		this.ORM_matchEvents = new HashSet();
 	}
 	

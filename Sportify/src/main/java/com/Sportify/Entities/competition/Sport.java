@@ -32,6 +32,12 @@ public class Sport implements Serializable {
 		this.ORM_modalities = new HashSet();
 	}
 
+	public Sport(String name, String imgUrl, boolean onlySport) {
+		this.name = name;
+		this.imgUrl = imgUrl;
+		this.onlySport = onlySport;
+	}
+
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_SPORT_MODALITIES) {
 			return ORM_modalities;
