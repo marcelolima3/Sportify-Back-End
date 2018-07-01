@@ -216,37 +216,37 @@ public class Populate {
 
             HashSet<Team> teams = new HashSet<Team>();
 
-            Team benfica = new Team("S.L. Benfica", "img");
+            Team benfica = new Team("S.L. Benfica", "https://seeklogo.com/images/S/sport-lisboa-e-benfica-logo-149703CDAB-seeklogo.com.png");
             Athlete benfica_athlete = new Athlete("Luisão", "Brazilian", "Male", "https://image.flaticon.com/icons/svg/166/166344.svg");
             benfica_athlete.setTeam(benfica);
             teams.add(benfica);
 
-            Team porto = new Team("FC Porto", "img");
+            Team porto = new Team("FC Porto", "https://seeklogo.com/images/F/F_C__Porto-logo-3BB4DAAEA2-seeklogo.com.png");
             Athlete porto_athlete = new Athlete("Herrera", "Mexican", "Male", "https://image.flaticon.com/icons/svg/166/166344.svg");
             porto_athlete.setTeam(porto);
             teams.add(porto);
 
-            Team sporting = new Team("Sporting CP", "img");
+            Team sporting = new Team("Sporting CP", "https://seeklogo.com/images/S/sporting-lisbon-sporting-clube-de-portugal-logo-87718592BF-seeklogo.com.png");
             Athlete sporting_athlete = new Athlete("Fábio Coentão", "Portuguese", "Male", "https://image.flaticon.com/icons/svg/166/166344.svg");
             sporting_athlete.setTeam(sporting);
             teams.add(sporting);
 
-            Team braga = new Team("S.C. Braga", "img");
+            Team braga = new Team("S.C. Braga", "https://seeklogo.com/images/S/Sporting_Clube_de_Braga-logo-3E6C00F285-seeklogo.com.png");
             Athlete braga_athlete = new Athlete("Paulinho", "Portuguese", "Male", "https://image.flaticon.com/icons/svg/166/166344.svg");
             braga_athlete.setTeam(braga);
             teams.add(braga);
 
-            Team real_madrid = new Team("Real Madrid C.F.", "img");
+            Team real_madrid = new Team("Real Madrid C.F.", "https://www.freeiconspng.com/uploads/real-madrid-logo-png-32.png");
             Athlete real_madrid_athlete = new Athlete("Cristiano Ronaldo", "Portuguese", "Male", "https://image.flaticon.com/icons/svg/166/166344.svg");
             real_madrid_athlete.setTeam(real_madrid);
             teams.add(real_madrid);
 
-            Team juventus = new Team("Juventus F.C.", "img");
+            Team juventus = new Team("Juventus F.C.", "https://seeklogo.com/images/J/juventus-2017-new-logo-40FBF543AF-seeklogo.com.png");
             Athlete juventus_athlete = new Athlete("Buffon", "Italian", "Male", "https://image.flaticon.com/icons/svg/166/166344.svg");
             juventus_athlete.setTeam(juventus);
             teams.add(juventus);
 
-            Team manchester_city = new Team("Manchester City F.C.", "img");
+            Team manchester_city = new Team("Manchester City F.C.", "https://seeklogo.com/images/M/manchester-city-fc-new-logo-4C45133019-seeklogo.com.png");
             Athlete manchester_city_athlete = new Athlete("David Silva", "Spanish","Male", "https://image.flaticon.com/icons/svg/166/166344.svg");
             manchester_city_athlete.setTeam(manchester_city);
             teams.add(manchester_city);
