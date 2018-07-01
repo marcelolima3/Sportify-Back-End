@@ -70,47 +70,33 @@ public class MatchEventService {
             Notifier notifier = new Notifier();
 
             for(Subscription s : m.subscriptions.toArray()){
-                List<Integer> list = subscriptionDAO.querySubscription("ID = " + s.getID(), null);
-                NotificationTracker nt = s.get_tracker();
-                nt.notificationHistory.add(event);
-                if(nt.getNotificationPolicy().equals("default")){
-                    notifier.sendMessage("" + list.get(0), event.getTextFormat());
-                }
-                else if(event.getCategory().getName().equals("After Match") || event.getCategory().getName().equals("Results")){
-                    m.setActive(false);
-                    notifier.sendMessage("" + list.get(0), m.getDescription()+ " is over! \nYou can now consult the notifications.");
-                }
+                sendNotification(s, event, notifier, ec, m);
             }
 
             for(Athlete a : m.athletes.toArray()){
                 for(Subscription sa : a.subscriptions.toArray()){
-                    List<Integer> list = subscriptionDAO.querySubscription("ID = "+ sa.getID(), null);
-                    NotificationTracker nt = sa.get_tracker();
-                    nt.notificationHistory.add(event);
-                    if(nt.getNotificationPolicy().equals("default")){
-                        notifier.sendMessage("" + list.get(0), event.getTextFormat());
-                    }
-                    else if(event.getCategory().getName().equals("After Match") || event.getCategory().getName().equals("Results")){
-                        m.setActive(false);
-                        notifier.sendMessage("" + list.get(0), m.getDescription()+ " is over! \nYou can now consult the notifications.");
-                    }
+                    sendNotification(sa, event, notifier, ec, m);
                 }
                 for(Subscription st : a.getTeam().subscriptions.toArray()){
-                    List<Integer> list = subscriptionDAO.querySubscription("ID = "+ st.getID(), null);
-                    NotificationTracker nt = st.get_tracker();
-                    nt.notificationHistory.add(event);
-                    if(nt.getNotificationPolicy().equals("default")){
-                        notifier.sendMessage("" + list.get(0), event.getTextFormat());
-                    }
-                    else if(event.getCategory().getName().equals("After Match") || event.getCategory().getName().equals("Results")){
-                        m.setActive(false);
-                        notifier.sendMessage("" + list.get(0), m.getDescription()+ " is over! \nYou can now consult the notifications.");
-                    }
+                    sendNotification(st, event, notifier, ec, m);
                 }
             }
             MatchEventDAO.save(m);
         } catch (PersistentException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void sendNotification(Subscription s, Event event, Notifier notifier, EventCategory ec, MatchEvent m) throws PersistentException {
+        List<Integer> list = subscriptionDAO.querySubscription("ID = " + s.getID(), null);
+        NotificationTracker nt = s.get_tracker();
+        nt.notificationHistory.add(event);
+        if(nt.getNotificationPolicy().equals("default")){
+            notifier.sendMessage("" + list.get(0), ec.getName(), event.getTextFormat());
+        }
+        else if(event.getCategory().getName().equals("After Match") || event.getCategory().getName().equals("Results")){
+            m.setActive(false);
+            notifier.sendMessage("" + list.get(0), ec.getName(), m.getDescription()+ " is over! \nYou can now consult the notifications.");
         }
     }
 }
