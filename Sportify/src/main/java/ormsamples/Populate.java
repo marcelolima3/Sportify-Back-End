@@ -47,7 +47,7 @@ public class Populate {
     public static EventCategory eventCategory_MatchRecord = new EventCategory("Match Record", 0.2, 2);
     public static EventCategory eventCategory_BeforeMatch = new EventCategory("Before Match", 0.2, 2);
     public static EventCategory eventCategory_AfterMatch = new EventCategory("After Match", 0.2, 2);
-    public static EventCategory eventCategory_Goal = new EventCategory("Goal", 0.2, 2);
+    public static EventCategory eventCategory_Goal = new EventCategory("Score", 0.2, 2);
     public static EventCategory eventCategory_Fault = new EventCategory("Fault", 0.2, 2);
     public static EventCategory eventCategory_FinalResult = new EventCategory("Final Result", 0.2, 2);
 
@@ -86,18 +86,70 @@ public class Populate {
                 new Athlete("Tiger Woods", "American", "Male", "https://image.flaticon.com/icons/svg/166/166353.svg"),
                 new Athlete("Rúben Vieira", "Portuguese", "Male",  "https://image.flaticon.com/icons/svg/166/166368.svg")
                 );
+        List<Competition> competitions_list = Arrays.asList(
+                new Competition("National Basketball Association (NBA)","North America", new Date(2017,7,1), new Date(2018, 7, 10), "NBA"),
+                new Competition("Australian Open","Australia", new Date(2018,1,1), new Date(2018, 1, 30), "Australian Open Tournament"),
+                new Competition("NCAA Baseball Championship","Nebraska", new Date(2018,7,5), new Date(2018, 7, 30), "NCAA"),
+                new Competition("UCI World Tour","Worldwide", new Date(2018,7,1), new Date(2018, 7, 10), "UCI"),
+                new Competition("FIVB Volleyball Challenger Cup - Men","Portugal", new Date(2018,9,5), new Date(2018, 11, 10), "FIVB Volleyball"),
+                new Competition("The Open Championship","United Kingdom", new Date(2018,9,10), new Date(2019, 1, 14), "The Open Championship"),
+                new Competition("World Badminton Grand Prix","Japan", new Date(2018,7,1), new Date(2018, 7, 10), "World Badminton Grand Prix")
+                );
+        List<MatchEvent> matches_list = Arrays.asList(
+                new MatchEvent("Cleveland Cavaliers vs Chicago Bulls", new Date(), new Date(), "Ohio", true),
+                new MatchEvent("Roger Federer vs Novak Djokovic", new Date(), new Date(), "Australia", true),
+                new MatchEvent("New York Yankees vs Minnesota Twins", new Date(), new Date(), "New York", true),
+                new MatchEvent("Volta a Catalunha", new Date(), new Date(), "Spain", true),
+                new MatchEvent("S.L. Benfica vs FC Porto", new Date(), new Date(), "Portugal", true),
+                new MatchEvent("Final Day", new Date(), new Date(), "United Kingdom", true),
+                new MatchEvent("Rúben Vieira vs Lin Dan", new Date(), new Date(), "Japan", true)
+                );
+
+        List<Team> teams_list_2 = Arrays.asList(
+                new Team("Chicago Bulls", "https://seeklogo.com/images/C/chicago-bulls-logo-9FCA01BE25-seeklogo.com.png"),
+                new Team("Novak Djokovic", "https://seeklogo.com/images/N/novak-djokovic-logo-0197066303-seeklogo.com.png"),
+                new Team("Minnesota Twins", "https://seeklogo.com/images/M/minnesota-twins-logo-8D8910AF17-seeklogo.com.png"),
+                new Team("FC Porto", "https://seeklogo.com/images/F/F_C__Porto-logo-3BB4DAAEA2-seeklogo.com.png"),
+                new Team("FC Porto", "https://seeklogo.com/images/F/F_C__Porto-logo-3BB4DAAEA2-seeklogo.com.png"),
+                new Team("Brooks Koepka", "https://seeklogo.com/images/B/Brooks-logo-BE9048B4D9-seeklogo.com.png"),
+                new Team("Lin Dan", "https://seeklogo.com/images/L/LIN_TV-logo-2B29416CBC-seeklogo.com.gif")
+                );
+
+        List<Athlete> athletes_list_2 = Arrays.asList(
+                new Athlete("Zach LaVine", "American", "Male", "https://image.flaticon.com/icons/svg/166/166355.svg"),
+                new Athlete("Novak Djokovic", "Serbia", "Male", "https://image.flaticon.com/icons/svg/166/166368.svg"),
+                new Athlete("Joe Mauer", "American", "Male", "https://image.flaticon.com/icons/svg/166/166366.svg"),
+                new Athlete("Antonio Carvalho", "Portuguese", "Male", "https://image.flaticon.com/icons/svg/166/166346.svg"),
+                new Athlete("Rui Almeida", "Portuguese", "Male", "https://image.flaticon.com/icons/svg/166/166344.svg"),
+                new Athlete("Brooks Koepka", "American", "Male", "https://image.flaticon.com/icons/svg/166/166353.svg"),
+                new Athlete("Lin Dan", "Chinese", "Male", "https://image.flaticon.com/icons/svg/166/166368.svg")
+                );
 
         try {
             for(int i = 0; i < 7; i++){
                 Sport sport = sports_list.get(i);
                 HashSet<Modality> sport_modalities = new HashSet<Modality>();
                 Modality modality = new Modality(sports_list.get(i).getName(), sports_list.get(i).getImgUrl());
+                modality._eventCategories.add(eventCategory_FinalResult);
+                modality._eventCategories.add(eventCategory_BeforeMatch);
+                modality._eventCategories.add(eventCategory_Fault);
+                modality._eventCategories.add(eventCategory_Goal);
                 HashSet<Team> teams = new HashSet<Team>();
-                Team team = teams_list.get(i);
-                Athlete athlete = athletes_list.get(i);
-                athlete.setTeam(team);
-                teams.add(team);
+                Team team1 = teams_list.get(i);
+                Team team2 = teams_list_2.get(i);
+                Athlete athlete1 = athletes_list.get(i);
+                Athlete athlete2 = athletes_list_2.get(i);
+                athlete1.setTeam(team1);
+                athlete2.setTeam(team2);
+                teams.add(team1);
+                teams.add(team2);
                 modality.setORM_Teams(teams);
+
+                matches_list.get(i).athletes.add(athlete1);
+                matches_list.get(i).athletes.add(athlete2);
+
+                competitions_list.get(i).matchEvents.add(matches_list.get(i));
+                modality.competitions.add(competitions_list.get(i));
                 sport_modalities.add(modality);
                 sport.setORM_Modalities(sport_modalities);
                 SportDAO.save(sport);
@@ -272,7 +324,6 @@ public class Populate {
             Athlete benfica_athlete = new Athlete("Luisão", "Brazilian", "Male", "https://image.flaticon.com/icons/svg/166/166344.svg");
             benfica_athlete.setTeam(benfica);
             matchEvent_football_liga_1.athletes.add(benfica_athlete);
-            matchEvent_football_liga_2.athletes.add(benfica_athlete);
             //matchEvent_football_champions_2.athletes.add(benfica_athlete);
             teams.add(benfica);
 
