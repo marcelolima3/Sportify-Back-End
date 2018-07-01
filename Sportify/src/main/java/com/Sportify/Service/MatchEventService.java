@@ -4,12 +4,14 @@ import com.Sportify.DAO.competition.CompetitionDAO;
 import com.Sportify.DAO.competition.MatchEventDAO;
 import com.Sportify.DAO.event.EventCategoryDAO;
 import com.Sportify.DAO.subentities.AthleteDAO;
+import com.Sportify.DAO.user.SubscriptionDAO;
 import com.Sportify.Entities.competition.Competition;
 import com.Sportify.Entities.competition.MatchEvent;
 import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
 import com.Sportify.Entities.subentities.Athlete;
 import com.Sportify.Entities.user.Subscription;
+import com.Sportify.PubSub.Notifier;
 import org.orm.PersistentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ public class MatchEventService {
     @Autowired private CompetitionDAO competitionDAO;
     @Autowired private MatchEventDAO matchEventDAO;
     @Autowired private AthleteDAO athleteDAO;
+    @Autowired private SubscriptionDAO subscriptionDAO;
 
     public List<MatchEvent> getCompetitionMatches(int competitionID){
         try {
@@ -60,20 +63,27 @@ public class MatchEventService {
     public void submitEvent(int matchID, Event event){
         try {
             MatchEvent m = MatchEventDAO.getMatchEventByORMID(matchID);
-            //EventCategory ec = EventCategoryDAO.getEventCategoryByORMID(eventCategoryID);
-            //event.setCategory(ec);
+            EventCategory ec = EventCategoryDAO.getEventCategoryByORMID(event.getCategory().getID());
+            event.setCategory(ec);
             m.events.add(event);
+            Notifier notifier = new Notifier();
 
             for(Subscription s : m.subscriptions.toArray()){
                 s.get_tracker().notificationHistory.add(event);
+                List<Integer> list = subscriptionDAO.querySubscription("ID = "+ s.getID(), null);
+                notifier.sendMessage(""+list.get(0), event.getTextFormat());
             }
 
             for(Athlete a : m.athletes.toArray()){
                 for(Subscription sa : a.subscriptions.toArray()){
                     sa.get_tracker().notificationHistory.add(event);
+                    List<Integer> list = subscriptionDAO.querySubscription("ID = "+ sa.getID(), null);
+                    notifier.sendMessage(""+list.get(0), event.getTextFormat());
                 }
                 for(Subscription st : a.getTeam().subscriptions.toArray()){
                     st.get_tracker().notificationHistory.add(event);
+                    List<Integer> list = subscriptionDAO.querySubscription("ID = "+ st.getID(), null);
+                    notifier.sendMessage(""+list.get(0), event.getTextFormat());
                 }
             }
 
