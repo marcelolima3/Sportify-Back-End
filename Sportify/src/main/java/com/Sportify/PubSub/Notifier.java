@@ -13,7 +13,8 @@ public class Notifier {
         this.pusher.setEncrypted(true);
     }
 
-    public void sendMessage(String channel, String message){
-        pusher.trigger(channel, "my-event", Collections.singletonMap("message", message));
+    public void sendMessage(String channel, String title, String content){
+        pusher.trigger(channel, "my-event", new Notification(title, content));
+
     }
 }
