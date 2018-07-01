@@ -10,6 +10,7 @@ import com.Sportify.Entities.competition.MatchEvent;
 import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
 import com.Sportify.Entities.subentities.Athlete;
+import com.Sportify.Entities.user.NotificationTracker;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.PubSub.Notifier;
 import org.orm.PersistentException;
@@ -69,21 +70,45 @@ public class MatchEventService {
             Notifier notifier = new Notifier();
 
             for(Subscription s : m.subscriptions.toArray()){
-                s.get_tracker().notificationHistory.add(event);
-                List<Integer> list = subscriptionDAO.querySubscription("ID = "+ s.getID(), null);
-                notifier.sendMessage(""+list.get(0), event.getTextFormat());
+                List<Integer> list = subscriptionDAO.querySubscription("ID = " + s.getID(), null);
+                NotificationTracker nt = s.get_tracker();
+                nt.notificationHistory.add(event);
+                if(nt.getNotificationPolicy().equals("default")){
+                    notifier.sendMessage("" + list.get(0), event.getTextFormat());
+                }
+                else if(event.getCategory().getName().equals("After Match") || event.getCategory().getName().equals("Results")){
+                    for(Event ev : nt.notificationHistory.toArray()){
+                        notifier.sendMessage("" + list.get(0), ev.getTextFormat());
+                    }
+                }
             }
 
             for(Athlete a : m.athletes.toArray()){
                 for(Subscription sa : a.subscriptions.toArray()){
-                    sa.get_tracker().notificationHistory.add(event);
                     List<Integer> list = subscriptionDAO.querySubscription("ID = "+ sa.getID(), null);
-                    notifier.sendMessage(""+list.get(0), event.getTextFormat());
+                    NotificationTracker nt = sa.get_tracker();
+                    nt.notificationHistory.add(event);
+                    if(nt.getNotificationPolicy().equals("default")){
+                        notifier.sendMessage("" + list.get(0), event.getTextFormat());
+                    }
+                    else if(event.getCategory().getName().equals("After Match") || event.getCategory().getName().equals("Results")){
+                        for(Event ev : nt.notificationHistory.toArray()){
+                            notifier.sendMessage("" + list.get(0), ev.getTextFormat());
+                        }
+                    }
                 }
                 for(Subscription st : a.getTeam().subscriptions.toArray()){
-                    st.get_tracker().notificationHistory.add(event);
                     List<Integer> list = subscriptionDAO.querySubscription("ID = "+ st.getID(), null);
-                    notifier.sendMessage(""+list.get(0), event.getTextFormat());
+                    NotificationTracker nt = st.get_tracker();
+                    nt.notificationHistory.add(event);
+                    if(nt.getNotificationPolicy().equals("default")){
+                        notifier.sendMessage("" + list.get(0), event.getTextFormat());
+                    }
+                    else if(event.getCategory().getName().equals("After Match") || event.getCategory().getName().equals("Results")){
+                        for(Event ev : nt.notificationHistory.toArray()){
+                            notifier.sendMessage("" + list.get(0), ev.getTextFormat());
+                        }
+                    }
                 }
             }
 
