@@ -34,15 +34,12 @@ import java.util.*;
 public class Populate {
 
     public void testUsersManagement() throws PersistentException {
-        PersistentTransaction t = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             UsersManagement usersManagement = new UsersManagement();
-            int id = usersManagement.registerUser("Dinis", "mail3@gmail.com", "root", new InvoicePayment(0));
-            System.out.println("ID: " + id);
-            t.commit();
-        }
-        catch (Exception e){
-            t.rollback();
+            usersManagement.registerUser("Dinis", "mail3@gmail.com", "root", new InvoicePayment(0));
+            //System.out.println("ID: " + id);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -56,9 +53,9 @@ public class Populate {
 
     public void populate() throws PersistentException {
 
+        testUsersManagement();
         populateAthletics();
         populateFootball();
-        testUsersManagement();
 
         List<Sport> sports_list = Arrays.asList(
                 new Sport("Basketball", "https://image.flaticon.com/icons/svg/123/123520.svg", false),
@@ -90,7 +87,6 @@ public class Populate {
                 new Athlete("Rúben Vieira", "Portuguese", "Male",  "https://image.flaticon.com/icons/svg/166/166368.svg")
                 );
 
-        PersistentTransaction t = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             for(int i = 0; i < 7; i++){
                 Sport sport = sports_list.get(i);
@@ -113,7 +109,7 @@ public class Populate {
     }
 
     public void populateAthletics() throws PersistentException {
-        PersistentTransaction t = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
+
         try {
             Sport sport_athletics = new Sport("Athletics", "https://image.flaticon.com/icons/svg/123/123500.svg", true);
             HashSet<Modality> athletics_modalities = new HashSet<Modality>();
@@ -249,7 +245,6 @@ public class Populate {
     }
 
     public void populateFootball() throws PersistentException {
-        PersistentTransaction t = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             Sport sport_football = new Sport("Football", "https://image.flaticon.com/icons/svg/123/123495.svg", false);
             HashSet<Modality> sport_modalities = new HashSet<Modality>();
@@ -277,7 +272,8 @@ public class Populate {
             Athlete benfica_athlete = new Athlete("Luisão", "Brazilian", "Male", "https://image.flaticon.com/icons/svg/166/166344.svg");
             benfica_athlete.setTeam(benfica);
             matchEvent_football_liga_1.athletes.add(benfica_athlete);
-            matchEvent_football_champions_2.athletes.add(benfica_athlete);
+            matchEvent_football_liga_2.athletes.add(benfica_athlete);
+            //matchEvent_football_champions_2.athletes.add(benfica_athlete);
             teams.add(benfica);
 
             Team porto = new Team("FC Porto", "https://seeklogo.com/images/F/F_C__Porto-logo-3BB4DAAEA2-seeklogo.com.png");
@@ -359,7 +355,9 @@ public class Populate {
 
     public static void main(String[] args) {
         try {
+            PersistentTransaction t = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
             Populate createAAData = new Populate();
+            t.commit();
             try {
                 createAAData.populate();
             } finally {

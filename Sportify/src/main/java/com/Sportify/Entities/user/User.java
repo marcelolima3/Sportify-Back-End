@@ -36,6 +36,7 @@ public class User implements Serializable {
 		this.name = name;
 		this.email = email;
 		this.password = password;
+		this.defaultNotificationType = "default";
 		this.registrationDate = new Date();
 		this.ORM_subscriptions = new HashSet();
 		this.isManager = false;

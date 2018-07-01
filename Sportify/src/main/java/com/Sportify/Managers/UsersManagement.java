@@ -96,7 +96,7 @@ public class UsersManagement {
     }**/
 
     // Tem de dar throw de uma exception se o utilizador não for criado!
-    public Integer registerUser(String name, String email, String password, PaymentMethod p) throws Exception{
+    public int registerUser(String name, String email, String password, PaymentMethod p) throws Exception{
         boolean exist = false;
         try {
             for (User u : (List<User>) UserDAO.queryUser(null, null)) {
@@ -115,9 +115,12 @@ public class UsersManagement {
             u.setPassword(password);
             u.setPaymentManager(p);
             u.setRegistrationDate(new Date());
+            u.setDefaultNotificationType("default");
+            u.setIsManager(false);
             try {
                 UserDAO.save(u);
             } catch (PersistentException e) {
+                System.out.println(e.getMessage());
                 e.printStackTrace();
             }
             return u.getID();
