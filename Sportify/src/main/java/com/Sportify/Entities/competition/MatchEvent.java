@@ -22,6 +22,7 @@ import com.Sportify.Views.JSONViews.user.SubscriptionView;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -31,6 +32,14 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(name="SubscriptionEntityID", referencedColumnName="ID")
 public class MatchEvent extends com.Sportify.Entities.subentities.SubscriptionEntity implements Serializable {
 	public MatchEvent() {
+	}
+
+	public MatchEvent(String description, Date startTime, Date endTime, String location, boolean active) {
+		this.description = description;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.location = location;
+		this.active = active;
 	}
 	
 	private java.util.Set this_getSet (int key) {
@@ -148,11 +157,6 @@ public class MatchEvent extends com.Sportify.Entities.subentities.SubscriptionEn
 	
 	@Transient	
 	public final com.Sportify.Entities.subentities.AthleteSetCollection athletes = new com.Sportify.Entities.subentities.AthleteSetCollection(this, _ormAdapter, ORMConstants.KEY_MATCHEVENT_ATHLETES, ORMConstants.KEY_ATHLETE_MATCHEVENTS, ORMConstants.KEY_MUL_MANY_TO_MANY);
-	
-	public MatchEvent(String description, java.util.Date startTime, java.util.Date endTime, String location, boolean active) {
-		//TODO: Implement Method
-		throw new UnsupportedOperationException();
-	}
 	
 	public String toString() {
 		return super.toString();
