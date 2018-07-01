@@ -77,9 +77,8 @@ public class MatchEventService {
                     notifier.sendMessage("" + list.get(0), event.getTextFormat());
                 }
                 else if(event.getCategory().getName().equals("After Match") || event.getCategory().getName().equals("Results")){
-                    for(Event ev : nt.notificationHistory.toArray()){
-                        notifier.sendMessage("" + list.get(0), ev.getTextFormat());
-                    }
+                    m.setActive(false);
+                    notifier.sendMessage("" + list.get(0), m.getDescription()+ " is over! \nYou can now consult the notifications.");
                 }
             }
 
@@ -92,9 +91,8 @@ public class MatchEventService {
                         notifier.sendMessage("" + list.get(0), event.getTextFormat());
                     }
                     else if(event.getCategory().getName().equals("After Match") || event.getCategory().getName().equals("Results")){
-                        for(Event ev : nt.notificationHistory.toArray()){
-                            notifier.sendMessage("" + list.get(0), ev.getTextFormat());
-                        }
+                        m.setActive(false);
+                        notifier.sendMessage("" + list.get(0), m.getDescription()+ " is over! \nYou can now consult the notifications.");
                     }
                 }
                 for(Subscription st : a.getTeam().subscriptions.toArray()){
@@ -105,13 +103,11 @@ public class MatchEventService {
                         notifier.sendMessage("" + list.get(0), event.getTextFormat());
                     }
                     else if(event.getCategory().getName().equals("After Match") || event.getCategory().getName().equals("Results")){
-                        for(Event ev : nt.notificationHistory.toArray()){
-                            notifier.sendMessage("" + list.get(0), ev.getTextFormat());
-                        }
+                        m.setActive(false);
+                        notifier.sendMessage("" + list.get(0), m.getDescription()+ " is over! \nYou can now consult the notifications.");
                     }
                 }
             }
-
             MatchEventDAO.save(m);
         } catch (PersistentException e) {
             e.printStackTrace();
