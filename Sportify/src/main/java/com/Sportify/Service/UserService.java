@@ -1,6 +1,7 @@
 package com.Sportify.Service;
 
 
+import com.Sportify.DAO.EAClassDiagramPersistentManager;
 import com.Sportify.DAO.event.EventCategoryDAO;
 import com.Sportify.DAO.subentities.SubscriptionEntityDAO;
 import com.Sportify.DAO.user.UserDAO;
@@ -14,17 +15,23 @@ import com.Sportify.Entities.user.NotificationTracker;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.User;
 import org.orm.PersistentException;
+import org.orm.PersistentSession;
+import org.orm.PersistentTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.transaction.Transactional;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
 @Service
 public class UserService {
+
     @Autowired private UserDAO userDAO;
+    @Autowired private SubscriptionEntityDAO subscriptionEntityDAO;
+    @Autowired private EventCategoryDAO eventCategoryDAO;
 
     public User getUser(int id){
         try {
@@ -45,8 +52,9 @@ public class UserService {
         return new ArrayList<>();
     }
 
-    public int registerUser(User user) throws Exception {
+    public int registerUser(User user) throws PersistentException, Exception {
         boolean exist = false;
+        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             for (User u : (List<User>) userDAO.queryUser(null, null)) {
                 if (u.getEmail().equals(user.getEmail())) {
@@ -63,8 +71,11 @@ public class UserService {
             user.setRegistrationDate(new Date());
             try {
                 userDAO.save(user);
+                transaction.commit();
+
             } catch (PersistentException e) {
                 e.printStackTrace();
+                transaction.rollback();
             }
             return user.getID();
         } else {
@@ -72,14 +83,17 @@ public class UserService {
         }
     }
 
-    public void changeOptions(int id, User user){
+    public void changeOptions(int id, User user) throws PersistentException {
+        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             User u = userDAO.getUserByORMID(id);
             u.setDefaultNotificationType(user.getDefaultNotificationType());
             u.setPaymentManager(user.getPaymentManager());
             userDAO.save(u);
+            transaction.commit();
         } catch (PersistentException e) {
             e.printStackTrace();
+            transaction.rollback();
         }
     }
 
@@ -112,6 +126,7 @@ public class UserService {
         try {
             String email = user.getEmail();
             String password = user.getPassword();
+
             List<User> list = userDAO.queryUser("Email = '" + email + "' and Password = '" + password + "'", null);
             if( list.size() > 0 ) {
                 return list.get(0);
@@ -124,14 +139,15 @@ public class UserService {
         }
     }
 
-    public void subscribe(int id, int idSE, Subscription subscription) {
+    public void subscribe(int id, int idSE, Subscription subscription) throws PersistentException {
+        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             boolean existSub = false; boolean regular_price;
             User u = userDAO.getUserByORMID(id);
-            SubscriptionEntity subscriptionEntity = SubscriptionEntityDAO.getSubscriptionEntityByORMID(idSE);
+            SubscriptionEntity subscriptionEntity = subscriptionEntityDAO.getSubscriptionEntityByORMID(idSE);
             EventCategory eventCategory = null;
             for(EventCategory ec : (Set<EventCategory>) subscription.getORM_SubscribedEvents()){
-                eventCategory = EventCategoryDAO.getEventCategoryByORMID(ec.getID());
+                eventCategory = eventCategoryDAO.getEventCategoryByORMID(ec.getID());
                 break;
             }
 
@@ -168,31 +184,18 @@ public class UserService {
                     u.getPaymentManager().addToBill(eventCategory.getExtraPrice());
                 userDAO.save(u);
             }
+            transaction.commit();
         }
-        catch (PersistentException e) { e.printStackTrace(); }
+        catch (PersistentException e) {
+            e.printStackTrace();
+            transaction.rollback();
+        }
     }
 
-    /**public static void main(String[] args){
-        UserService us = new UserService();
-        Subscription s = new Subscription();
-        s.setDate(new Date());
-        s.setPaid(false);
-        NotificationTracker nt = new NotificationTracker();
-        nt.setNotificationPolicy("HEHE");
-        s.set_tracker(nt);
-
+    public Invoice payService(int id) throws PersistentException {
+        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
-            s.subscribedEvents.add(EventCategoryDAO.getEventCategoryByORMID(1));
-        } catch (PersistentException e) {
-            e.printStackTrace();
-        }
-
-        us.subscribe(1, 29, s);
-    }**/
-
-    public Invoice payService(int id) {
-        try {
-            User u = UserDAO.getUserByORMID(id);
+            User u = userDAO.getUserByORMID(id);
             PaymentMethod paymentMethod = u.getPaymentManager();
             double price; Date date = new Date();
             Invoice i = new Invoice();
@@ -232,10 +235,12 @@ public class UserService {
                 ((PrepaidCard) paymentMethod).setBalance(100);
             }**/
             saveTransaction(id, price, date);
-            UserDAO.save(u);
+            userDAO.save(u);
+            transaction.commit();
             return i;
         } catch (PersistentException e) {
             e.printStackTrace();
+            transaction.rollback();
         }
         return null;
     }
@@ -260,11 +265,12 @@ public class UserService {
         } catch (IOException ioe) {
             System.err.println("IOException: " + ioe.getMessage());
         }
+
     }
 
     public List<Event> consultNotifications(int id) {
         try {
-            User u = UserDAO.getUserByORMID(id);
+            User u = userDAO.getUserByORMID(id);
             List<Event> notificationList = new ArrayList<>();
             for (Subscription subscription : u.subscriptions.toArray()) {
                 notificationList.addAll(Arrays.asList(subscription.get_tracker().notificationHistory.toArray()));

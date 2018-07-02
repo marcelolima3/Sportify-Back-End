@@ -1,13 +1,16 @@
 package com.Sportify.Service;
 
+import com.Sportify.DAO.EAClassDiagramPersistentManager;
 import com.Sportify.DAO.competition.ModalityDAO;
 import com.Sportify.DAO.subentities.TeamDAO;
 import com.Sportify.Entities.competition.Modality;
 import com.Sportify.Entities.subentities.Team;
 import org.orm.PersistentException;
+import org.orm.PersistentTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -39,15 +42,18 @@ public class TeamService {
         return new ArrayList<>();
     }
 
-    public Team createTeam(int modalityID, Team team){
+    public Team createTeam(int modalityID, Team team) throws PersistentException {
+        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             Modality modality = modalityDAO.getModalityByORMID(modalityID);
             team.setORM_Athletes(new HashSet());
             modality.teams.add(team);
             modalityDAO.save(modality);
+            transaction.commit();
             return team;
         } catch (PersistentException e) {
             e.printStackTrace();
+            transaction.rollback();
         }
         return null;
     }

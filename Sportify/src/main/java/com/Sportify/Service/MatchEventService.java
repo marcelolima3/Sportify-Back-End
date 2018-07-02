@@ -1,5 +1,6 @@
 package com.Sportify.Service;
 
+import com.Sportify.DAO.EAClassDiagramPersistentManager;
 import com.Sportify.DAO.competition.CompetitionDAO;
 import com.Sportify.DAO.competition.MatchEventDAO;
 import com.Sportify.DAO.event.EventCategoryDAO;
@@ -14,9 +15,11 @@ import com.Sportify.Entities.user.NotificationTracker;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.PubSub.Notifier;
 import org.orm.PersistentException;
+import org.orm.PersistentTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +30,7 @@ public class MatchEventService {
     @Autowired private MatchEventDAO matchEventDAO;
     @Autowired private AthleteDAO athleteDAO;
     @Autowired private SubscriptionDAO subscriptionDAO;
+    @Autowired private EventCategoryDAO eventCategoryDAO;
 
     public List<MatchEvent> getCompetitionMatches(int competitionID){
         try {
@@ -38,33 +42,39 @@ public class MatchEventService {
         return new ArrayList<>();
     }
 
-    public MatchEvent createMatch(int competitionID, MatchEvent match){
+    public MatchEvent createMatch(int competitionID, MatchEvent match) throws PersistentException {
+        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             Competition competition = competitionDAO.getCompetitionByORMID(competitionID);
-
             competition.matchEvents.add(match);
             competitionDAO.save(competition);
+            transaction.commit();
         } catch (PersistentException e) {
             e.printStackTrace();
+            transaction.rollback();
         }
         return match;
     }
 
-    public void addAthleteToMatch(int matchID, Athlete athlete){
+    public void addAthleteToMatch(int matchID, Athlete athlete) throws PersistentException {
+        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             MatchEvent m = matchEventDAO.getMatchEventByORMID(matchID);
             Athlete a = athleteDAO.getAthleteByORMID(athlete.getID());
             m.athletes.add(a);
             matchEventDAO.save(m);
+            transaction.commit();
         } catch (PersistentException e) {
             e.printStackTrace();
+            transaction.rollback();
         }
     }
 
-    public void submitEvent(int matchID, Event event){
+    public void submitEvent(int matchID, Event event) throws PersistentException {
+        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
-            MatchEvent m = MatchEventDAO.getMatchEventByORMID(matchID);
-            EventCategory ec = EventCategoryDAO.getEventCategoryByORMID(event.getCategory().getID());
+            MatchEvent m = matchEventDAO.getMatchEventByORMID(matchID);
+            EventCategory ec = eventCategoryDAO.getEventCategoryByORMID(event.getCategory().getID());
             event.setCategory(ec);
             m.events.add(event);
             Notifier notifier = new Notifier();
@@ -81,9 +91,11 @@ public class MatchEventService {
                     sendNotification(st, event, notifier, ec, m);
                 }
             }
-            MatchEventDAO.save(m);
+            matchEventDAO.save(m);
+            transaction.commit();
         } catch (PersistentException e) {
             e.printStackTrace();
+            transaction.rollback();
         }
     }
 

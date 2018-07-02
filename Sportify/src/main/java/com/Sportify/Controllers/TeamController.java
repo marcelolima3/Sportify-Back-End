@@ -4,6 +4,7 @@ import com.Sportify.Entities.subentities.Team;
 import com.Sportify.Service.TeamService;
 import com.Sportify.Views.JSONViews.subentities.TeamView;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.orm.PersistentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,11 @@ public class TeamController {
     @JsonView(TeamView.Public.class)
     @RequestMapping(value = "/{idM}/teams", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Team createTeam(@PathVariable("idM") int modalityID, @RequestBody Team team){
-        return teamService.createTeam(modalityID, team);
+        try {
+            return teamService.createTeam(modalityID, team);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
