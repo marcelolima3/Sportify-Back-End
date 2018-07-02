@@ -23,7 +23,7 @@ import org.hibernate.boot.MetadataSources;
 public class EAClassDiagramPersistentManager extends PersistentManager {
 	private static final String PROJECT_NAME = "EAClassDiagram";
 	private static PersistentManager _instance = null;
-	private static SessionType _sessionType = SessionType.THREAD_BASE;
+	private static SessionType _sessionType = SessionType.APP_BASE;
 	private static int _timeToAlive = 60000;
 	private static JDBCConnectionSetting _connectionSetting = null;
 	private static Properties _extraProperties = null;
