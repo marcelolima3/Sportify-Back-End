@@ -109,4 +109,16 @@ public class UserController {
     public List<Event> getNotifications(@PathVariable("idU") int id){
         return userService.consultNotifications(id);
     }
+
+    @JsonView(EventView.Public.class)
+    @RequestMapping(value = "/{idU}/notifications/sports/{idS}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Event> getNotificationsBySport(@PathVariable("idU") int idU, @PathVariable("idS") int idS){
+        return userService.consultNotificationsBySport(idU, idS);
+    }
+
+    @JsonView(SubscriptionView.Public.class)
+    @RequestMapping(value = "/{idU}/subscriptions/sports/{idS}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Subscription> getSubscriptionsBySport(@PathVariable("idU") int idU, @PathVariable("idS") int idS){
+        return userService.consultSubscriptionsBySport(idU, idS);
+    }
 }

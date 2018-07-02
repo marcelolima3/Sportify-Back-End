@@ -1,29 +1,27 @@
 package com.Sportify.Service;
 
 
-import com.Sportify.DAO.EAClassDiagramPersistentManager;
+import com.Sportify.DAO.competition.ModalityDAO;
 import com.Sportify.DAO.event.EventCategoryDAO;
+import com.Sportify.DAO.subentities.AthleteDAO;
 import com.Sportify.DAO.subentities.SubscriptionEntityDAO;
-import com.Sportify.DAO.user.NotificationTrackerDAO;
-import com.Sportify.DAO.user.SubscriptionDAO;
+import com.Sportify.DAO.subentities.TeamDAO;
 import com.Sportify.DAO.user.UserDAO;
 import com.Sportify.Entities.competition.MatchEvent;
 
 import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
 import com.Sportify.Entities.payment.*;
+import com.Sportify.Entities.subentities.Athlete;
 import com.Sportify.Entities.subentities.SubscriptionEntity;
+import com.Sportify.Entities.subentities.Team;
 import com.Sportify.Entities.user.NotificationTracker;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.User;
 import org.orm.PersistentException;
-import org.orm.PersistentSession;
-import org.orm.PersistentTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.transaction.Transactional;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -34,8 +32,9 @@ public class UserService {
     @Autowired private UserDAO userDAO;
     @Autowired private SubscriptionEntityDAO subscriptionEntityDAO;
     @Autowired private EventCategoryDAO eventCategoryDAO;
-    @Autowired private SubscriptionDAO subscriptionDAO;
-    @Autowired private NotificationTrackerDAO notificationTrackerDAO;
+    @Autowired private TeamDAO teamDAO;
+    @Autowired private ModalityDAO modalityDAO;
+    @Autowired private AthleteDAO athleteDAO;
 
     public User getUser(int id){
         try {
@@ -267,6 +266,78 @@ public class UserService {
                 notificationList.addAll(Arrays.asList(subscription.get_tracker().notificationHistory.toArray()));
             }
             return notificationList;
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    public List<Event> consultNotificationsBySport(int id, int sport) {
+        try {
+            int sport_id = 0;
+            User u = userDAO.getUserByORMID(id);
+
+            List<Event> notificationList = new ArrayList<>();
+
+            for (Subscription subscription : u.subscriptions.toArray()) {
+                SubscriptionEntity subscriptionEntity = subscription.getSubscribedEntity();
+                if(subscriptionEntity instanceof Team){
+                    int modality_id = (int) teamDAO.queryTeam("SubscriptionEntityID = " + subscriptionEntity.getID(), null).get(0);
+                    sport_id = (int) modalityDAO.queryModality("ID = " + modality_id, null).get(0);
+                }
+                else if(subscriptionEntity instanceof Athlete){
+                    int team_id = ((Athlete) subscriptionEntity).getTeam().getID();
+                    int modality_id = (int) teamDAO.queryTeam("SubscriptionEntityID = " + team_id, null).get(0);
+                    sport_id = (int) modalityDAO.queryModality("ID = " + modality_id, null).get(0);
+                }
+                else{
+                    Athlete athlete = (Athlete) ((MatchEvent)subscriptionEntity).athletes.getIterator().next();
+                    int team_id = athlete.getTeam().getID();
+                    int modality_id = (int) teamDAO.queryTeam("SubscriptionEntityID = " + team_id, null).get(0);
+                    sport_id = (int) modalityDAO.queryModality("ID = " + modality_id, null).get(0);
+                }
+
+                if(sport == sport_id)
+                    notificationList.addAll(Arrays.asList(subscription.get_tracker().notificationHistory.toArray()));
+            }
+
+            return notificationList;
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    public List<Subscription> consultSubscriptionsBySport(int id, int sport) {
+        try {
+            int sport_id = 0;
+            User u = userDAO.getUserByORMID(id);
+
+            List<Subscription> subscriptionList = new ArrayList<>();
+
+            for (Subscription subscription : u.subscriptions.toArray()) {
+                SubscriptionEntity subscriptionEntity = subscription.getSubscribedEntity();
+                if(subscriptionEntity instanceof Team){
+                    int modality_id = (int) teamDAO.queryTeam("SubscriptionEntityID = " + subscriptionEntity.getID(), null).get(0);
+                    sport_id = (int) modalityDAO.queryModality("ID = " + modality_id, null).get(0);
+                }
+                else if(subscriptionEntity instanceof Athlete){
+                    int team_id = ((Athlete) subscriptionEntity).getTeam().getID();
+                    int modality_id = (int) teamDAO.queryTeam("SubscriptionEntityID = " + team_id, null).get(0);
+                    sport_id = (int) modalityDAO.queryModality("ID = " + modality_id, null).get(0);
+                }
+                else{
+                    Athlete athlete = (Athlete) ((MatchEvent)subscriptionEntity).athletes.getIterator().next();
+                    int team_id = athlete.getTeam().getID();
+                    int modality_id = (int) teamDAO.queryTeam("SubscriptionEntityID = " + team_id, null).get(0);
+                    sport_id = (int) modalityDAO.queryModality("ID = " + modality_id, null).get(0);
+                }
+
+                if(sport == sport_id)
+                    subscriptionList.addAll(Arrays.asList(subscription));
+            }
+
+            return subscriptionList;
         } catch (PersistentException e) {
             e.printStackTrace();
         }

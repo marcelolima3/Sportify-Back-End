@@ -16,6 +16,7 @@ package com.Sportify.DAO.subentities;
 import com.Sportify.DAO.EAClassDiagramPersistentManager;
 import com.Sportify.Entities.subentities.Team;
 import com.Sportify.Entities.subentities.TeamCriteria;
+import org.hibernate.SQLQuery;
 import org.orm.*;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
@@ -153,14 +154,15 @@ public class TeamDAO {
 	}
 	
 	public static List queryTeam(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From com.Sportify.Entities.subentities.Team as Team");
+		StringBuffer sb = new StringBuffer("Select Team.ModalityID From Team");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
 			sb.append(" Order By ").append(orderBy);
 		try {
-			Query query = session.createQuery(sb.toString());
-			return query.list();
+			SQLQuery sql = session.createSQLQuery(sb.toString());
+			//Query query = session.createQuery(sb.toString());
+			return sql.list();
 		}
 		catch (Exception e) {
 			e.printStackTrace();

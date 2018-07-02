@@ -16,6 +16,7 @@ package com.Sportify.DAO.competition;
 import com.Sportify.DAO.EAClassDiagramPersistentManager;
 import com.Sportify.Entities.competition.Modality;
 import com.Sportify.Entities.competition.ModalityCriteria;
+import org.hibernate.SQLQuery;
 import org.orm.*;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
@@ -153,14 +154,15 @@ public class ModalityDAO {
 	}
 	
 	public static List queryModality(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From com.Sportify.Entities.competition.Modality as Modality");
+		StringBuffer sb = new StringBuffer("Select Modality.SportID From Modality");
 		if (condition != null)
 			sb.append(" Where ").append(condition);
 		if (orderBy != null)
 			sb.append(" Order By ").append(orderBy);
 		try {
-			Query query = session.createQuery(sb.toString());
-			return query.list();
+			SQLQuery sql = session.createSQLQuery(sb.toString());
+			//Query query = session.createQuery(sb.toString());
+			return sql.list();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
