@@ -52,17 +52,14 @@ public class CompetitionService {
     }
 
     public Competition createCompetition(int modalityID, Competition competition) throws PersistentException {
-        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             Modality modality = modalityDAO.getModalityByORMID(modalityID);
             competition.setORM_MatchEvents(new HashSet());
             modality.competitions.add(competition);
             modalityDAO.save(modality);
-            transaction.commit();
             return competition;
         } catch (PersistentException e) {
             e.printStackTrace();
-            transaction.rollback();
         }
         return null;
     }

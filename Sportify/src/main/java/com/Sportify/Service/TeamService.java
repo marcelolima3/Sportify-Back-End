@@ -43,17 +43,14 @@ public class TeamService {
     }
 
     public Team createTeam(int modalityID, Team team) throws PersistentException {
-        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             Modality modality = modalityDAO.getModalityByORMID(modalityID);
             team.setORM_Athletes(new HashSet());
             modality.teams.add(team);
             modalityDAO.save(modality);
-            transaction.commit();
             return team;
         } catch (PersistentException e) {
             e.printStackTrace();
-            transaction.rollback();
         }
         return null;
     }

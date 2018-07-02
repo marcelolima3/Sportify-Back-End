@@ -48,17 +48,14 @@ public class AthleteService {
     }
 
     public Athlete createAthlete(int teamID, Athlete athlete) throws PersistentException {
-        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             Team t = teamDAO.getTeamByORMID(teamID);
             athlete.setORM_MatchEvents(new HashSet());
             athlete.setTeam(t);
             athleteDAO.save(athlete);
-            transaction.commit();
             return athlete;
         } catch (PersistentException e) {
             e.printStackTrace();
-            transaction.rollback();
         }
         return null;
     }

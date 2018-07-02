@@ -4,6 +4,8 @@ package com.Sportify.Service;
 import com.Sportify.DAO.EAClassDiagramPersistentManager;
 import com.Sportify.DAO.event.EventCategoryDAO;
 import com.Sportify.DAO.subentities.SubscriptionEntityDAO;
+import com.Sportify.DAO.user.NotificationTrackerDAO;
+import com.Sportify.DAO.user.SubscriptionDAO;
 import com.Sportify.DAO.user.UserDAO;
 import com.Sportify.Entities.competition.MatchEvent;
 
@@ -32,10 +34,12 @@ public class UserService {
     @Autowired private UserDAO userDAO;
     @Autowired private SubscriptionEntityDAO subscriptionEntityDAO;
     @Autowired private EventCategoryDAO eventCategoryDAO;
+    @Autowired private SubscriptionDAO subscriptionDAO;
+    @Autowired private NotificationTrackerDAO notificationTrackerDAO;
 
     public User getUser(int id){
         try {
-            User u = userDAO.getUserByORMID(id);
+            User u = userDAO.getUserByORMID( id);
             return u;
         } catch (PersistentException e) {
             e.printStackTrace();
@@ -45,7 +49,7 @@ public class UserService {
 
     public List<User> getUsers(){
         try {
-            return (List<User>) userDAO.queryUser(null, null);
+            return (List<User>) userDAO.queryUser( null, null);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -54,9 +58,8 @@ public class UserService {
 
     public int registerUser(User user) throws PersistentException, Exception {
         boolean exist = false;
-        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
-            for (User u : (List<User>) userDAO.queryUser(null, null)) {
+            for (User u : (List<User>) userDAO.queryUser( null, null)) {
                 if (u.getEmail().equals(user.getEmail())) {
                     exist = true;
                     break;
@@ -71,11 +74,8 @@ public class UserService {
             user.setRegistrationDate(new Date());
             try {
                 userDAO.save(user);
-                transaction.commit();
-
             } catch (PersistentException e) {
                 e.printStackTrace();
-                transaction.rollback();
             }
             return user.getID();
         } else {
@@ -84,22 +84,19 @@ public class UserService {
     }
 
     public void changeOptions(int id, User user) throws PersistentException {
-        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
-            User u = userDAO.getUserByORMID(id);
+            User u = userDAO.getUserByORMID( id);
             u.setDefaultNotificationType(user.getDefaultNotificationType());
             u.setPaymentManager(user.getPaymentManager());
             userDAO.save(u);
-            transaction.commit();
         } catch (PersistentException e) {
             e.printStackTrace();
-            transaction.rollback();
         }
     }
 
     public List<EventCategory> getSEEventCategories(int userID, int subscriptionEntityID){
         try {
-            User u = userDAO.getUserByORMID(userID);
+            User u = userDAO.getUserByORMID( userID);
 
             for (Subscription subscription : u.subscriptions.toArray()) {
                 if(subscription.getSubscribedEntity().getID() == subscriptionEntityID){
@@ -114,7 +111,7 @@ public class UserService {
 
     public List<Subscription> getSubscriptions(int id){
         try {
-            User u = userDAO.getUserByORMID(id);
+            User u = userDAO.getUserByORMID( id);
             return Arrays.asList(u.subscriptions.toArray());
         } catch (PersistentException e) {
             e.printStackTrace();
@@ -126,8 +123,7 @@ public class UserService {
         try {
             String email = user.getEmail();
             String password = user.getPassword();
-
-            List<User> list = userDAO.queryUser("Email = '" + email + "' and Password = '" + password + "'", null);
+            List<User> list = userDAO.queryUser( "Email = '" + email + "' and Password = '" + password + "'", null);
             if( list.size() > 0 ) {
                 return list.get(0);
             }
@@ -140,14 +136,15 @@ public class UserService {
     }
 
     public void subscribe(int id, int idSE, Subscription subscription) throws PersistentException {
-        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             boolean existSub = false; boolean regular_price;
             User u = userDAO.getUserByORMID(id);
-            SubscriptionEntity subscriptionEntity = subscriptionEntityDAO.getSubscriptionEntityByORMID(idSE);
+
+            SubscriptionEntity subscriptionEntity = subscriptionEntityDAO.getSubscriptionEntityByORMID( idSE);
+
             EventCategory eventCategory = null;
             for(EventCategory ec : (Set<EventCategory>) subscription.getORM_SubscribedEvents()){
-                eventCategory = eventCategoryDAO.getEventCategoryByORMID(ec.getID());
+                eventCategory = eventCategoryDAO.getEventCategoryByORMID( ec.getID());
                 break;
             }
 
@@ -158,12 +155,11 @@ public class UserService {
             for (Subscription sub : u.subscriptions.toArray()) {
                 if (sub.getSubscribedEntity().equals(subscriptionEntity) && !sub.getPaid() && !sub.subscribedEvents.contains(eventCategory)) {
                     existSub = true;
-                    sub.subscribedEvents.add(eventCategory);
+                    sub.getORM_SubscribedEvents().add(eventCategory);
                     if(regular_price)
                         u.getPaymentManager().addToBill(eventCategory.getRegularPrice());
                     else
                         u.getPaymentManager().addToBill(eventCategory.getExtraPrice());
-                    userDAO.save(u);
                 } else if (sub.getSubscribedEntity().equals(subscriptionEntity) && !sub.getPaid()) {
                     existSub = true;
                 }
@@ -176,26 +172,23 @@ public class UserService {
                 NotificationTracker nt = new NotificationTracker();
                 nt.setNotificationPolicy(subscription.get_tracker().getNotificationPolicy());
                 s.set_tracker(nt);
-                s.subscribedEvents.add(eventCategory);
+                s.getORM_SubscribedEvents().add(eventCategory);
                 u.subscriptions.add(s);
                 if(regular_price)
                     u.getPaymentManager().addToBill(eventCategory.getRegularPrice());
                 else
                     u.getPaymentManager().addToBill(eventCategory.getExtraPrice());
-                userDAO.save(u);
             }
-            transaction.commit();
+            userDAO.save(u);
         }
         catch (PersistentException e) {
             e.printStackTrace();
-            transaction.rollback();
         }
     }
 
     public Invoice payService(int id) throws PersistentException {
-        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
-            User u = userDAO.getUserByORMID(id);
+            User u = userDAO.getUserByORMID( id);
             PaymentMethod paymentMethod = u.getPaymentManager();
             double price; Date date = new Date();
             Invoice i = new Invoice();
@@ -236,18 +229,16 @@ public class UserService {
             }**/
             saveTransaction(id, price, date);
             userDAO.save(u);
-            transaction.commit();
             return i;
         } catch (PersistentException e) {
             e.printStackTrace();
-            transaction.rollback();
         }
         return null;
     }
 
     public PaymentMethod getPaymentMethod(int id) {
         try {
-            User u = userDAO.getUserByORMID(id);
+            User u = userDAO.getUserByORMID( id);
             return u.getPaymentManager();
         } catch (PersistentException e) {
             e.printStackTrace();
@@ -270,7 +261,7 @@ public class UserService {
 
     public List<Event> consultNotifications(int id) {
         try {
-            User u = userDAO.getUserByORMID(id);
+            User u = userDAO.getUserByORMID( id);
             List<Event> notificationList = new ArrayList<>();
             for (Subscription subscription : u.subscriptions.toArray()) {
                 notificationList.addAll(Arrays.asList(subscription.get_tracker().notificationHistory.toArray()));

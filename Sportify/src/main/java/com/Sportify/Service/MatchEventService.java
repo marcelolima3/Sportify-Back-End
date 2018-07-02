@@ -43,35 +43,28 @@ public class MatchEventService {
     }
 
     public MatchEvent createMatch(int competitionID, MatchEvent match) throws PersistentException {
-        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             Competition competition = competitionDAO.getCompetitionByORMID(competitionID);
             competition.matchEvents.add(match);
             competitionDAO.save(competition);
-            transaction.commit();
         } catch (PersistentException e) {
             e.printStackTrace();
-            transaction.rollback();
         }
         return match;
     }
 
     public void addAthleteToMatch(int matchID, Athlete athlete) throws PersistentException {
-        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             MatchEvent m = matchEventDAO.getMatchEventByORMID(matchID);
             Athlete a = athleteDAO.getAthleteByORMID(athlete.getID());
             m.athletes.add(a);
             matchEventDAO.save(m);
-            transaction.commit();
         } catch (PersistentException e) {
             e.printStackTrace();
-            transaction.rollback();
         }
     }
 
     public void submitEvent(int matchID, Event event) throws PersistentException {
-        PersistentTransaction transaction = EAClassDiagramPersistentManager.instance().getSession().beginTransaction();
         try {
             MatchEvent m = matchEventDAO.getMatchEventByORMID(matchID);
             EventCategory ec = eventCategoryDAO.getEventCategoryByORMID(event.getCategory().getID());
@@ -92,10 +85,8 @@ public class MatchEventService {
                 }
             }
             matchEventDAO.save(m);
-            transaction.commit();
         } catch (PersistentException e) {
             e.printStackTrace();
-            transaction.rollback();
         }
     }
 
