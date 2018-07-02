@@ -14,6 +14,7 @@ import com.Sportify.Views.JSONViews.event.EventView;
 import com.Sportify.Views.JSONViews.user.SubscriptionView;
 import com.Sportify.Views.JSONViews.user.UserView;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.orm.PersistentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +53,11 @@ public class UserController {
 
     @RequestMapping(value = "/{id}/options", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void changeOptions(@PathVariable("id") int id, @RequestBody User user){
-        userService.changeOptions(id, user);
+        try {
+            userService.changeOptions(id, user);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
     }
 
     @JsonView(EventCategoryView.Public.class)
@@ -75,7 +80,11 @@ public class UserController {
 
     @RequestMapping(value = "/{idU}/subscribe/{idSE}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void subscribe(@PathVariable("idU") int id, @PathVariable("idSE") int idSE, @RequestBody Subscription subscription){
-        userService.subscribe(id, idSE, subscription);
+        try {
+            userService.subscribe(id, idSE, subscription);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
     }
 
     @JsonView(PaymentMethodView.Public.class)
@@ -87,7 +96,12 @@ public class UserController {
     @JsonView(InvoiceView.Private.class)
     @RequestMapping(value = "/{idU}/payments", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public Invoice payService(@PathVariable("idU") int id) {
-        return userService.payService(id);
+        try {
+            return userService.payService(id);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @JsonView(EventView.Public.class)

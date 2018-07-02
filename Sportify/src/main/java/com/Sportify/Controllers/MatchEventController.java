@@ -7,6 +7,7 @@ import com.Sportify.Service.MatchEventService;
 import com.Sportify.Views.JSONViews.competition.MatchEventView;
 import com.Sportify.Views.JSONViews.subentities.SubscriptionEntityView;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.orm.PersistentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -29,16 +30,29 @@ public class MatchEventController {
     @JsonView(SubscriptionEntityView.Public.class)
     @RequestMapping(value = "/{idC}/matches", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public MatchEvent createMatch(@PathVariable("idC") int id, @RequestBody MatchEvent match){
-        return matchEventService.createMatch(id, match);
+        try {
+            return matchEventService.createMatch(id, match);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @RequestMapping(value = "/matches/{idM}/athlete", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addAthleteToMatch(@PathVariable("idM") int id, @RequestBody Athlete athlete){
-        matchEventService.addAthleteToMatch(id, athlete);
+        try {
+            matchEventService.addAthleteToMatch(id, athlete);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping(value = "/matches/{idM}/events", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void submitEvent(@PathVariable("idM") int id, @RequestBody Event event){
-        matchEventService.submitEvent(id, event);
+        try {
+            matchEventService.submitEvent(id, event);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
     }
 }
