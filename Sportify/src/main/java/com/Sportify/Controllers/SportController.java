@@ -2,16 +2,14 @@ package com.Sportify.Controllers;
 
 
 import com.Sportify.Entities.competition.Sport;
+import com.Sportify.Entities.notPresist.BreadCumbResponse;
+import com.Sportify.Entities.notPresist.BreadCumbResquest;
 import com.Sportify.Service.SportService;
 import com.Sportify.Views.JSONViews.competition.SportView;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +31,11 @@ public class SportController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Sport> getAllSports(){
         return sportService.getAllSports();
+    }
+
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public BreadCumbResponse getBreadCumbInfo(@RequestBody BreadCumbResquest req){
+        System.out.println(req.getId());
+        return sportService.getBreadCumbInfo(req);
     }
 }
