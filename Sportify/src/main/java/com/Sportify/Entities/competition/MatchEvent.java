@@ -136,22 +136,22 @@ public class MatchEvent extends com.Sportify.Entities.subentities.SubscriptionEn
 		return active;
 	}
 	
-	private void setORM_Events(java.util.Set value) {
+	public void setORM_Events(java.util.Set value) {
 		this.ORM_events = value;
 	}
 	
-	private java.util.Set getORM_Events() {
+	public java.util.Set getORM_Events() {
 		return ORM_events;
 	}
 	
 	@Transient	
 	public final com.Sportify.Entities.event.EventSetCollection events = new com.Sportify.Entities.event.EventSetCollection(this, _ormAdapter, ORMConstants.KEY_MATCHEVENT_EVENTS, ORMConstants.KEY_MUL_ONE_TO_MANY);
 	
-	private void setORM_Athletes(java.util.Set value) {
+	public void setORM_Athletes(java.util.Set value) {
 		this.ORM_athletes = value;
 	}
 	
-	private java.util.Set getORM_Athletes() {
+	public java.util.Set getORM_Athletes() {
 		return ORM_athletes;
 	}
 	

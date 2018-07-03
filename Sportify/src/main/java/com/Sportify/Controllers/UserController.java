@@ -2,10 +2,12 @@ package com.Sportify.Controllers;
 
 import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
+import com.Sportify.Entities.notPresist.NotificationResponse;
 import com.Sportify.Entities.payment.Invoice;
 import com.Sportify.Entities.payment.PaymentMethod;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.User;
+import com.Sportify.PubSub.Notification;
 import com.Sportify.Service.UserService;
 import com.Sportify.Views.JSONViews.event.EventCategoryView;
 import com.Sportify.Views.JSONViews.payment.InvoiceView;
@@ -110,9 +112,8 @@ public class UserController {
         return userService.consultNotifications(id);
     }
 
-    @JsonView(EventView.Public.class)
     @RequestMapping(value = "/{idU}/notifications/sports/{idS}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Event> getNotificationsBySport(@PathVariable("idU") int idU, @PathVariable("idS") int idS){
+    public List<NotificationResponse> getNotificationsBySport(@PathVariable("idU") int idU, @PathVariable("idS") int idS){
         return userService.consultNotificationsBySport(idU, idS);
     }
 

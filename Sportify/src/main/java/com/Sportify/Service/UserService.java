@@ -11,6 +11,7 @@ import com.Sportify.Entities.competition.MatchEvent;
 
 import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
+import com.Sportify.Entities.notPresist.NotificationResponse;
 import com.Sportify.Entities.payment.*;
 import com.Sportify.Entities.subentities.Athlete;
 import com.Sportify.Entities.subentities.SubscriptionEntity;
@@ -18,6 +19,7 @@ import com.Sportify.Entities.subentities.Team;
 import com.Sportify.Entities.user.NotificationTracker;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Entities.user.User;
+import com.Sportify.PubSub.Notification;
 import org.orm.PersistentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -263,36 +265,41 @@ public class UserService {
         return new ArrayList<>();
     }
 
-    public List<Event> consultNotificationsBySport(int id, int sport) {
+    public List<NotificationResponse> consultNotificationsBySport(int id, int sport) {
         try {
             int sport_id = 0;
+            int modality_id = 0;
+            String name;
             User u = userDAO.getUserByORMID(id);
 
-            List<Event> notificationList = new ArrayList<>();
+            List<NotificationResponse> notificationList = new ArrayList<>();
 
             for (Subscription subscription : u.subscriptions.toArray()) {
                 SubscriptionEntity subscriptionEntity = subscription.getSubscribedEntity();
+                id = subscriptionEntity.getID();
                 if(subscriptionEntity instanceof Team){
-                    int modality_id = (int) teamDAO.queryTeam("SubscriptionEntityID = " + subscriptionEntity.getID(), null).get(0);
+                    name = ((Team) subscriptionEntity).getName();
+                    modality_id = (int) teamDAO.queryTeam("SubscriptionEntityID = " + subscriptionEntity.getID(), null).get(0);
                     sport_id = (int) modalityDAO.queryModality("ID = " + modality_id, null).get(0);
                 }
                 else if(subscriptionEntity instanceof Athlete){
+                    name = ((Athlete) subscriptionEntity).getName();
                     int team_id = ((Athlete) subscriptionEntity).getTeam().getID();
-                    int modality_id = (int) teamDAO.queryTeam("SubscriptionEntityID = " + team_id, null).get(0);
+                    modality_id = (int) teamDAO.queryTeam("SubscriptionEntityID = " + team_id, null).get(0);
                     sport_id = (int) modalityDAO.queryModality("ID = " + modality_id, null).get(0);
                 }
                 else{
+                    name = ((MatchEvent) subscriptionEntity).getDescription();
                     Athlete athlete = (Athlete) ((MatchEvent)subscriptionEntity).athletes.getIterator().next();
                     int team_id = athlete.getTeam().getID();
-                    int modality_id = (int) teamDAO.queryTeam("SubscriptionEntityID = " + team_id, null).get(0);
+                    modality_id = (int) teamDAO.queryTeam("SubscriptionEntityID = " + team_id, null).get(0);
                     sport_id = (int) modalityDAO.queryModality("ID = " + modality_id, null).get(0);
                 }
 
                 if(sport == sport_id) {
                     for (Event event : subscription.get_tracker().notificationHistory.toArray()) {
-                        if (!notificationList.contains(event))
-                            notificationList.add(event);
-                        //notificationList.addAll(Arrays.asList(subscription.get_tracker().notificationHistory.toArray()));
+                        NotificationResponse notificationResponse = new NotificationResponse(event, name, subscriptionEntity.getClass().toString(), id);
+                        notificationList.add(notificationResponse);
                     }
                 }
             }

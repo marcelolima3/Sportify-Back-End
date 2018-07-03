@@ -35,7 +35,6 @@ public class SportController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public BreadCumbResponse getBreadCumbInfo(@RequestBody BreadCumbResquest req){
-        System.out.println(req.getId());
         return sportService.getBreadCumbInfo(req);
     }
 }
