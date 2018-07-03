@@ -120,7 +120,7 @@ public class Sport implements Serializable {
 		this.ORM_modalities = value;
 	}
 	
-	private java.util.Set getORM_Modalities() {
+	public java.util.Set getORM_Modalities() {
 		return ORM_modalities;
 	}
 	
