@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -75,6 +76,7 @@ public class MatchEventService {
             EventCategory ec = eventCategoryDAO.getEventCategoryByORMID(event.getCategory().getID());
             event.setCategory(ec);
             se.events.add(event);
+
             Notifier notifier = new Notifier();
 
             // match
