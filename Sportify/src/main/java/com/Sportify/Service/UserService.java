@@ -24,6 +24,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 @Service
@@ -68,6 +71,7 @@ public class UserService {
             e.printStackTrace();
         }
         if (!exist) {
+            user.setPassword(gen_pass(user.getPassword()));
             user.setORM_Subscriptions(new HashSet());
             user.setDefaultNotificationType("default");
             user.setRegistrationDate(new Date());
@@ -121,7 +125,7 @@ public class UserService {
     public User login(User user) {
         try {
             String email = user.getEmail();
-            String password = user.getPassword();
+            String password = gen_pass(user.getPassword());
             List<User> list = userDAO.queryUser( "Email = '" + email + "' and Password = '" + password + "'", null);
             if( list.size() > 0 ) {
                 return list.get(0);
@@ -245,19 +249,6 @@ public class UserService {
         return null;
     }
 
-    private void saveTransaction(int user_id, double price, Date date) {
-        try {
-            String transaction = "[" + date.toString() + "] User: " + user_id + " ------------------> " + price + " €. \n";
-            String filename = "user_transactions.txt";
-            FileWriter fw = new FileWriter(filename, true);
-            fw.write(transaction);
-            fw.close();
-        } catch (IOException ioe) {
-            System.err.println("IOException: " + ioe.getMessage());
-        }
-
-    }
-
     public List<Event> consultNotifications(int id) {
         try {
             User u = userDAO.getUserByORMID( id);
@@ -297,8 +288,13 @@ public class UserService {
                     sport_id = (int) modalityDAO.queryModality("ID = " + modality_id, null).get(0);
                 }
 
-                if(sport == sport_id)
-                    notificationList.addAll(Arrays.asList(subscription.get_tracker().notificationHistory.toArray()));
+                if(sport == sport_id) {
+                    for (Event event : subscription.get_tracker().notificationHistory.toArray()) {
+                        if (!notificationList.contains(event))
+                            notificationList.add(event);
+                        //notificationList.addAll(Arrays.asList(subscription.get_tracker().notificationHistory.toArray()));
+                    }
+                }
             }
 
             return notificationList;
@@ -342,5 +338,29 @@ public class UserService {
             e.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    private void saveTransaction(int user_id, double price, Date date) {
+        try {
+            String transaction = "[" + date.toString() + "] User: " + user_id + " ------------------> " + price + " €. \n";
+            String filename = "user_transactions.txt";
+            FileWriter fw = new FileWriter(filename, true);
+            fw.write(transaction);
+            fw.close();
+        } catch (IOException ioe) {
+            System.err.println("IOException: " + ioe.getMessage());
+        }
+
+    }
+
+    private String gen_pass(String password){
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        }
+        catch (NoSuchAlgorithmException e) { e.printStackTrace(); }
+        byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+
+        return Base64.getEncoder().encodeToString(hash);
     }
 }

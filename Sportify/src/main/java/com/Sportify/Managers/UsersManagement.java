@@ -10,6 +10,9 @@ import com.Sportify.Entities.user.User;
 import org.orm.PersistentException;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 @Service
@@ -19,7 +22,6 @@ public class UsersManagement {
     public UsersManagement() {
     }
 
-    // Aqui falta o AddToBill
     public void subscribe(int id, SubscriptionEntity subscriptionEntity, EventCategory eventCategory) {
         try {
             boolean existSub = false;
@@ -47,7 +49,6 @@ public class UsersManagement {
             e.printStackTrace();
         }
     }
-
 
     public List<Event> consult_notifications(int id) throws PersistentException {
         User u = UserDAO.getUserByORMID(id);
@@ -95,8 +96,7 @@ public class UsersManagement {
         }
     }**/
 
-    // Tem de dar throw de uma exception se o utilizador não for criado!
-    public int registerUser(String name, String email, String password, PaymentMethod p) throws Exception{
+    public int registerUser(String name, String email, String password, PaymentMethod p, boolean manager) throws Exception{
         boolean exist = false;
         try {
             for (User u : (List<User>) UserDAO.queryUser(null, null)) {
@@ -112,11 +112,11 @@ public class UsersManagement {
             User u = new User();
             u.setName(name);
             u.setEmail(email);
-            u.setPassword(password);
+            u.setPassword(gen_pass(password));
             u.setPaymentManager(p);
             u.setRegistrationDate(new Date());
             u.setDefaultNotificationType("default");
-            u.setIsManager(false);
+            u.setIsManager(manager);
             try {
                 UserDAO.save(u);
             } catch (PersistentException e) {
@@ -162,5 +162,16 @@ public class UsersManagement {
             e.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    private String gen_pass(String password){
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        }
+        catch (NoSuchAlgorithmException e) { e.printStackTrace(); }
+        byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+
+        return Base64.getEncoder().encodeToString(hash);
     }
 }

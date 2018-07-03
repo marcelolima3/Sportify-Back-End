@@ -36,8 +36,8 @@ public class Populate {
     public void testUsersManagement() throws PersistentException {
         try {
             UsersManagement usersManagement = new UsersManagement();
-            usersManagement.registerUser("Dinis", "mail3@gmail.com", "root", new InvoicePayment(0));
-            //System.out.println("ID: " + id);
+            usersManagement.registerUser("Dinis", "mail3@gmail.com", "root", new InvoicePayment(0), false);
+            usersManagement.registerUser("Manager", "root", "root", new InvoicePayment(0), true);
         } catch (Exception e) {
             e.printStackTrace();
         }
