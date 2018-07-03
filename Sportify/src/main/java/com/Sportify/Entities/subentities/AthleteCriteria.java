@@ -15,6 +15,7 @@ package com.Sportify.Entities.subentities;
 
 import com.Sportify.DAO.EAClassDiagramPersistentManager;
 import com.Sportify.Entities.competition.MatchEventCriteria;
+import com.Sportify.Entities.event.EventCriteria;
 import com.Sportify.Entities.user.SubscriptionCriteria;
 import org.hibernate.Criteria;
 import org.orm.PersistentException;
@@ -31,6 +32,7 @@ public class AthleteCriteria extends AbstractORMCriteria {
 	public final IntegerExpression teamId;
 	public final AssociationExpression team;
 	public final CollectionExpression matchEvents;
+	public final CollectionExpression events;
 	
 	public AthleteCriteria(Criteria criteria) {
 		super(criteria);
@@ -43,6 +45,7 @@ public class AthleteCriteria extends AbstractORMCriteria {
 		teamId = new IntegerExpression("team.", this);
 		team = new AssociationExpression("team", this);
 		matchEvents = new CollectionExpression("ORM_matchEvents", this);
+		events = new CollectionExpression("ORM_events", this);
 	}
 	
 	public AthleteCriteria(PersistentSession session) {
@@ -63,6 +66,10 @@ public class AthleteCriteria extends AbstractORMCriteria {
 	
 	public SubscriptionCriteria createSubscriptionsCriteria() {
 		return new SubscriptionCriteria(createCriteria("ORM_subscriptions"));
+	}
+
+	public EventCriteria createEventsCriteria() {
+		return new EventCriteria(createCriteria("ORM_events"));
 	}
 	
 	public Athlete uniqueAthlete() {

@@ -526,10 +526,10 @@
       <Index>false</Index>
       <UserTypes/>
     </Column>
-    <Column name="MatchEventSubscriptionEntityID">
+    <Column name="SubscriptionEntityID">
       <PrimaryKey>false</PrimaryKey>
       <ForeignKey>true</ForeignKey>
-      <ReferencedColumn>com.Sportify.Entities.competition.MatchEvent.SubscriptionEntityID</ReferencedColumn>
+      <ReferencedColumn>subEntities.SubscriptionEntity.ID</ReferencedColumn>
       <Type>9</Type>
       <Length>10</Length>
       <Nullable>false</Nullable>
@@ -1268,14 +1268,14 @@
       <Column>ID</Column>
     </RefColumns>
   </ForeignKey>
-  <ForeignKey name="FKEvent695362">
+  <ForeignKey name="FKEvent315619">
     <ReferenceTable>Event</ReferenceTable>
-    <ReferencedTable>MatchEvent</ReferencedTable>
+    <ReferencedTable>SubscriptionEntity</ReferencedTable>
     <Columns>
-      <Column>MatchEventSubscriptionEntityID</Column>
+      <Column>SubscriptionEntityID</Column>
     </Columns>
     <RefColumns>
-      <Column>SubscriptionEntityID</Column>
+      <Column>ID</Column>
     </RefColumns>
   </ForeignKey>
   <ForeignKey name="FKMatchEvent370651">

@@ -41,15 +41,12 @@ public class MatchEvent extends com.Sportify.Entities.subentities.SubscriptionEn
 		this.location = location;
 		this.active = active;
 	}
-	
+
 	private java.util.Set this_getSet (int key) {
-		if (key == ORMConstants.KEY_MATCHEVENT_EVENTS) {
-			return ORM_events;
-		}
-		else if (key == ORMConstants.KEY_MATCHEVENT_ATHLETES) {
+		if (key == ORMConstants.KEY_MATCHEVENT_ATHLETES) {
 			return ORM_athletes;
 		}
-		
+
 		return null;
 	}
 	
@@ -82,13 +79,6 @@ public class MatchEvent extends com.Sportify.Entities.subentities.SubscriptionEn
 	@JsonView({SubscriptionEntityView.Public.class,CompetitionView.Private.class,MatchEventView.Public.class})
 	@Column(name="Active", nullable=true, length=1)	
 	private boolean active;
-
-	@JsonView({CompetitionView.Private.class,MatchEventView.Private.class})
-	@OneToMany(targetEntity= com.Sportify.Entities.event.Event.class)
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="MatchEventSubscriptionEntityID", nullable=false) })	
-	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private java.util.Set ORM_events = new java.util.HashSet();
 
 	@JsonView({CompetitionView.Private.class})
 	@ManyToMany(mappedBy="ORM_matchEvents", targetEntity= com.Sportify.Entities.subentities.Athlete.class)
@@ -134,14 +124,6 @@ public class MatchEvent extends com.Sportify.Entities.subentities.SubscriptionEn
 	
 	public boolean getActive() {
 		return active;
-	}
-	
-	private void setORM_Events(java.util.Set value) {
-		this.ORM_events = value;
-	}
-	
-	private java.util.Set getORM_Events() {
-		return ORM_events;
 	}
 	
 	@Transient	

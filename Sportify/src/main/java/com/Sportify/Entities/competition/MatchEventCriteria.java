@@ -27,19 +27,19 @@ public class MatchEventCriteria extends AbstractORMCriteria {
 	public final DateExpression endTime;
 	public final StringExpression location;
 	public final BooleanExpression active;
-	public final CollectionExpression events;
 	public final CollectionExpression athletes;
-	
+	public final CollectionExpression events;
+
 	public MatchEventCriteria(Criteria criteria) {
 		super(criteria);
 		ID = new IntegerExpression("ID", this);
 		subscriptions = new CollectionExpression("ORM_subscriptions", this);
+		events = new CollectionExpression("ORM_events", this);
 		description = new StringExpression("description", this);
 		startTime = new DateExpression("startTime", this);
 		endTime = new DateExpression("endTime", this);
 		location = new StringExpression("location", this);
 		active = new BooleanExpression("active", this);
-		events = new CollectionExpression("ORM_events", this);
 		athletes = new CollectionExpression("ORM_athletes", this);
 	}
 	
@@ -51,10 +51,6 @@ public class MatchEventCriteria extends AbstractORMCriteria {
 		this(EAClassDiagramPersistentManager.instance().getSession());
 	}
 	
-	public com.Sportify.Entities.event.EventCriteria createEventsCriteria() {
-		return new com.Sportify.Entities.event.EventCriteria(createCriteria("ORM_events"));
-	}
-	
 	public com.Sportify.Entities.subentities.AthleteCriteria createAthletesCriteria() {
 		return new com.Sportify.Entities.subentities.AthleteCriteria(createCriteria("ORM_athletes"));
 	}
@@ -62,7 +58,12 @@ public class MatchEventCriteria extends AbstractORMCriteria {
 	public com.Sportify.Entities.user.SubscriptionCriteria createSubscriptionsCriteria() {
 		return new com.Sportify.Entities.user.SubscriptionCriteria(createCriteria("ORM_subscriptions"));
 	}
-	
+
+	public com.Sportify.Entities.event.EventCriteria createEventsCriteria() {
+		return new com.Sportify.Entities.event.EventCriteria(createCriteria("ORM_events"));
+	}
+
+
 	public MatchEvent uniqueMatchEvent() {
 		return (MatchEvent) super.uniqueResult();
 	}

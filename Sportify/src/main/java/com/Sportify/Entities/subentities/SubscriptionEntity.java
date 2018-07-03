@@ -15,6 +15,8 @@ package com.Sportify.Entities.subentities;
 
 import com.Sportify.DAO.ORMConstants;
 import com.Sportify.Entities.competition.MatchEvent;
+import com.Sportify.Entities.event.Event;
+import com.Sportify.Entities.event.EventSetCollection;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.Views.JSONViews.competition.MatchEventView;
 import com.Sportify.Views.JSONViews.subentities.AthleteView;
@@ -42,13 +44,16 @@ import javax.persistence.*;
 @Table(name="SubscriptionEntity")
 @Inheritance(strategy=InheritanceType.JOINED)
 @DiscriminatorValue("SubscriptionEntity")
-public abstract class SubscriptionEntity implements Serializable {
+public abstract class 	SubscriptionEntity implements Serializable {
 	public SubscriptionEntity() {
 	}
 	
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_SUBSCRIPTIONENTITY_SUBSCRIPTIONS) {
 			return ORM_subscriptions;
+		}
+		else if (key == ORMConstants.KEY_SUBSCRIPTIONENTITY_EVENTS) {
+			return ORM_events;
 		}
 		
 		return null;
@@ -74,6 +79,12 @@ public abstract class SubscriptionEntity implements Serializable {
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set ORM_subscriptions = new java.util.HashSet();
+
+	@OneToMany(targetEntity=Event.class)
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
+	@JoinColumns({ @JoinColumn(name="SubscriptionEntityID", nullable=false) })
+	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
+	private java.util.Set ORM_events = new java.util.HashSet();
 	
 	private void setID(int value) {
 		this.ID = value;
@@ -97,7 +108,18 @@ public abstract class SubscriptionEntity implements Serializable {
 	
 	@Transient	
 	public final com.Sportify.Entities.user.SubscriptionSetCollection subscriptions = new com.Sportify.Entities.user.SubscriptionSetCollection(this, _ormAdapter, ORMConstants.KEY_SUBSCRIPTIONENTITY_SUBSCRIPTIONS, ORMConstants.KEY_SUBSCRIPTION_SUBSCRIBEDENTITY, ORMConstants.KEY_MUL_ONE_TO_MANY);
-	
+
+	private void setORM_Events(java.util.Set value) {
+		this.ORM_events = value;
+	}
+
+	private java.util.Set getORM_Events() {
+		return ORM_events;
+	}
+
+	@Transient
+	public final EventSetCollection events = new EventSetCollection(this, _ormAdapter, ORMConstants.KEY_SUBSCRIPTIONENTITY_EVENTS, ORMConstants.KEY_MUL_ONE_TO_MANY);
+
 	public String toString() {
 		return String.valueOf(getID());
 	}

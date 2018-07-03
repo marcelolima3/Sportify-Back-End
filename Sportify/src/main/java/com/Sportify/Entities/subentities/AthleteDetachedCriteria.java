@@ -16,6 +16,7 @@ package com.Sportify.Entities.subentities;
 import java.util.List;
 
 import com.Sportify.Entities.competition.MatchEventDetachedCriteria;
+import com.Sportify.Entities.event.EventDetachedCriteria;
 import com.Sportify.Entities.user.SubscriptionDetachedCriteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.orm.PersistentSession;
@@ -31,7 +32,8 @@ public class AthleteDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression teamId;
 	public final AssociationExpression team;
 	public final CollectionExpression matchEvents;
-	
+	public final CollectionExpression events;
+
 	public AthleteDetachedCriteria() {
 		super(com.Sportify.Entities.subentities.Athlete.class, com.Sportify.Entities.subentities.AthleteCriteria.class);
 		ID = new IntegerExpression("ID", this.getDetachedCriteria());
@@ -43,6 +45,7 @@ public class AthleteDetachedCriteria extends AbstractORMDetachedCriteria {
 		teamId = new IntegerExpression("team.", this.getDetachedCriteria());
 		team = new AssociationExpression("team", this.getDetachedCriteria());
 		matchEvents = new CollectionExpression("ORM_matchEvents", this.getDetachedCriteria());
+		events = new CollectionExpression("ORM_events", this.getDetachedCriteria());
 	}
 	
 	public AthleteDetachedCriteria(DetachedCriteria aDetachedCriteria) {
@@ -56,6 +59,7 @@ public class AthleteDetachedCriteria extends AbstractORMDetachedCriteria {
 		teamId = new IntegerExpression("team.", this.getDetachedCriteria());
 		team = new AssociationExpression("team", this.getDetachedCriteria());
 		matchEvents = new CollectionExpression("ORM_matchEvents", this.getDetachedCriteria());
+		events = new CollectionExpression("ORM_events", this.getDetachedCriteria());
 	}
 	
 	public TeamDetachedCriteria createTeamCriteria() {
@@ -69,7 +73,13 @@ public class AthleteDetachedCriteria extends AbstractORMDetachedCriteria {
 	public SubscriptionDetachedCriteria createSubscriptionsCriteria() {
 		return new SubscriptionDetachedCriteria(createCriteria("ORM_subscriptions"));
 	}
-	
+
+
+	public EventDetachedCriteria createEventsCriteria() {
+		return new EventDetachedCriteria(createCriteria("ORM_events"));
+	}
+
+
 	public Athlete uniqueAthlete(PersistentSession session) {
 		return (Athlete) super.createExecutableCriteria(session).uniqueResult();
 	}

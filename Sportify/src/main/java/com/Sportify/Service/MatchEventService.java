@@ -5,12 +5,15 @@ import com.Sportify.DAO.competition.CompetitionDAO;
 import com.Sportify.DAO.competition.MatchEventDAO;
 import com.Sportify.DAO.event.EventCategoryDAO;
 import com.Sportify.DAO.subentities.AthleteDAO;
+import com.Sportify.DAO.subentities.SubscriptionEntityDAO;
 import com.Sportify.DAO.user.SubscriptionDAO;
 import com.Sportify.Entities.competition.Competition;
 import com.Sportify.Entities.competition.MatchEvent;
 import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.event.EventCategory;
 import com.Sportify.Entities.subentities.Athlete;
+import com.Sportify.Entities.subentities.SubscriptionEntity;
+import com.Sportify.Entities.subentities.Team;
 import com.Sportify.Entities.user.NotificationTracker;
 import com.Sportify.Entities.user.Subscription;
 import com.Sportify.PubSub.Notifier;
@@ -31,6 +34,7 @@ public class MatchEventService {
     @Autowired private AthleteDAO athleteDAO;
     @Autowired private SubscriptionDAO subscriptionDAO;
     @Autowired private EventCategoryDAO eventCategoryDAO;
+    @Autowired private SubscriptionEntityDAO subscriptionEntityDAO;
 
     public List<MatchEvent> getCompetitionMatches(int competitionID){
         try {
@@ -64,33 +68,31 @@ public class MatchEventService {
         }
     }
 
-    public void submitEvent(int matchID, Event event) throws PersistentException {
+    public void submitEvent(int id, Event event) throws PersistentException {
         try {
-            MatchEvent m = matchEventDAO.getMatchEventByORMID(matchID);
+            //MatchEvent m = matchEventDAO.getMatchEventByORMID(matchID);
+            SubscriptionEntity se = subscriptionEntityDAO.getSubscriptionEntityByORMID(id);
             EventCategory ec = eventCategoryDAO.getEventCategoryByORMID(event.getCategory().getID());
             event.setCategory(ec);
-            m.events.add(event);
+            se.events.add(event);
             Notifier notifier = new Notifier();
 
-            for(Subscription s : m.subscriptions.toArray()){
-                sendNotification(s, event, notifier, ec, m);
+            // match
+            if(se instanceof MatchEvent){
+                sendMatchEvent((MatchEvent) se, event, notifier, ec);
             }
-
-            for(Athlete a : m.athletes.toArray()){
-                for(Subscription sa : a.subscriptions.toArray()){
-                    sendNotification(sa, event, notifier, ec, m);
-                }
-                for(Subscription st : a.getTeam().subscriptions.toArray()){
-                    sendNotification(st, event, notifier, ec, m);
-                }
+            else if(se instanceof Team){
+                sendTeam((Team) se, event, notifier, ec);
             }
-            matchEventDAO.save(m);
+            else if(se instanceof Athlete){
+                sendAthlete((Athlete) se, event, notifier, ec);
+            }
         } catch (PersistentException e) {
             e.printStackTrace();
         }
     }
 
-    public void sendNotification(Subscription s, Event event, Notifier notifier, EventCategory ec, MatchEvent m) throws PersistentException {
+    public void sendNotification(Subscription s, Event event, Notifier notifier, EventCategory ec, SubscriptionEntity se) throws PersistentException {
         List<Integer> list = subscriptionDAO.querySubscription("ID = " + s.getID(), null);
         NotificationTracker nt = s.get_tracker();
         nt.notificationHistory.add(event);
@@ -98,8 +100,37 @@ public class MatchEventService {
             notifier.sendMessage("" + list.get(0), ec.getName(), event.getTextFormat());
         }
         else if(event.getCategory().getName().equals("After Match") || event.getCategory().getName().equals("Results")){
-            m.setActive(false);
-            notifier.sendMessage("" + list.get(0), ec.getName(), m.getDescription()+ " is over! \nYou can now consult the notifications.");
+            MatchEvent me = (MatchEvent) se;
+            me.setActive(false);
+            notifier.sendMessage("" + list.get(0), ec.getName(), me.getDescription()+ " is over! \nYou can now consult the notifications.");
+        }
+    }
+
+    public void sendMatchEvent(MatchEvent m, Event event, Notifier notifier, EventCategory ec) throws PersistentException {
+        for(Subscription s : m.subscriptions.toArray()){
+            sendNotification(s, event, notifier, ec, m);
+        }
+
+        for(Athlete a : m.athletes.toArray()){
+            for(Subscription sa : a.subscriptions.toArray()){
+                sendNotification(sa, event, notifier, ec, m);
+            }
+            for(Subscription st : a.getTeam().subscriptions.toArray()){
+                sendNotification(st, event, notifier, ec, m);
+            }
+        }
+        matchEventDAO.save(m);
+    }
+
+    public void sendTeam(Team t, Event event, Notifier notifier, EventCategory ec) throws PersistentException {
+        for(Subscription s : t.subscriptions.toArray()){
+            sendNotification(s, event, notifier, ec, t);
+        }
+    }
+
+    public void sendAthlete(Athlete a, Event event, Notifier notifier, EventCategory ec) throws PersistentException {
+        for(Subscription s : a.subscriptions.toArray()){
+            sendNotification(s, event, notifier, ec, a);
         }
     }
 }
