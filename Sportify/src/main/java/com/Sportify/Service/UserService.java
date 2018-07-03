@@ -270,6 +270,7 @@ public class UserService {
             int sport_id = 0;
             int modality_id = 0;
             String name;
+            String subscription_entity_class;
             User u = userDAO.getUserByORMID(id);
 
             List<NotificationResponse> notificationList = new ArrayList<>();
@@ -302,7 +303,13 @@ public class UserService {
                         if(!list_events.contains(event))
                             list_events.add(event);
 
-                    NotificationResponse notificationResponse = new NotificationResponse(list_events, name, subscriptionEntity.getClass().toString(), id);
+                    if(subscriptionEntity instanceof Athlete)
+                        subscription_entity_class = "Athlete";
+                    else if(subscriptionEntity instanceof Team)
+                        subscription_entity_class = "Team";
+                    else subscription_entity_class = "MatchEvent";
+
+                    NotificationResponse notificationResponse = new NotificationResponse(list_events, name, subscription_entity_class, id);
                     notificationList.add(notificationResponse);
                 }
             }
