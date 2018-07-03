@@ -297,10 +297,13 @@ public class UserService {
                 }
 
                 if(sport == sport_id) {
-                    for (Event event : subscription.get_tracker().notificationHistory.toArray()) {
-                        NotificationResponse notificationResponse = new NotificationResponse(event, name, subscriptionEntity.getClass().toString(), id);
-                        notificationList.add(notificationResponse);
-                    }
+                    List<Event> list_events = new ArrayList<>();
+                    for (Event event : subscription.get_tracker().notificationHistory.toArray())
+                        if(!list_events.contains(event))
+                            list_events.add(event);
+
+                    NotificationResponse notificationResponse = new NotificationResponse(list_events, name, subscriptionEntity.getClass().toString(), id);
+                    notificationList.add(notificationResponse);
                 }
             }
 

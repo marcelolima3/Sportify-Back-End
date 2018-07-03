@@ -5,25 +5,27 @@ import com.Sportify.Entities.event.Event;
 import com.Sportify.Entities.subentities.SubscriptionEntity;
 import com.Sportify.Entities.user.Subscription;
 
+import java.util.List;
+
 public class NotificationResponse {
 
-    private Event event;
+    private List<Event> event;
     private String subscriptionEntity_name;
     private String subscriptionEntity_type;
     private int subscriptionEntity_id;
 
-    public NotificationResponse(Event event, String subscriptionEntity_name, String subscriptionEntity_type, int subscriptionEntity_id) {
+    public NotificationResponse(List<Event> event, String subscriptionEntity_name, String subscriptionEntity_type, int subscriptionEntity_id) {
         this.event = event;
         this.subscriptionEntity_name = subscriptionEntity_name;
         this.subscriptionEntity_type = subscriptionEntity_type;
         this.subscriptionEntity_id = subscriptionEntity_id;
     }
 
-    public Event getEvent() {
+    public List<Event> getEvent() {
         return event;
     }
 
-    public void setEvent(Event event) {
+    public void setEvent(List<Event> event) {
         this.event = event;
     }
 
