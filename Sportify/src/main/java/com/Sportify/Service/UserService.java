@@ -102,12 +102,15 @@ public class UserService {
     public List<EventCategory> getSEEventCategories(int userID, int subscriptionEntityID){
         try {
             User u = userDAO.getUserByORMID( userID);
+            List<EventCategory> events = new ArrayList<>();
 
             for (Subscription subscription : u.subscriptions.toArray()) {
                 if(subscription.getSubscribedEntity().getID() == subscriptionEntityID){
-                    return Arrays.asList(subscription.subscribedEvents.toArray());
+                    events.addAll(Arrays.asList(subscription.subscribedEvents.toArray()));
+                    //return Arrays.asList(subscription.subscribedEvents.toArray());
                 }
             }
+            return events;
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -184,7 +187,7 @@ public class UserService {
                 else
                     u.getPaymentManager().addToBill(eventCategory.getExtraPrice());
             }
-            userDAO.save(u);
+                userDAO.save(u);
         }
         catch (PersistentException e) {
             e.printStackTrace();
