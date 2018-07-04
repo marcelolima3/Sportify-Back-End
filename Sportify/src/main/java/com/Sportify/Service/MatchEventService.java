@@ -115,10 +115,12 @@ public class MatchEventService {
 
         for(Athlete a : m.athletes.toArray()){
             for(Subscription sa : a.subscriptions.toArray()){
-                sendNotification(sa, event, notifier, ec, m);
+                if(sa.getORM_SubscribedEvents().contains(ec))
+                    sendNotification(sa, event, notifier, ec, m);
             }
             for(Subscription st : a.getTeam().subscriptions.toArray()){
-                sendNotification(st, event, notifier, ec, m);
+                if(st.getORM_SubscribedEvents().contains(ec))
+                    sendNotification(st, event, notifier, ec, m);
             }
         }
         matchEventDAO.save(m);
